@@ -6,7 +6,7 @@ adjective: Vampiric
 difficulty: Advanced
 difficulty_priority: 90
 aptitudes:
-  xp: -2
+  xp: -1
   hp: 0
   mp_mod: 0
   mr: 4

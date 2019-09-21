@@ -123,8 +123,8 @@ meat. They regenerate health rapidly.
 %%%%
 Vampire
 
-Shifting between the states of life and undeath, Vampires are accomplished
-stabbers and casters.
+Being semi-undead, Vampires are accomplished stabbers and casters. Plain
+strong when very well fed and more subtle when low on blood.
 %%%%
 Vine Stalker
 

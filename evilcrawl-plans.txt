@@ -3,8 +3,6 @@
 items for evilcrawl
 ===================
 
-- change VP descriptions
-
 - option to extend beyond level 27 (port from spicy)
 
 - make DS guarantee of Hurl Hellfire and Death Affinity optional
