@@ -1,0 +1,25 @@
+
+===================
+items for evilcrawl
+===================
+
+- change VP descriptions
+
+- option to extend beyond level 27 (port from spicy)
+
+- make DS guarantee of Hurl Hellfire and Death Affinity optional
+
+- write README
+
+- post in the dcss forums about this fork and the VP implementation
+
+- remain in sync with new tags of vanilla
+
+(- changes to VP are non-optional, since the vanilla implementations are, well, dull)
+
+======================
+fix "bugs" for vanilla
+======================
+
+- food.cc: chunks before other food
+- timed-effects.cc: _handle_magic_contamination: ifs are arranged strangely with the orb influencing dissipation
