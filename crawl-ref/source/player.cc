@@ -88,6 +88,18 @@
 #include "wizard-option-type.h"
 #include "xom.h"
 
+bool player::res_damnation() const
+{
+  for (player::demon_trait trait : demonic_traits)
+  {
+    if (trait.mutation == MUT_HURL_DAMNATION)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 static void _moveto_maybe_repel_stairs()
 {
     const dungeon_feature_type new_grid = env.grid(you.pos());
@@ -1136,17 +1148,30 @@ int player_regen()
     if (you.species == SP_VAMPIRE)
     {
         if (you.hunger_state <= HS_STARVING)
-            rr = 0;   // No regeneration for starving vampires.
+            rr = - 1 - 1 * you.get_experience_level() * 2 / 3;
         else if (you.hunger_state < HS_SATIATED)
             rr /= 2;  // Halved regeneration for hungry vampires.
-        else if (you.hunger_state >= HS_FULL)
-            rr += 20; // Bonus regeneration for full vampires.
+        else if (you.hunger_state == HS_FULL)
+        {
+            rr += 1;
+            rr *= 3/2;
+        }
+        else if (you.hunger_state == HS_VERY_FULL)
+        {
+            rr += 2;
+            rr *= 10/4;
+        }
+        else if (you.hunger_state == HS_ENGORGED)
+        {
+            rr += 3;
+            rr *= 3;
+        }
     }
 
-    if (you.duration[DUR_COLLAPSE])
+    if (you.duration[DUR_COLLAPSE] && rr > 0)
         rr /= 4;
 
-    if (you.disease || regeneration_is_inhibited() || !player_regenerates_hp())
+    if (rr > 0 && (you.disease || regeneration_is_inhibited() || !player_regenerates_hp()))
         rr = 0;
 
     // Trog's Hand. This circumvents sickness or inhibited regeneration.
@@ -1255,9 +1280,13 @@ int player_hunger_rate(bool temp)
         case HS_SATIATED:
             break;
         case HS_FULL:
+            hunger++;
+            break;
         case HS_VERY_FULL:
-        case HS_ENGORGED:
             hunger += 2;
+            break;
+        case HS_ENGORGED:
+            hunger += 3;
             break;
         }
     }
@@ -1856,10 +1885,11 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
         case HS_HUNGRY:
             pl = 2;
             break;
-        case HS_SATIATED:
-            pl = 1;
-            break;
+      //case HS_SATIATED:
+      //    pl = 1;
+      //    break;
         default:
+            pl = 1;
             break;
         }
     }
@@ -4015,8 +4045,8 @@ bool player_regenerates_hp()
 {
     if (you.has_mutation(MUT_NO_REGENERATION))
         return false;
-    if (you.species == SP_VAMPIRE && you.hunger_state <= HS_STARVING)
-        return false;
+  //if (you.species == SP_VAMPIRE && you.hunger_state <= HS_STARVING)
+  //    return false;
     return true;
 }
 
@@ -4665,7 +4695,10 @@ bool haste_player(int turns, bool rageext)
     else if (you.duration[DUR_HASTE] > threshold * BASELINE_DELAY)
         mpr("You already have as much speed as you can handle.");
     else if (!rageext)
-        mpr("You feel as though your hastened speed will last longer.");
+    {
+      mpr("You feel as though your hastened speed will last longer.");
+      contaminate_player(1000, true); // always deliberate
+    }
 
     you.increase_duration(DUR_HASTE, turns, threshold);
 
@@ -5673,10 +5706,11 @@ int player::missile_deflection() const
     if (attribute[ATTR_DEFLECT_MISSILES])
         return 2;
 
-    if (get_mutation_level(MUT_DISTORTION_FIELD) == 3
-        || you.wearing_ego(EQ_ALL_ARMOUR, SPARM_REPULSION)
-        || scan_artefacts(ARTP_RMSL, true)
-        || have_passive(passive_t::upgraded_storm_shield))
+    if ( attribute[ATTR_REPEL_MISSILES]
+      || get_mutation_level(MUT_DISTORTION_FIELD) == 3
+      || you.wearing_ego(EQ_ALL_ARMOUR, SPARM_REPULSION)
+      || scan_artefacts(ARTP_RMSL, true)
+      || have_passive(passive_t::upgraded_storm_shield))
     {
         return 1;
     }
@@ -5686,14 +5720,36 @@ int player::missile_deflection() const
 
 void player::ablate_deflection()
 {
+    const int orig_defl = missile_deflection();
+    
+    bool did_something = false;
+    
     if (attribute[ATTR_DEFLECT_MISSILES])
     {
         const int power = calc_spell_power(SPELL_DEFLECT_MISSILES, true);
         if (one_chance_in(2 + power / 8))
         {
             attribute[ATTR_DEFLECT_MISSILES] = 0;
-            mprf(MSGCH_DURATION, "You feel less protected from missiles.");
+            did_something = true;
         }
+    }
+    else if (attribute[ATTR_REPEL_MISSILES])
+    {
+          const int power = calc_spell_power(SPELL_REPEL_MISSILES, true);
+          if (one_chance_in(2 + power / 8))
+          {
+                attribute[ATTR_REPEL_MISSILES] = 0;
+                did_something = true;
+          }
+    }
+
+    if (did_something)
+    {
+          // We might also have the effect from a non-expiring source.
+          mprf(MSGCH_DURATION, "You feel %s from missiles.",
+                                              missile_deflection() < orig_defl
+                                                  ? "less protected"
+                                                  : "your spell is no longer protecting you");
     }
 }
 

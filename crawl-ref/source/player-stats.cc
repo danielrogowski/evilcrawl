@@ -385,6 +385,7 @@ static int _strength_modifier(bool innate_only)
 
     if (!innate_only)
     {
+      
         if (you.duration[DUR_MIGHT] || you.duration[DUR_BERSERK])
             result += 5;
 
@@ -404,6 +405,21 @@ static int _strength_modifier(bool innate_only)
 
         // form
         result += get_form()->str_mod;
+    }
+    
+    if (you.species == SP_VAMPIRE)
+    {
+        switch(you.hunger_state)
+        {
+            case HS_ENGORGED:
+                result += 2;
+            case HS_VERY_FULL:
+                result += 2;
+            case HS_FULL:
+                result += 2;
+            default:
+              ;
+        }
     }
 
     // mutations

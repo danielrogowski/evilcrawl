@@ -6,12 +6,13 @@ adjective: Vampiric
 difficulty: Advanced
 difficulty_priority: 90
 aptitudes:
-  xp: -1
+  xp: -2
   hp: 0
   mp_mod: 0
   mr: 4
-  fighting: -1
+  fighting: 0
   short_blades: +1
+  long_blades: 0
   axes: -1
   maces_and_flails: -2
   polearms: -1
@@ -19,13 +20,13 @@ aptitudes:
   slings: -2
   bows: -2
   crossbows: -2
-  throwing: -2
+  throwing: 0
   armour: -2
-  dodging: 1
+  dodging: 2
   stealth: 5
   shields: -1
   unarmed_combat: 1
-  spellcasting: -1
+  spellcasting: 0
   conjurations: -3
   hexes: 4
   charms: 1
@@ -40,10 +41,7 @@ undead_type: US_SEMI_UNDEAD
 str: 7
 int: 10
 dex: 9
-levelup_stat_frequency: 5
-levelup_stats:
-  - int
-  - dex
+levelup_stat_frequency: 3
 mutations:
   1:
     MUT_FANGS: 3

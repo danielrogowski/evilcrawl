@@ -1422,8 +1422,12 @@ spret your_spells(spell_type spell, int powc, bool allow_fail,
             return spret::abort;
         }
 
-        if (spd.isMe() && spell == SPELL_INVISIBILITY && !invis_allowed())
-            return spret::abort;
+        if (spd.isMe()
+            && (spell == SPELL_HASTE && check_stasis(NO_HASTE_MSG)
+                || spell == SPELL_INVISIBILITY && !invis_allowed()))
+        {
+             return spret::abort;
+        }
     }
 
     if (evoked_item)
@@ -1615,6 +1619,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     switch (spell)
     {
+    case SPELL_HURL_DAMNATION:
+        mpr("You hurl a sphere of damnation!");
+        break;
     case SPELL_FREEZE:
         return cast_freeze(powc, monster_at(target), fail);
 
@@ -1845,6 +1852,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     // General enhancement.
     case SPELL_REGENERATION:
         return cast_regen(powc, fail);
+
+    case SPELL_REPEL_MISSILES:
+        return missile_prot(powc, fail);
 
     case SPELL_DEFLECT_MISSILES:
         return deflection(powc, fail);

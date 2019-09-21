@@ -9,7 +9,8 @@ aptitudes:
   xp: -1
   hp: 0
   mp_mod: 0
-  mr: 3
+  mr: 4
+  fighting: 1
   short_blades: -1
   long_blades: -1
   axes: -1
@@ -23,8 +24,8 @@ aptitudes:
   armour: -1
   dodging: -1
   shields: -1
-  unarmed_combat: -1
-  spellcasting: -1
+  unarmed_combat: 1
+  spellcasting: 1
   charms: -1
   necromancy: 1
   translocations: -1

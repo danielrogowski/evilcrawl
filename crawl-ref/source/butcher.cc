@@ -76,7 +76,7 @@ void finish_butchering(item_def& corpse, bool bottling)
     {
         mpr("You bottle the corpse's blood.");
 
-        if (mons_skeleton(corpse.mon_type) && one_chance_in(3))
+        if (mons_skeleton(corpse.mon_type)/* && one_chance_in(3)*/)
             turn_corpse_into_skeleton_and_blood_potions(corpse);
         else
             turn_corpse_into_blood_potions(corpse);

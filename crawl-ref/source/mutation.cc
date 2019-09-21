@@ -771,18 +771,25 @@ static int _vampire_bloodlessness()
     switch (you.hunger_state)
     {
     case HS_ENGORGED:
-    case HS_VERY_FULL:
-    case HS_FULL:
         return 1;
-    case HS_SATIATED:
+        break;
+    case HS_VERY_FULL:
         return 2;
+        break;
+    case HS_FULL:
+        return 3;
+        break;
+    case HS_SATIATED:
+        return 4;
+        break;
     case HS_HUNGRY:
     case HS_VERY_HUNGRY:
     case HS_NEAR_STARVING:
-        return 3;
+        return 5;
+        break;
     case HS_STARVING:
     case HS_FAINTING:
-        return 4;
+        return 6;
     }
     die("bad hunger state %d", you.hunger_state);
 }
@@ -793,42 +800,56 @@ static string _display_vampire_attributes()
 
     string result;
 
-    const int lines = 12;
-    string column[lines][5] =
+    const int lines = 19;
+    const int columns = 7;
+    string column[lines][columns] =
     {
-        {"                     ", "<green>Full</green>       ", "Satiated   ", "<yellow>Thirsty</yellow>    ", "<lightred>Bloodless</lightred>"},
-                                 //Full       Satiated      Thirsty         Bloodless
-        {"Metabolism           ", "fast       ", "normal     ", "slow       ", "none  "},
+        {"                     ", "<lightcyan>Engorged</lightcyan>         ", "<lightgreen>Very Full</lightgreen>     ", "<green>Full</green>       ", "Satiated   ", "<yellow>Thirsty</yellow>    ", "<lightred>Bloodless</lightred>"},
+      
+        {""},
+        //                          Engorged          Very Full        Full           Satiated       Thirsty        Bloodless
+        //{"Metabolism           ", "fast          ", "fast           ", "fast       ", "normal     ", "slow       ", "none  "},
+      
+        {"Strength bonus       ", "+6               ", "+4            ", "+2         ", "none       ", "none       ", "none  "},
+        
+        {"Regeneration         ", "extremely fast   ", "very fast     ", "fast       ", "normal     ", "slow       ", "none  "},
+      
+        {"Stealth boost        ", "none             ", "none          ", "none       ", "none       ", "minor      ", "major "},
 
-        {"Regeneration         ", "fast       ", "normal     ", "slow       ", "none  "},
+        {"Hunger costs         ", "very high        ", "even higher   ", "higher     ", "full       ", "halved     ", "none  "},
+        
+        {""},
 
-        {"Stealth boost        ", "none       ", "none       ", "minor      ", "major "},
+        {"<w>Resistances</w>"},
+        
+        {""},
+        
+        {"Poison resistance    ", "                 ", "              ", "           ", "           ", "+          ", "immune"},
 
-        {"Hunger costs         ", "full       ", "full       ", "halved     ", "none  "},
+        {"Cold resistance      ", "                 ", "              ", "           ", "           ", "+          ", "++    "},
 
-        {"\n<w>Resistances</w>\n"
-         "Poison resistance    ", "           ", "           ", "+          ", "immune"},
-
-        {"Cold resistance      ", "           ", "           ", "+          ", "++    "},
-
-        {"Negative resistance  ", "           ", " +         ", "++         ", "+++   "},
-
-        {"Rotting resistance   ", "           ", "           ", "+          ", "+     "},
-
-        {"Torment resistance   ", "           ", "           ", "           ", "+     "},
-
-        {"\n<w>Transformations</w>\n"
-         "Bat form             ", "no         ", "yes        ", "yes        ", "yes   "},
-
-        {"Other forms and \n"
-         "berserk              ", "yes        ", "yes        ", "no         ", "no    "}
+        {"Negative resistance  ", "+                ", "+             ", "+          ", " +         ", "++         ", "+++   "},
+        
+        {"Rotting resistance   ", "                 ", "              ", "           ", "           ", "+          ", "+     "},
+        
+        {"Torment resistance   ", "                 ", "              ", "           ", "           ", "           ", "+     "},
+        
+        {""},
+        
+        {"<w>Transformations</w>"},
+        
+        {""},
+        
+        {"Bat form             ", "no               ", "no            ", "no         ", "yes        ", "yes        ", "yes   "},
+          
+        {"Other forms & berserk", "yes              ", "yes           ", "yes        ", "yes        ", "no         ", "no    "}
     };
 
     int current = _vampire_bloodlessness();
 
     for (int y = 0; y < lines; y++)  // lines   (properties)
     {
-        for (int x = 0; x < 5; x++)  // columns (hunger states)
+        for (int x = 0; x < columns; x++)  // columns (hunger states)
         {
             if (y > 0 && x == current)
                 result += "<w>";
@@ -2366,16 +2387,16 @@ static const facet_def _demon_facets[] =
       { -33, 0, 0 } },
     // Tier 3 facets
     { 3, { MUT_HEAT_RESISTANCE, MUT_FLAME_CLOUD_IMMUNITY, MUT_HURL_DAMNATION },
-      { 50, 50, 50 } },
+      { -33, 0, 33 } },
     { 3, { MUT_COLD_RESISTANCE, MUT_FREEZING_CLOUD_IMMUNITY, MUT_PASSIVE_FREEZE },
-      { 50, 50, 50 } },
+      { 0, 33, 50 } },
     { 3, { MUT_ROBUST, MUT_ROBUST, MUT_ROBUST },
-      { 50, 50, 50 } },
-    { 3, { MUT_NEGATIVE_ENERGY_RESISTANCE, MUT_STOCHASTIC_TORMENT_RESISTANCE,
-           MUT_BLACK_MARK },
-      { 50, 50, 50 } },
+      { 0, 33, 50 } },
+    // black mark before torment resistance, because it's more useful this way
+    { 3, { MUT_NEGATIVE_ENERGY_RESISTANCE, MUT_BLACK_MARK, MUT_STOCHASTIC_TORMENT_RESISTANCE},
+      { 0, 33, 50 } },
     { 3, { MUT_AUGMENTATION, MUT_AUGMENTATION, MUT_AUGMENTATION },
-      { 50, 50, 50 } },
+      { 0, 33, 50 } },
 };
 
 static bool _works_at_tier(const facet_def& facet, int tier)
@@ -2410,68 +2431,125 @@ static bool _slot_is_unique(const mut_array_t &mut,
     return true;
 }
 
+static inline bool undesired_facet(const facet_def* const facet)
+{
+  for (int i = 0; i < 3; ++i)
+  {
+    mutation_type m = facet->muts[i];
+    if (m == MUT_ANTENNAE
+      || m == MUT_THIN_SKELETAL_STRUCTURE
+      || m == MUT_NIGHTSTALKER
+      || m == MUT_FOUL_STENCH
+      || m == MUT_PASSIVE_FREEZE
+      || m == MUT_ROBUST
+      || m == MUT_POWERED_BY_PAIN
+      || m == MUT_SPINY// is useful, but should conflict with body armor
+      //|| m == MUT_HURL_DAMNATION// is it cool or what? especially for non-casters! but of not so much use in extended, and gets online quite late
+    )
+      return true;
+  }
+  return false;
+}
+
+static inline bool contains_mutation(const facet_def* const facet, const mutation_type m)
+{
+  for (unsigned int i = 0; i < 3; ++i)
+  {
+    if (facet->muts[i] == m)
+      return true;
+  }
+  return false;
+}
+
 static vector<demon_mutation_info> _select_ds_mutations()
 {
+  //if (one_chance_in(10))
+  
     int ct_of_tier[] = { 1, 1, 2, 1 };
-    // 1 in 10 chance to create a monstrous set
-    if (one_chance_in(10))
+    
+    // 1 in 5 chance to create a monstrous set
+    if (one_chance_in(5))
+      {
+          ct_of_tier[0] = 3;
+          //ct_of_tier[1] = 0;
+      }
+
+      vector<demon_mutation_info> ret;
+    
+    bool try_again = false;
+    bool hurl_damnation = false;
+    bool powered_by_death = false;
+    
+    do
     {
-        ct_of_tier[0] = 3;
-        ct_of_tier[1] = 0;
-    }
-
-try_again:
-    vector<demon_mutation_info> ret;
-
-    ret.clear();
-    int absfacet = 0;
-    int ice_elemental = 0;
-    int fire_elemental = 0;
-    int cloud_producing = 0;
-
-    set<const facet_def *> facets_used;
-
-    for (int tier = ARRAYSZ(ct_of_tier) - 1; tier >= 0; --tier)
-    {
-        for (int nfacet = 0; nfacet < ct_of_tier[tier]; ++nfacet)
+      
+        ret.clear();
+        int absfacet = 0;
+        int ice_elemental = 0;
+        int fire_elemental = 0;
+        int cloud_producing = 0;
+        
+        set<const facet_def *> facets_used;
+        
+        for (int tier = ARRAYSZ(ct_of_tier) - 1; tier >= 0; --tier)
         {
-            const facet_def* next_facet;
-
-            do
+            for (int nfacet = 0; nfacet < ct_of_tier[tier]; ++nfacet)
             {
-                next_facet = &RANDOM_ELEMENT(_demon_facets);
+                const facet_def* next_facet;
+
+                do
+                {
+                    next_facet = &RANDOM_ELEMENT(_demon_facets);
+                }
+                while (!_works_at_tier(*next_facet, tier)
+                      || facets_used.count(next_facet)
+                      || !_slot_is_unique(next_facet->muts, facets_used)
+                      || undesired_facet(next_facet));
+
+                if (!hurl_damnation)
+                    hurl_damnation = contains_mutation(next_facet, MUT_HURL_DAMNATION);
+                if (!powered_by_death)
+                    powered_by_death = contains_mutation(next_facet, MUT_POWERED_BY_DEATH);
+
+                facets_used.insert(next_facet);
+
+                for (int i = 0; i < 3; ++i)
+                {
+                    mutation_type m = next_facet->muts[i];
+
+                    ret.emplace_back(m, next_facet->when[i], absfacet);
+
+                    if (m == MUT_COLD_RESISTANCE
+                      || m == MUT_ICEMAIL
+                      || m == MUT_ICY_BLUE_SCALES
+                      || m == MUT_PASSIVE_FREEZE
+                    )
+                        ice_elemental++;
+
+                    if (m == MUT_HEAT_RESISTANCE
+                      || m == MUT_MOLTEN_SCALES
+                      || m == MUT_IGNITE_BLOOD
+                    )
+                        fire_elemental++;
+
+                    if (m == MUT_ROT_IMMUNITY
+                      || m == MUT_IGNITE_BLOOD)
+                        cloud_producing++;
+                  }
+
+                  ++absfacet;
             }
-            while (!_works_at_tier(*next_facet, tier)
-                   || facets_used.count(next_facet)
-                   || !_slot_is_unique(next_facet->muts, facets_used));
-
-            facets_used.insert(next_facet);
-
-            for (int i = 0; i < 3; ++i)
-            {
-                mutation_type m = next_facet->muts[i];
-
-                ret.emplace_back(m, next_facet->when[i], absfacet);
-
-                if (m == MUT_COLD_RESISTANCE)
-                    ice_elemental++;
-
-                if (m == MUT_HEAT_RESISTANCE)
-                    fire_elemental++;
-
-                if (m == MUT_ROT_IMMUNITY || m == MUT_IGNITE_BLOOD)
-                    cloud_producing++;
-            }
-
-            ++absfacet;
         }
-    }
-
-    if (ice_elemental + fire_elemental > 1)
-        goto try_again;
-
-    if (cloud_producing > 1)
-        goto try_again;
+          
+        if ((ice_elemental && fire_elemental)
+          || cloud_producing > 1
+          || !hurl_damnation
+          || !powered_by_death)
+          try_again = true;
+        else
+          try_again = false;
+        
+    } while (try_again);
 
     return ret;
 }

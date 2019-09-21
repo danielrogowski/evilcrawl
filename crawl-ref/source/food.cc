@@ -34,6 +34,7 @@
 #include "notes.h"
 #include "options.h"
 #include "output.h"
+#include "player-stats.h"
 #include "religion.h"
 #include "rot.h"
 #include "state.h"
@@ -72,6 +73,9 @@ void make_hungry(int hunger_amount, bool suppress_msg,
 
     if (!suppress_msg && !state_message)
         _describe_food_change(-hunger_amount);
+
+    if (you.species == SP_VAMPIRE)
+        notify_stat_change();
 }
 
 /**
@@ -103,6 +107,9 @@ void lessen_hunger(int satiated_amount, bool suppress_msg, int max)
 
     if (!suppress_msg && !state_message)
         _describe_food_change(satiated_amount);
+
+    if (you.species == SP_VAMPIRE)
+        notify_stat_change();
 }
 
 void set_hunger(int new_hunger_level, bool suppress_msg)
@@ -437,26 +444,25 @@ int prompt_eat_chunks(bool only_auto)
         found_valid = true;
         chunks.push_back(&(*si));
     }
-
-    // Then search through the inventory.
-    for (auto &item : you.inv)
+    
+    if (you.species != SP_VAMPIRE)
     {
+      // Then search through the inventory.
+      for (auto &item : you.inv)
+      {
         if (!item.defined())
-            continue;
-
-        // Vampires can't eat anything in their inventory.
-        if (you.species == SP_VAMPIRE)
-            continue;
-
+          continue;
+        
         if (item.base_type != OBJ_FOOD || item.sub_type != FOOD_CHUNK)
-            continue;
-
+          continue;
+        
         // Don't prompt for bad food types.
         if (is_bad_food(item))
-            continue;
-
+          continue;
+        
         found_valid = true;
         chunks.push_back(&item);
+      }
     }
 
     const bool easy_eat = Options.easy_eat_chunks || only_auto;
@@ -927,7 +933,7 @@ static bool _vampire_consume_corpse(item_def& corpse)
     if (mons_class_holiness(mons_type) & MH_HOLY)
         did_god_conduct(DID_DESECRATE_HOLY_REMAINS, 2);
 
-    if (mons_skeleton(mons_type) && one_chance_in(3))
+    if (mons_skeleton(mons_type) /* && one_chance_in(3) */)
     {
         turn_corpse_into_skeleton(corpse);
         item_check();
@@ -1012,6 +1018,20 @@ void handle_starvation()
                 {
                     return can_eat(food, true);
                 });
+            // chunks should be eaten 1st, if possible
+            auto it2 = find_if(begin(you.inv), end(you.inv),
+                               [](const item_def& food) -> bool
+                               {
+                                 if (!can_eat(food, true) || food.sub_type != FOOD_CHUNK)
+                                 {
+                                   return false;
+                                 }
+                                 return true;
+                               });
+            if (it2 != end(you.inv))
+            {
+              it = it2;
+            }
             if (it != end(you.inv))
             {
                 mpr("As you are about to starve, you manage to eat something.");

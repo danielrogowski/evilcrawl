@@ -231,15 +231,20 @@ static void _handle_magic_contamination()
     //Increase contamination each turn while invisible
     if (you.duration[DUR_INVIS])
         added_contamination += INVIS_CONTAM_PER_TURN;
-    //If not invisible, normal dissipation
-    else
+    
+    if (you.duration[DUR_HASTE])
+        added_contamination += 30;
+    
+    if (!you.duration[DUR_INVIS] && !you.duration[DUR_HASTE])
+    {
         added_contamination -= 25;
 
-    // The Orb halves dissipation (well a bit more, I had to round it),
-    // but won't cause glow on its own -- otherwise it'd spam the player
-    // with messages about contamination oscillating near zero.
-    if (you.magic_contamination && player_has_orb())
-        added_contamination += 13;
+        // The Orb halves dissipation (well a bit more, I had to round it),
+        // but won't cause glow on its own -- otherwise it'd spam the player
+        // with messages about contamination oscillating near zero.
+        if (you.magic_contamination && player_has_orb() && added_contamination < 0)
+            added_contamination /= 2;
+    }
 
     // Scaling to turn length
     added_contamination = div_rand_round(added_contamination * you.time_taken,
