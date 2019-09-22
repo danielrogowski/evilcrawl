@@ -1055,7 +1055,7 @@ static string _skill_target_desc(skill_type skill, int scaled_target,
         "you %s reach %d.%d in %s %d.%d XLs.",
             hypothetical ? "would" : "will",
             scaled_target / 10, scaled_target % 10,
-            (you.experience_level + (level_diff + 9) / 10) > 27
+            (you.experience_level + (level_diff + 9) / 10) > Options.max_exp_level
                                 ? "the equivalent of" : "about",
             level_diff / 10, level_diff % 10);
     if (you.wizard)

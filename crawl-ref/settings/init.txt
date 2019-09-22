@@ -85,3 +85,17 @@
 # include                 = 0.12_monster_glyphs.txt
 # include                 = 0.13_monster_glyphs.txt
 # include                 = 0.14_monster_glyphs.txt
+
+
+# Here are the spicy edition expansion options (Look at the readme for details)
+
+no_exp_cap = false
+wide_spell_list = false
+
+
+# evilcrawl options
+
+ds_guaranteed_hurl_hellfire = false
+ds_guaranteed_death_affinity = false
+ds_undesired_facets = false
+ds_always_monstrous = false

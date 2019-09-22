@@ -223,6 +223,17 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(default_manual_training), false),
         new BoolGameOption(SIMPLE_NAME(one_SDL_sound_channel), false),
         new BoolGameOption(SIMPLE_NAME(sounds_on), true),
+        
+        // spicy
+        new BoolGameOption(SIMPLE_NAME(no_exp_cap), false),
+        new BoolGameOption(SIMPLE_NAME(wide_spell_list), false),
+        
+        // evil
+        new BoolGameOption(SIMPLE_NAME(ds_guaranteed_hurl_hellfire), false),
+        new BoolGameOption(SIMPLE_NAME(ds_guaranteed_death_affinity), false),
+        new BoolGameOption(SIMPLE_NAME(ds_undesired_facets), false),
+        new BoolGameOption(SIMPLE_NAME(ds_always_monstrous), false),
+        
         new ColourGameOption(SIMPLE_NAME(tc_reachable), BLUE),
         new ColourGameOption(SIMPLE_NAME(tc_excluded), LIGHTMAGENTA),
         new ColourGameOption(SIMPLE_NAME(tc_exclude_circle), RED),
@@ -1080,6 +1091,13 @@ void game_options::reset_options()
                    "javelin / tomahawk / stone / rock / net, "
                    "inscribed",
                    false, false);
+    
+    // spicy
+    no_exp_cap                    = false;
+    wide_spell_list               = false;
+    // evil
+    ds_guaranteed_hurl_hellfire   = false;
+    ds_guaranteed_death_affinity  = false;
 
     // These are only used internally, and only from the commandline:
     // XXX: These need a better place.
@@ -1672,6 +1690,18 @@ void read_init_file(bool runscript)
     Options.filename     = init_file_name;
     Options.basefilename = get_base_filename(init_file_name);
     Options.line_num     = -1;
+    
+    // spicy
+    if (Options.no_exp_cap)
+    {
+        Options.max_exp_level = 99;
+        Options.max_skill_level = 99;
+    }
+    else
+    {
+        Options.max_exp_level = 27;
+        Options.max_skill_level = 27;
+    }
 }
 
 newgame_def read_startup_prefs()

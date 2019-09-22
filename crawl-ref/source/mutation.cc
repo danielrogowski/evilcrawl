@@ -909,7 +909,7 @@ void display_mutations()
     switcher->set_margin_for_crt({1, 0, 0, 0});
     switcher->expand_h = false;
 #ifdef USE_TILE_LOCAL
-    switcher->max_size()[0] = tiles.get_crt_font()->char_width()*80;
+    switcher->max_size()[0] = tiles.get_crt_font()->char_width()*120;
 #endif
     vbox->add_child(switcher);
 
@@ -2433,25 +2433,28 @@ static bool _slot_is_unique(const mut_array_t &mut,
 
 static inline bool undesired_facet(const facet_def* const facet)
 {
-  for (int i = 0; i < 3; ++i)
-  {
-    mutation_type m = facet->muts[i];
-    if (m == MUT_ANTENNAE
-      || m == MUT_THIN_SKELETAL_STRUCTURE
-      || m == MUT_NIGHTSTALKER
-      || m == MUT_FOUL_STENCH
-      || m == MUT_PASSIVE_FREEZE
-      || m == MUT_ROBUST
-      || m == MUT_POWERED_BY_PAIN
-      || m == MUT_SPINY// is useful, but should conflict with body armor
-      //|| m == MUT_HURL_DAMNATION// is it cool or what? especially for non-casters! but of not so much use in extended, and gets online quite late
-    )
-      return true;
-  }
-  return false;
+    if (!Options.ds_undesired_facets)
+        return false;
+    
+    for (int i = 0; i < 3; ++i)
+    {
+        mutation_type m = facet->muts[i];
+        if (m == MUT_ANTENNAE
+          || m == MUT_THIN_SKELETAL_STRUCTURE
+          || m == MUT_NIGHTSTALKER
+          || m == MUT_FOUL_STENCH
+          || m == MUT_PASSIVE_FREEZE
+          || m == MUT_ROBUST
+          || m == MUT_POWERED_BY_PAIN
+          || m == MUT_SPINY// is useful, but should conflict with body armor
+          //|| m == MUT_HURL_DAMNATION// is it cool or what? especially for non-casters! but of not so much use in extended, and gets online quite late
+        )
+            return true;
+    }
+    return false;
 }
 
-static inline bool contains_mutation(const facet_def* const facet, const mutation_type m)
+static bool contains_mutation(const facet_def* const facet, const mutation_type m)
 {
   for (unsigned int i = 0; i < 3; ++i)
   {
@@ -2463,12 +2466,11 @@ static inline bool contains_mutation(const facet_def* const facet, const mutatio
 
 static vector<demon_mutation_info> _select_ds_mutations()
 {
-  //if (one_chance_in(10))
-  
     int ct_of_tier[] = { 1, 1, 2, 1 };
     
-    // 1 in 5 chance to create a monstrous set
-    if (one_chance_in(5))
+    const int monstrous_chance = Options.ds_always_monstrous ? 1 : 10;
+    
+    if (one_chance_in(monstrous_chance))
       {
           ct_of_tier[0] = 3;
           //ct_of_tier[1] = 0;
@@ -2477,8 +2479,8 @@ static vector<demon_mutation_info> _select_ds_mutations()
       vector<demon_mutation_info> ret;
     
     bool try_again = false;
-    bool hurl_damnation = false;
-    bool powered_by_death = false;
+    bool hurl_damnation = !Options.ds_guaranteed_hurl_hellfire;
+    bool powered_by_death = !Options.ds_guaranteed_death_affinity;
     
     do
     {

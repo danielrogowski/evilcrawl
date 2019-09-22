@@ -3,10 +3,6 @@
 items for evilcrawl
 ===================
 
-- option to extend beyond level 27 (port from spicy)
-
-- make DS guarantee of Hurl Hellfire and Death Affinity optional
-
 - write README
 
 - post in the dcss forums about this fork and the VP implementation

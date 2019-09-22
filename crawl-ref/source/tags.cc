@@ -2292,7 +2292,7 @@ static void tag_read_you(reader &th)
 
     ASSERT_RANGE(you.species, 0, NUM_SPECIES);
     ASSERT_RANGE(you.char_class, 0, NUM_JOBS);
-    ASSERT_RANGE(you.experience_level, 1, 28);
+    ASSERT_RANGE(you.experience_level, 1, 100);
     ASSERT(you.religion < NUM_GODS);
     ASSERT_RANGE(crawl_state.type, GAME_TYPE_UNSPECIFIED + 1, NUM_GAME_TYPE);
     you.last_mid          = unmarshallInt(th);
@@ -2639,7 +2639,7 @@ static void tag_read_you(reader &th)
     for (int j = 0; j < count; ++j)
     {
         you.skills[j]          = unmarshallUByte(th);
-        ASSERT(you.skills[j] <= 27 || you.wizard);
+        ASSERT(you.skills[j] <= Options.max_skill_level || you.wizard);
 
         you.train[j]    = (training_status)unmarshallByte(th);
         you.train_alt[j]    = (training_status)unmarshallByte(th);

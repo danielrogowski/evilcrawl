@@ -3703,7 +3703,7 @@ bool is_useless_item(const item_def &item, bool temp)
             return useless;
         }
         // If we're here, it's a manual.
-        if (you.skills[item.plus] >= 27)
+        if (you.skills[item.plus] >= Options.max_skill_level)
             return true;
         if (is_useless_skill((skill_type)item.plus))
             return true;

@@ -2867,9 +2867,9 @@ void level_change(bool skip_attribute_increase)
         {
             // Don't want to see the dead creature at the prompt.
             redraw_screen();
-
-            if (new_exp == 27)
-                mprf(MSGCH_INTRINSIC_GAIN, "You have reached level 27, the final one!");
+            
+            if (new_exp == Options.max_exp_level)
+                mprf(MSGCH_INTRINSIC_GAIN, "You have reached level %d, the final one!", Options.max_exp_level);
             else if (new_exp == you.get_max_xl())
                 mprf(MSGCH_INTRINSIC_GAIN, "You have reached level %d, the highest you will ever reach!",
                         you.get_max_xl());
@@ -5846,7 +5846,7 @@ int player::skill(skill_type sk, int scale, bool real, bool drained, bool temp) 
     unsigned int effective_points = skill_points[sk];
     if (!real)
         effective_points += get_crosstrain_points(sk);
-    effective_points = min(effective_points, skill_exp_needed(MAX_SKILL_LEVEL, sk));
+    effective_points = min(effective_points, skill_exp_needed(Options.max_skill_level, sk));
     actual_skill = calc_skill_level_change(sk, actual_skill, effective_points);
 
     int level = actual_skill * scale
@@ -5871,7 +5871,7 @@ int player::skill(skill_type sk, int scale, bool real, bool drained, bool temp) 
             level = ash_skill_boost(sk, scale);
 
     if (temp && duration[DUR_HEROISM] && sk <= SK_LAST_MUNDANE)
-        level = min(level + 5 * scale, MAX_SKILL_LEVEL * scale);
+        level = min(level + 5 * scale, Options.max_skill_level * scale);
     return level;
 }
 

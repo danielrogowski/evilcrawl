@@ -716,7 +716,7 @@ static bool _sack_of_spiders(item_def &sack)
             // don't try to make surge affect web chance; too messy.
             const int web_dist_factor
                 = 100 * (you.pos().distance_from((*mi)->pos()) - 1) / rad;
-            const int web_skill_factor = 2 * (27 - you.skill(SK_EVOCATIONS));
+            const int web_skill_factor = 2 * (Options.max_skill_level - you.skill(SK_EVOCATIONS));
             const int web_chance = 100 - web_dist_factor - web_skill_factor;
             if (x_chance_in_y(web_chance, 100))
             {

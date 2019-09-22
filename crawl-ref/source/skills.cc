@@ -160,10 +160,25 @@ int calc_skill_cost(int skill_cost_level)
                          37, 48, 73, 98, 125,      // 11-15
                          145, 170, 190, 212, 225,  // 16-20
                          240, 255, 260, 265, 265,  // 21-25
-                         265, 265 };
-    COMPILE_CHECK(ARRAYSZ(cost) == MAX_SKILL_COST_LEVEL);
+                         265, 265, 265, 265, 265,  // 26-30
+                         265, 265, 265, 265, 265,  // 31-35
+                         265, 265, 265, 265, 265,  // 36-40
+                         265, 265, 265, 265, 265,  // 41-45
+                         265, 265, 265, 265, 265,  // 46-50
+                         265, 265, 265, 265, 265,  // 51-55
+                         265, 265, 265, 265, 265,  // 56-60
+                         265, 265, 265, 265, 265,  // 61-65
+                         265, 265, 265, 265, 265,  // 66-70
+                         265, 265, 265, 265, 265,  // 71-75
+                         265, 265, 265, 265, 265,  // 76-80
+                         265, 265, 265, 265, 265,  // 81-85
+                         265, 265, 265, 265, 265,  // 86-90
+                         265, 265, 265, 265, 265,  // 91-95
+                         265, 265, 265, 265        // 96-99
+    };
+    COMPILE_CHECK(ARRAYSZ(cost) == 99);
 
-    ASSERT_RANGE(skill_cost_level, 1, MAX_SKILL_COST_LEVEL + 1);
+    ASSERT_RANGE(skill_cost_level, 1, Options.max_skill_level + 1);
     return cost[skill_cost_level - 1];
 }
 
@@ -186,7 +201,7 @@ int skill_cost_baseline()
  */
 int one_level_cost(skill_type sk)
 {
-    if (you.skills[sk] >= MAX_SKILL_LEVEL)
+    if (you.skills[sk] >= Options.max_skill_level)
         return 0;
     return skill_exp_needed(you.skills[sk] + 1, sk)
            - skill_exp_needed(you.skills[sk], sk);
@@ -201,7 +216,7 @@ int one_level_cost(skill_type sk)
  */
 float scaled_skill_cost(skill_type sk)
 {
-    if (you.skills[sk] == MAX_SKILL_LEVEL || is_useless_skill(sk))
+    if (you.skills[sk] == Options.max_skill_level || is_useless_skill(sk))
         return 0;
     int baseline = skill_cost_baseline();
     int next_level = one_level_cost(sk);
@@ -280,7 +295,7 @@ static void _change_skill_level(skill_type exsk, int n)
 
     // are you drained/crosstrained/ash'd in the relevant skill?
     const bool specify_base = you.skill(exsk, 1) != you.skill(exsk, 1, true);
-    if (you.skills[exsk] == MAX_SKILL_LEVEL)
+    if (you.skills[exsk] == Options.max_skill_level)
         mprf(MSGCH_INTRINSIC_GAIN, "You have mastered %s!", skill_name(exsk));
     else if (abs(n) == 1 && you.num_turns)
     {
@@ -305,7 +320,7 @@ static void _change_skill_level(skill_type exsk, int n)
     if (n > 0 && you.num_turns)
         learned_something_new(HINT_SKILL_RAISE);
 
-    if (you.skills[exsk] - n == MAX_SKILL_LEVEL)
+    if (you.skills[exsk] - n == Options.max_skill_level)
     {
         you.train[exsk] = TRAINING_ENABLED;
         need_reset = true;
@@ -372,7 +387,7 @@ int calc_skill_level_change(skill_type sk, int starting_level, int sk_points)
     int new_level = starting_level;
     while (1)
     {
-        if (new_level < MAX_SKILL_LEVEL
+        if (new_level < Options.max_skill_level
             && sk_points >= (int) skill_exp_needed(new_level + 1, sk))
         {
             ++new_level;
@@ -839,7 +854,7 @@ void reset_training()
 
 void exercise(skill_type exsk, int deg)
 {
-    if (you.skills[exsk] >= MAX_SKILL_LEVEL)
+    if (you.skills[exsk] >= Options.max_skill_level)
         return;
 
     dprf(DIAG_SKILLS, "Exercise %s by %d.", skill_name(exsk), deg);
@@ -864,7 +879,7 @@ void exercise(skill_type exsk, int deg)
 static bool _level_up_check(skill_type sk, bool simu)
 {
     // Don't train past level 27.
-    if (you.skill_points[sk] >= skill_exp_needed(MAX_SKILL_LEVEL, sk))
+    if (you.skill_points[sk] >= skill_exp_needed(Options.max_skill_level, sk))
     {
         you.training[sk] = 0;
         if (!simu)
@@ -1331,9 +1346,9 @@ skill_diff skill_level_to_diffs(skill_type skill, double amount,
     // TODO: can `amount` be converted to fixed point?
     double level;
     double fractional = modf(amount, &level);
-    if (level >= MAX_SKILL_LEVEL)
+    if (level >= Options.max_skill_level)
     {
-        level = MAX_SKILL_LEVEL;
+        level = Options.max_skill_level;
         fractional = 0;
     }
 
@@ -1458,7 +1473,7 @@ void set_skill_level(skill_type skill, double amount)
 
 int get_skill_progress(skill_type sk, int level, int points, int scale)
 {
-    if (level >= MAX_SKILL_LEVEL)
+    if (level >= Options.max_skill_level)
         return 0;
 
     const int needed = skill_exp_needed(level + 1, sk);
@@ -1899,15 +1914,28 @@ float apt_to_factor(int apt)
 
 unsigned int skill_exp_needed(int lev, skill_type sk, species_type sp)
 {
-    const int exp[28] =
-          { 0, 50, 150, 300, 500, 750,          // 0-5
-            1050, 1400, 1800, 2250, 2800,       // 6-10
-            3450, 4200, 5050, 6000, 7050,       // 11-15
-            8200, 9450, 10800, 12300, 13950,    // 16-20
-            15750, 17700, 19800, 22050, 24450,  // 21-25
-            27000, 29750 };
+    static bool init = false;
+    const int nr_entries = 100;
+    static int exp[nr_entries] =
+              { 0, 50, 150, 300, 500, 750,          // 0-5
+                1050, 1400, 1800, 2250, 2800,       // 6-10
+                3450, 4200, 5050, 6000, 7050,       // 11-15
+                8200, 9450, 10800, 12300, 13950,    // 16-20
+                15750, 17700, 19800, 22050, 24450,  // 21-25
+                27000                               // 26
+              };
+    
+    if (!init)
+    {
+        for (unsigned int i = 27; i < nr_entries; ++i)
+        {
+            exp[i] = 2750 + exp[i-1];
+        }
+        
+        init = true;
+    }
 
-    ASSERT_RANGE(lev, 0, MAX_SKILL_LEVEL + 1);
+    ASSERT_RANGE(lev, 0, Options.max_skill_level + 1);
     return exp[lev] * species_apt_factor(sk, sp);
 }
 
@@ -2129,7 +2157,7 @@ int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
         if (fsk != tsk)
         {
             change_skill_points(tsk, skp_gained, false);
-            if (you.skills[tsk] == MAX_SKILL_LEVEL)
+            if (you.skills[tsk] == Options.max_skill_level)
                 break;
         }
     }
@@ -2167,7 +2195,7 @@ int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
         }
 
         if (you.transfer_skill_points == 0
-            || you.skills[tsk] == MAX_SKILL_LEVEL)
+            || you.skills[tsk] == Options.max_skill_level)
         {
             ashenzari_end_transfer(true);
         }
@@ -2232,7 +2260,7 @@ void skill_state::restore_training()
     {
         // Don't resume training if it's impossible or a target was met
         // after our backup was made.
-        if (you.skills[sk] < MAX_SKILL_LEVEL
+        if (you.skills[sk] < Options.max_skill_level
             && !(training_targets[sk] &&
                  target_met(sk, training_targets[sk])))
         {
@@ -2265,7 +2293,7 @@ void fixup_skills()
         else if (is_gnoll)
             you.train[sk] = TRAINING_ENABLED;
         you.skill_points[sk] = min(you.skill_points[sk],
-                                   skill_exp_needed(MAX_SKILL_LEVEL, sk));
+                                   skill_exp_needed(Options.max_skill_level, sk));
         check_skill_level_change(sk);
     }
     init_can_train();
@@ -2288,7 +2316,7 @@ bool can_enable_skill(skill_type sk, bool override)
 {
     // TODO: should this check you.skill_points or you.skills?
     return you.species != SP_GNOLL
-       && you.skills[sk] < MAX_SKILL_LEVEL
+       && you.skills[sk] < Options.max_skill_level
        && !is_useless_skill(sk)
        && (override || (you.can_train[sk] && !is_harmful_skill(sk)));
 }
