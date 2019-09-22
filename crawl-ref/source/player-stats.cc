@@ -411,12 +411,15 @@ static int _strength_modifier(bool innate_only)
     {
         switch(you.hunger_state)
         {
-            case HS_ENGORGED:
-                result += 2;
-            case HS_VERY_FULL:
-                result += 2;
             case HS_FULL:
-                result += 2;
+                result += 1 + 1 * you.get_experience_level() / 10;
+                break;
+            case HS_VERY_FULL:
+                result += 2 + 2 * you.get_experience_level() / 10;
+                break;
+            case HS_ENGORGED:
+                result += 3 + 4 * you.get_experience_level() / 10;
+                break;
             default:
               ;
         }
