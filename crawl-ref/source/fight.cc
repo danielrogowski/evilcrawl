@@ -820,9 +820,9 @@ int weapon_min_delay(const item_def &weapon, bool check_speed)
         min_delay /= 3;
     }
 
-    // never go faster than speed 3 (ie 3.33 attacks per round)
-    if (min_delay < 3)
-        min_delay = 3;
+    // never go faster than speed 2 (ie 5 attacks per round)
+    if (min_delay < 2)
+        min_delay = 2;
 
     return min_delay;
 }
