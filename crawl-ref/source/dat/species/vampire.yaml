@@ -22,7 +22,7 @@ aptitudes:
   crossbows: -2
   throwing: 0
   armour: -2
-  dodging: 2
+  dodging: 1
   stealth: 5
   shields: -1
   unarmed_combat: 1
