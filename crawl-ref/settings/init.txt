@@ -91,6 +91,7 @@
 
 no_exp_cap = false
 wide_spell_list = false
+unlimited_summons = false
 
 
 # evilcrawl options

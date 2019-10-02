@@ -471,6 +471,7 @@ public:
     int         max_skill_level;
     bool        no_exp_cap;
     bool        wide_spell_list;
+    bool        unlimited_summons;
     
     // evil
     bool        ds_guaranteed_hurl_hellfire;

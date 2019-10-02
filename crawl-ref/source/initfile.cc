@@ -227,6 +227,7 @@ const vector<GameOption*> game_options::build_options_list()
         // spicy
         new BoolGameOption(SIMPLE_NAME(no_exp_cap), false),
         new BoolGameOption(SIMPLE_NAME(wide_spell_list), false),
+        new BoolGameOption(SIMPLE_NAME(unlimited_summons), false),
         
         // evil
         new BoolGameOption(SIMPLE_NAME(ds_guaranteed_hurl_hellfire), false),
