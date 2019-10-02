@@ -4183,6 +4183,40 @@ void contaminate_player(int change, bool controlled, bool msg)
     }
 }
 
+int player_summon_count()
+{
+    const actor *summoner = &you;
+    int count = 0;
+    
+    for (monster_iterator mi; mi; ++mi)
+    {
+        if (summoner == *mi)
+            continue;
+        
+        int stype    = 0;
+        const bool summoned = mi->is_summoned(nullptr, &stype);
+        if (summoned && summoner->mid == mi->summoner
+            && mons_aligned(summoner, *mi))
+        {
+            count++;
+        }
+    }
+    
+    return count;
+}
+
+bool player_summoned_monster(spell_type spell, monster *mons)
+{
+    const bool success = player_summon_count() < you.intel();
+    
+    if (!success)
+    {
+        mpr("Your mind can't handle so many minions at once.");
+    }
+    
+    return success;
+}
+
 /**
  * Increase the player's confusion duration.
  *

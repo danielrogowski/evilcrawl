@@ -1149,5 +1149,8 @@ bool need_expiration_warning(dungeon_feature_type feat);
 bool need_expiration_warning(duration_type dur, coord_def p = you.pos());
 bool need_expiration_warning(coord_def p = you.pos());
 
+int player_summon_count();
+bool player_summoned_monster(spell_type spell, monster *mons);
+
 bool player_has_orb();
 bool player_on_orb_run();

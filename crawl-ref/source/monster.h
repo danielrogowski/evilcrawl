@@ -48,6 +48,8 @@ public:
 
     monster& operator = (const monster& other);
     void reset();
+    
+    bool is_player_summon() const;
 
 public:
     // Possibly some of these should be moved into the hash table

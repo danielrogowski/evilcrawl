@@ -618,6 +618,22 @@ static bool _valid_monster_generation_location(mgen_data &mg)
     return _valid_monster_generation_location(mg, mg.pos);
 }
 
+void _prep_summoned_monster(mgen_data &mg, monster *&mon)
+{
+    if (mg.summon_type && mon && mon->is_player_summon() && mg.god == GOD_NO_GOD)
+    {
+        const spell_type spell = (const spell_type) mg.summon_type;
+        
+        if (!player_summoned_monster(spell, mon))
+        {
+            mons_remove_from_grid(const_cast<const monster&>(*mon));
+            mon->destroy_inventory();
+            monster_cleanup(mon);
+            mon = 0;
+        }
+    }
+}
+
 monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
 {
 #ifdef DEBUG_MON_CREATION
@@ -730,6 +746,8 @@ monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
         mon = _place_pghost_aux(mg, nullptr, place, force_pos, dont_place);
     else
         mon = _place_monster_aux(mg, nullptr, place, force_pos, dont_place);
+    
+    _prep_summoned_monster(mg, mon);
 
     if (!mon)
         return nullptr;
@@ -822,6 +840,8 @@ monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
             }
             else if (mon->type == MONS_KIRKE)
                 member->props["kirke_band"] = true;
+            
+            _prep_summoned_monster(band_template, member);
         }
     }
 

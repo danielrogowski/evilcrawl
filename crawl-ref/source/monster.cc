@@ -6708,6 +6708,17 @@ bool monster::has_facet(int facet) const
     return false;
 }
 
+bool monster::is_player_summon() const
+{
+    const mon_enchant& ench_summon(get_ench(ENCH_SUMMON));
+    
+    // this could also be summon type if we didn't know for sure this was a creature summoned by the player
+    const spell_type spell_used = (spell_type) ench_summon.degree;
+    
+    const bool from_player = summoner ? summoner == MID_PLAYER : false;
+    return from_player && spell_produces_minion(spell_used);
+}
+
 /// If the player attacks this monster, will it become hostile?
 bool monster::angered_by_attacks() const
 {

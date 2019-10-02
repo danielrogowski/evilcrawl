@@ -3473,3 +3473,21 @@ bool spell_produces_summoned_minion(const spell_type spell)
             return false;
     }
 }
+
+bool spell_produces_undead_minion(const spell_type spell)
+{
+    switch(spell)
+    {
+        case SPELL_ANIMATE_SKELETON:
+        case SPELL_ANIMATE_DEAD:
+        case SPELL_SIMULACRUM:
+            return true;
+        default:
+            return false;
+    }
+}
+
+bool spell_produces_minion(const spell_type spell)
+{
+    return spell_produces_summoned_minion(spell) || spell_produces_undead_minion(spell);
+}
