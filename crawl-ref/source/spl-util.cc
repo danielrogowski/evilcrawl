@@ -478,6 +478,8 @@ int spell_mana(spell_type which_spell)
     const int mana_cost = spell_difficulty(which_spell);
     if (Options.unlimited_summons && spell_produces_summoned_minion(spell->id))
     {
+        if (which_spell == SPELL_SUMMON_LIGHTNING_SPIRE)
+            return 10;
         return ceil(mana_cost * 3 / 2);
     }
     return mana_cost;
@@ -491,7 +493,7 @@ int spell_difficulty(spell_type which_spell)
     
     if (Options.unlimited_summons && which_spell == SPELL_SUMMON_LIGHTNING_SPIRE)
     {
-        return level + 2;
+        return level + 1;
     }
     
     return level;
