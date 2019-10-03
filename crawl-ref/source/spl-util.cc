@@ -478,7 +478,7 @@ int spell_mana(spell_type which_spell)
     const int mana_cost = spell_difficulty(which_spell);
     if (Options.unlimited_summons && spell_produces_summoned_minion(spell->id))
     {
-        return ceil(mana_cost * 3 / 2);
+        return ceil(mana_cost * pow(1.3, player_summon_count()));
     }
     return mana_cost;
 }
