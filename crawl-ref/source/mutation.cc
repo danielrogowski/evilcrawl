@@ -2480,7 +2480,7 @@ static vector<demon_mutation_info> _select_ds_mutations()
     
     bool try_again = false;
     bool hurl_damnation = !Options.ds_guaranteed_hurl_hellfire;
-    bool powered_by_death = !Options.ds_guaranteed_death_affinity;
+    bool powered_by_death = !Options.ds_guaranteed_powered_by_death;
     
     do
     {
@@ -2596,7 +2596,7 @@ _order_ds_mutations(vector<demon_mutation_info> muts)
     for (int time = 0; time < 1000; time++)
         if (time_slots[time] >= 0)
             out.push_back(muts[time_slots[time]].mut);
-
+    
     return out;
 }
 
@@ -2622,7 +2622,7 @@ _schedule_ds_mutations(vector<mutation_type> muts)
             dt.level_gained = slots_left.front();
             dt.mutation     = muts_left.front();
 
-            dprf("Demonspawn will gain %s at level %d",
+            mprf("Demonspawn will gain %s at level %d",
                     _get_mutation_def(dt.mutation).short_desc, dt.level_gained);
 
             out.push_back(dt);

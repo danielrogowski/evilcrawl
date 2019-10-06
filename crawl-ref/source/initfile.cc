@@ -231,7 +231,7 @@ const vector<GameOption*> game_options::build_options_list()
         
         // evil
         new BoolGameOption(SIMPLE_NAME(ds_guaranteed_hurl_hellfire), false),
-        new BoolGameOption(SIMPLE_NAME(ds_guaranteed_death_affinity), false),
+        new BoolGameOption(SIMPLE_NAME(ds_guaranteed_powered_by_death), false),
         new BoolGameOption(SIMPLE_NAME(ds_undesired_facets), false),
         new BoolGameOption(SIMPLE_NAME(ds_always_monstrous), false),
         
@@ -1096,9 +1096,13 @@ void game_options::reset_options()
     // spicy
     no_exp_cap                    = false;
     wide_spell_list               = false;
+    unlimited_summons             = false;
+    
     // evil
     ds_guaranteed_hurl_hellfire   = false;
-    ds_guaranteed_death_affinity  = false;
+    ds_guaranteed_powered_by_death= false;
+    ds_undesired_facets           = false;
+    ds_always_monstrous           = false;
 
     // These are only used internally, and only from the commandline:
     // XXX: These need a better place.

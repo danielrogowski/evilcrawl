@@ -475,7 +475,7 @@ public:
     
     // evil
     bool        ds_guaranteed_hurl_hellfire;
-    bool        ds_guaranteed_death_affinity;
+    bool        ds_guaranteed_powered_by_death;
     bool        ds_undesired_facets;
     bool        ds_always_monstrous;
 
