@@ -2468,6 +2468,9 @@ static vector<demon_mutation_info> _select_ds_mutations()
 {
     int ct_of_tier[] = { 1, 1, 2, 1 };
     
+    dprf("Options.ds_guaranteed_hurl_hellfire = %i", Options.ds_guaranteed_hurl_hellfire);
+    dprf("Options.ds_guaranteed_powered_by_death = %i", Options.ds_guaranteed_powered_by_death);
+    
     const int monstrous_chance = Options.ds_always_monstrous ? 1 : 10;
     
     if (one_chance_in(monstrous_chance))
@@ -2622,8 +2625,14 @@ _schedule_ds_mutations(vector<mutation_type> muts)
             dt.level_gained = slots_left.front();
             dt.mutation     = muts_left.front();
 
-            mprf("Demonspawn will gain %s at level %d",
+            dprf("Demonspawn will gain %s at level %d",
                     _get_mutation_def(dt.mutation).short_desc, dt.level_gained);
+            
+            if (Options.ds_guaranteed_hurl_hellfire && dt.mutation == MUT_HURL_DAMNATION)
+                mprf("You will gain %s at some point", _get_mutation_def(dt.mutation).short_desc);
+            
+            if (Options.ds_guaranteed_powered_by_death && dt.mutation == MUT_POWERED_BY_DEATH)
+                mprf("You will gain %s at some point", _get_mutation_def(dt.mutation).short_desc);
 
             out.push_back(dt);
 
