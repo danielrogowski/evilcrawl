@@ -2482,8 +2482,6 @@ static vector<demon_mutation_info> _select_ds_mutations()
       vector<demon_mutation_info> ret;
     
     bool try_again = false;
-    bool hurl_damnation = !Options.ds_guaranteed_hurl_hellfire;
-    bool powered_by_death = !Options.ds_guaranteed_powered_by_death;
     
     do
     {
@@ -2493,6 +2491,8 @@ static vector<demon_mutation_info> _select_ds_mutations()
         int ice_elemental = 0;
         int fire_elemental = 0;
         int cloud_producing = 0;
+        bool hurl_damnation = !Options.ds_guaranteed_hurl_hellfire;
+        bool powered_by_death = !Options.ds_guaranteed_powered_by_death;
         
         set<const facet_def *> facets_used;
         
@@ -2506,10 +2506,10 @@ static vector<demon_mutation_info> _select_ds_mutations()
                 {
                     next_facet = &RANDOM_ELEMENT(_demon_facets);
                 }
-                while (!_works_at_tier(*next_facet, tier)
+                while (  undesired_facet(next_facet)
+                      || !_works_at_tier(*next_facet, tier)
                       || facets_used.count(next_facet)
-                      || !_slot_is_unique(next_facet->muts, facets_used)
-                      || undesired_facet(next_facet));
+                      || !_slot_is_unique(next_facet->muts, facets_used));
 
                 if (!hurl_damnation)
                     hurl_damnation = contains_mutation(next_facet, MUT_HURL_DAMNATION);
