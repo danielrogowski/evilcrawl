@@ -95,8 +95,6 @@ spret missile_prot(int pow, bool fail)
         return spret::abort;
     }
     fail_check();
-    you.attribute[ATTR_DEFLECT_MISSILES] = 1;
-    mpr("You feel very safe from missiles.");
 
     you.attribute[ATTR_REPEL_MISSILES] = 1;
     mpr("You feel protected from missiles.");
