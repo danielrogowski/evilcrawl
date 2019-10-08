@@ -2172,7 +2172,7 @@ static int _player_evasion_bonuses()
     evbonus += you.get_mutation_level(MUT_GELATINOUS_BODY);
 
     if (you.get_mutation_level(MUT_DISTORTION_FIELD))
-        evbonus += you.get_mutation_level(MUT_DISTORTION_FIELD) + 1;
+        evbonus += you.get_mutation_level(MUT_DISTORTION_FIELD) * 2;
 
     // transformation penalties/bonuses not covered by size alone:
     if (you.get_mutation_level(MUT_SLOW_REFLEXES))

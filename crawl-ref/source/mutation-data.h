@@ -1245,8 +1245,8 @@ static const mutation_def mut_data[] =
   "repulsion field",
 
   {"You are surrounded by a mild repulsion field. (EV +2)",
-   "You are surrounded by a moderate repulsion field. (EV +3)",
-   "You are surrounded by a strong repulsion field. (EV +4, RMsl)"},
+   "You are surrounded by a moderate repulsion field. (EV +4)",
+   "You are surrounded by a strong repulsion field. (EV +6, RMsl)"},
 
   {"You begin to radiate repulsive energy.",
    "Your repulsive radiation grows stronger.",
