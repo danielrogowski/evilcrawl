@@ -79,6 +79,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_SILENCE,
     SPELL_DEFLECT_MISSILES,
     SPELL_HASTE,
+    SPELL_MASS_CONFUSION,
     SPELL_DISCORD,
 },
 
@@ -329,6 +330,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_BORGNJORS_VILE_CLUTCH,
     SPELL_SILENCE,
     SPELL_DARKNESS,
+    SPELL_MASS_CONFUSION,
     SPELL_SHADOW_CREATURES,
 },
 

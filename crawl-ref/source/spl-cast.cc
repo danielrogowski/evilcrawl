@@ -1847,6 +1847,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_INTOXICATE:
         return cast_intoxicate(powc, fail);
+        
+    case SPELL_MASS_CONFUSION:
+        return mass_enchantment(ENCH_CONFUSION, powc, fail);
 
     case SPELL_DISCORD:
         return mass_enchantment(ENCH_INSANE, powc, fail);
@@ -2357,7 +2360,7 @@ const set<spell_type> removed_spells =
     SPELL_STONESKIN,
     SPELL_SUMMON_SWARM,
     SPELL_PHASE_SHIFT,
-    SPELL_MASS_CONFUSION,
+//  SPELL_MASS_CONFUSION,
     SPELL_CURE_POISON,
     SPELL_CONTROL_UNDEAD,
     SPELL_CIGOTUVIS_EMBRACE,
