@@ -234,6 +234,7 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(ds_guaranteed_powered_by_death), false),
         new BoolGameOption(SIMPLE_NAME(ds_undesired_facets), false),
         new BoolGameOption(SIMPLE_NAME(ds_always_monstrous), false),
+        new BoolGameOption(SIMPLE_NAME(rune_identifies_items), false),
         
         new ColourGameOption(SIMPLE_NAME(tc_reachable), BLUE),
         new ColourGameOption(SIMPLE_NAME(tc_excluded), LIGHTMAGENTA),

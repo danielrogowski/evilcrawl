@@ -100,3 +100,4 @@ ds_guaranteed_hurl_hellfire = false
 ds_guaranteed_death_affinity = false
 ds_undesired_facets = false
 ds_always_monstrous = false
+rune_identifies_items = false

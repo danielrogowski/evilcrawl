@@ -478,6 +478,7 @@ public:
     bool        ds_guaranteed_powered_by_death;
     bool        ds_undesired_facets;
     bool        ds_always_monstrous;
+    bool        rune_identifies_items;
 
     lang_t              language;         // Translation to use.
     const char*         lang_name;        // Database name of the language.

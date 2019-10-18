@@ -938,11 +938,12 @@ void item_check()
 }
 
 // Identify the object the player stepped on.
-// Books are fully identified.
-// Wands are only type-identified.
+// All items are identified when the player has a rune, otherwise
+// only wands and books are fully identified.
 static bool _id_floor_item(item_def &item)
 {
-    if (item.base_type == OBJ_BOOKS)
+    const int runes = Options.rune_identifies_items ? runes_in_pack() : 0;
+    if (runes || item.base_type == OBJ_BOOKS)
     {
         if (fully_identified(item))
             return false;
@@ -951,6 +952,8 @@ static bool _id_floor_item(item_def &item)
         if (item_needs_autopickup(item))
             item.props["needs_autopickup"] = true;
         set_ident_flags(item, ISFLAG_IDENT_MASK);
+        if (item.base_type != OBJ_BOOKS)
+            mpr("You use a rune to identify the item.");
         return true;
     }
     else if (item.base_type == OBJ_WANDS)
