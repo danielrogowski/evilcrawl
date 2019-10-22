@@ -125,7 +125,7 @@ static const zap_info zap_data[] =
 
 {
     ZAP_HASTE,
-    "",
+    "haste",
     100,
     nullptr,
     nullptr,
