@@ -211,8 +211,8 @@ spret cast_infusion(int pow, bool fail)
         mpr("You begin infusing your attacks with magical energy.");
     else
         mpr("You extend your infusion's duration.");
-
-    you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow), 100);
+    
+    you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow/2), 30);
     you.props["infusion_power"] = pow;
 
     return spret::success;
