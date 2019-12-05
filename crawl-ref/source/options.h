@@ -474,11 +474,12 @@ public:
     bool        unlimited_summons;
     
     // evil
-    bool        ds_guaranteed_hurl_hellfire;
+    int         ds_hurl_hellfire;
     bool        ds_guaranteed_powered_by_death;
     bool        ds_undesired_facets;
     bool        ds_always_monstrous;
     bool        rune_identifies_items;
+    bool        infusion_enhancement;
 
     lang_t              language;         // Translation to use.
     const char*         lang_name;        // Database name of the language.

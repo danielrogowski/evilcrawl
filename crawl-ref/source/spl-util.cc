@@ -97,7 +97,7 @@ void init_spell_descs()
 
     for (unsigned int i = 0; i < SPELLDATASIZE; i++)
     {
-        const spell_desc &data = spelldata[i];
+        spell_desc &data = spelldata[i];
 
         ASSERTM(data.id >= SPELL_NO_SPELL && data.id < NUM_SPELLS,
                 "spell #%d has invalid id %d", i, data.id);
@@ -119,6 +119,9 @@ void init_spell_descs()
                 "spell '%s' is declared as a monster spell but is a player spell", data.title);
 
         spell_list[data.id] = i;
+        
+        if (data.id == SPELL_INFUSION)
+            data.power_cap = 100;
     }
 }
 

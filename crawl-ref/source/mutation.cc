@@ -2447,7 +2447,7 @@ static inline bool undesired_facet(const facet_def* const facet)
           || m == MUT_ROBUST
           || m == MUT_POWERED_BY_PAIN
           || m == MUT_SPINY// is useful, but should conflict with body armor
-          //|| m == MUT_HURL_DAMNATION// is it cool or what? especially for non-casters! but of not so much use in extended, and gets online quite late
+          || Options.ds_hurl_hellfire == 0 ? m == MUT_HURL_DAMNATION : false
         )
             return true;
     }
@@ -2464,11 +2464,34 @@ static bool contains_mutation(const facet_def* const facet, const mutation_type 
   return false;
 }
 
+static bool guaranteed_facets_present(const vector<demon_mutation_info>& dmis)
+{
+    // check only necessary when hellfire guaranteed (option equals "2"), otherwise "hellfire" checks alright
+    bool hellfire = Options.ds_hurl_hellfire != 2;
+    
+    bool powered_by_death = !Options.ds_guaranteed_powered_by_death;
+    
+    for (const demon_mutation_info& dmi : dmis)
+    {
+        if (hellfire && powered_by_death)
+            return true;
+        
+        switch(dmi.mut)
+        {
+            case MUT_HURL_DAMNATION: hellfire = true; break;
+            case MUT_POWERED_BY_DEATH: powered_by_death = true; break;
+            default:;
+        }
+    }
+    
+    return false;
+}
+
 static vector<demon_mutation_info> _select_ds_mutations()
 {
     int ct_of_tier[] = { 1, 1, 2, 1 };
     
-    dprf("Options.ds_guaranteed_hurl_hellfire = %i", Options.ds_guaranteed_hurl_hellfire);
+    dprf("Options.ds_hurl_hellfire = %i", Options.ds_hurl_hellfire);
     dprf("Options.ds_guaranteed_powered_by_death = %i", Options.ds_guaranteed_powered_by_death);
     
     const int monstrous_chance = Options.ds_always_monstrous ? 1 : 10;
@@ -2476,7 +2499,7 @@ static vector<demon_mutation_info> _select_ds_mutations()
     if (one_chance_in(monstrous_chance))
       {
           ct_of_tier[0] = 3;
-          //ct_of_tier[1] = 0;
+          //ct_of_tier[1] = 0; // monstrous ds are weak at defense already, don't take away the only defensive mut they get
       }
 
       vector<demon_mutation_info> ret;
@@ -2491,8 +2514,6 @@ static vector<demon_mutation_info> _select_ds_mutations()
         int ice_elemental = 0;
         int fire_elemental = 0;
         int cloud_producing = 0;
-        bool hurl_damnation = !Options.ds_guaranteed_hurl_hellfire;
-        bool powered_by_death = !Options.ds_guaranteed_powered_by_death;
         
         set<const facet_def *> facets_used;
         
@@ -2510,11 +2531,6 @@ static vector<demon_mutation_info> _select_ds_mutations()
                       || !_works_at_tier(*next_facet, tier)
                       || facets_used.count(next_facet)
                       || !_slot_is_unique(next_facet->muts, facets_used));
-
-                if (!hurl_damnation)
-                    hurl_damnation = contains_mutation(next_facet, MUT_HURL_DAMNATION);
-                if (!powered_by_death)
-                    powered_by_death = contains_mutation(next_facet, MUT_POWERED_BY_DEATH);
 
                 facets_used.insert(next_facet);
 
@@ -2548,8 +2564,7 @@ static vector<demon_mutation_info> _select_ds_mutations()
           
         if ((ice_elemental && fire_elemental)
           || cloud_producing > 1
-          || !hurl_damnation
-          || !powered_by_death)
+          || !guaranteed_facets_present(ret))
           try_again = true;
         else
           try_again = false;
@@ -2628,7 +2643,7 @@ _schedule_ds_mutations(vector<mutation_type> muts)
             dprf("Demonspawn will gain %s at level %d",
                     _get_mutation_def(dt.mutation).short_desc, dt.level_gained);
             
-            if (Options.ds_guaranteed_hurl_hellfire && dt.mutation == MUT_HURL_DAMNATION)
+            if (Options.ds_hurl_hellfire == 2 && dt.mutation == MUT_HURL_DAMNATION)
                 mprf("You will gain %s at some point", _get_mutation_def(dt.mutation).short_desc);
             
             if (Options.ds_guaranteed_powered_by_death && dt.mutation == MUT_POWERED_BY_DEATH)

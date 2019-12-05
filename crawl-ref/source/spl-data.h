@@ -19,7 +19,7 @@ struct spell_desc
 }
 */
 
-static const struct spell_desc spelldata[] =
+static struct spell_desc spelldata[] =
 {
 
 {
@@ -2870,7 +2870,7 @@ static const struct spell_desc spelldata[] =
     spschool::charms,
     spflag::utility,
     1,
-    100,
+    25,
     -1, -1,
     1, 0,
     TILEG_INFUSION,

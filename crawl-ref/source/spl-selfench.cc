@@ -212,7 +212,11 @@ spret cast_infusion(int pow, bool fail)
     else
         mpr("You extend your infusion's duration.");
     
-    you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow/2), 30);
+    if (Options.infusion_enhancement)
+        you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow/2), 30);
+    else
+        you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow), 100);
+    
     you.props["infusion_power"] = pow;
 
     return spret::success;

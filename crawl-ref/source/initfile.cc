@@ -230,11 +230,12 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(unlimited_summons), false),
         
         // evil
-        new BoolGameOption(SIMPLE_NAME(ds_guaranteed_hurl_hellfire), false),
+        new IntGameOption(SIMPLE_NAME(ds_hurl_hellfire), 1, 0, 2),
         new BoolGameOption(SIMPLE_NAME(ds_guaranteed_powered_by_death), false),
         new BoolGameOption(SIMPLE_NAME(ds_undesired_facets), false),
         new BoolGameOption(SIMPLE_NAME(ds_always_monstrous), false),
         new BoolGameOption(SIMPLE_NAME(rune_identifies_items), false),
+        new BoolGameOption(SIMPLE_NAME(infusion_enhancement), false),
         
         new ColourGameOption(SIMPLE_NAME(tc_reachable), BLUE),
         new ColourGameOption(SIMPLE_NAME(tc_excluded), LIGHTMAGENTA),
@@ -1100,10 +1101,12 @@ void game_options::reset_options()
     unlimited_summons             = false;
     
     // evil
-    ds_guaranteed_hurl_hellfire   = false;
+    ds_hurl_hellfire              = 1;
     ds_guaranteed_powered_by_death= false;
     ds_undesired_facets           = false;
     ds_always_monstrous           = false;
+    rune_identifies_items         = false;
+    infusion_enhancement          = false;
 
     // These are only used internally, and only from the commandline:
     // XXX: These need a better place.

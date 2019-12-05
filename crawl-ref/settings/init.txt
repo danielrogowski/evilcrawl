@@ -96,8 +96,9 @@ unlimited_summons = false
 
 # evilcrawl options
 
-ds_guaranteed_hurl_hellfire = false
+ds_hurl_hellfire = false # 0 = off, 1 = random (default), 2 = guaranteed
 ds_guaranteed_death_affinity = false
 ds_undesired_facets = false
 ds_always_monstrous = false
 rune_identifies_items = false
+infusion_enhancement = false
