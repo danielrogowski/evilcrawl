@@ -2439,30 +2439,72 @@ static inline bool undesired_facet(const facet_def* const facet)
     for (int i = 0; i < 3; ++i)
     {
         mutation_type m = facet->muts[i];
-        if (m == MUT_ANTENNAE
-          || m == MUT_THIN_SKELETAL_STRUCTURE
-          || m == MUT_NIGHTSTALKER
-          || m == MUT_FOUL_STENCH
-          || m == MUT_PASSIVE_FREEZE
-          || m == MUT_ROBUST
-          || m == MUT_POWERED_BY_PAIN
-          || m == MUT_SPINY// is useful, but should conflict with body armor
-          || Options.ds_hurl_hellfire == 0 ? m == MUT_HURL_DAMNATION : false
-        )
-            return true;
+        // I don't understand why, but the following if-block doesn't work
+//         if (m == MUT_ANTENNAE
+//           || m == MUT_THIN_SKELETAL_STRUCTURE
+//           || m == MUT_NIGHTSTALKER
+//           || m == MUT_FOUL_STENCH
+//           || m == MUT_PASSIVE_FREEZE
+//           || m == MUT_ROBUST
+//           || m == MUT_POWERED_BY_PAIN
+//           || m == MUT_SPINY// is useful, but should conflict with body armor
+//           || Options.ds_hurl_hellfire == 0 ? m == MUT_HURL_DAMNATION : false
+//         )
+//         {
+//             dprf("undesired_facet returns true");
+//             return true;
+//         }
+        // the switch does
+        switch(m)
+        {
+            case MUT_ANTENNAE:
+                dprf("undesired_facet: returns true because m is MUT_ANTENNAE");
+                return true;
+            case MUT_THIN_SKELETAL_STRUCTURE:
+                dprf("undesired_facet: returns true because m is MUT_THIN_SKELETAL_STRUCTURE");
+                return true;
+            case MUT_NIGHTSTALKER:
+                dprf("undesired_facet: returns true because m is MUT_NIGHTSTALKER");
+                return true;
+            case MUT_FOUL_STENCH:
+                dprf("undesired_facet: returns true because m is MUT_FOUL_STENCH");
+                return true;
+            case MUT_PASSIVE_FREEZE:
+                dprf("undesired_facet: returns true because m is MUT_PASSIVE_FREEZE");
+                return true;
+            case MUT_ROBUST:
+                dprf("undesired_facet: returns true because m is MUT_ROBUST");
+                return true;
+            case MUT_POWERED_BY_PAIN:
+                dprf("undesired_facet: returns true because m is MUT_POWERED_BY_PAIN");
+                return true;
+            // spiny is useful, but should conflict with body armor
+            case MUT_SPINY:
+                dprf("undesired_facet: returns true because m is MUT_SPINY");
+                return true;
+            case MUT_HURL_DAMNATION:
+                if (Options.ds_hurl_hellfire == 0)
+                {
+                    dprf("undesired_facet: returns true because m is MUT_HURL_DAMNATION");
+                    return true;
+                }
+                break;
+            default:;
+        }
     }
+    mprf("undesired_facet returns false");
     return false;
 }
 
-static bool contains_mutation(const facet_def* const facet, const mutation_type m)
-{
-  for (unsigned int i = 0; i < 3; ++i)
-  {
-    if (facet->muts[i] == m)
-      return true;
-  }
-  return false;
-}
+// static bool contains_mutation(const facet_def* const facet, const mutation_type m)
+// {
+//   for (unsigned int i = 0; i < 3; ++i)
+//   {
+//     if (facet->muts[i] == m)
+//       return true;
+//   }
+//   return false;
+// }
 
 static bool guaranteed_facets_present(const vector<demon_mutation_info>& dmis)
 {
@@ -2491,24 +2533,25 @@ static vector<demon_mutation_info> _select_ds_mutations()
 {
     int ct_of_tier[] = { 1, 1, 2, 1 };
     
+    dprf("Options.ds_undesired_facets = %i", Options.ds_undesired_facets);
     dprf("Options.ds_hurl_hellfire = %i", Options.ds_hurl_hellfire);
     dprf("Options.ds_guaranteed_powered_by_death = %i", Options.ds_guaranteed_powered_by_death);
+    dprf("Options.ds_always_monstrous = %i", Options.ds_always_monstrous);
     
     const int monstrous_chance = Options.ds_always_monstrous ? 1 : 10;
     
     if (one_chance_in(monstrous_chance))
-      {
-          ct_of_tier[0] = 3;
-          //ct_of_tier[1] = 0; // monstrous ds are weak at defense already, don't take away the only defensive mut they get
-      }
+    {
+        ct_of_tier[0] = 3;
+        //ct_of_tier[1] = 0; // monstrous ds are weak at defense already, don't take away the only defensive mut they get
+    }
 
-      vector<demon_mutation_info> ret;
+    vector<demon_mutation_info> ret;
     
     bool try_again = false;
     
     do
     {
-      
         ret.clear();
         int absfacet = 0;
         int ice_elemental = 0;
