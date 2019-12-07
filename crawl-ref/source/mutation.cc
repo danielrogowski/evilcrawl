@@ -645,9 +645,9 @@ string describe_mutations(bool drop_title)
     if (you.species == SP_VAMPIRE)
     {
         if (you.hunger_state <= HS_STARVING)
-            result += "<green>You do not heal naturally.</green>\n";
+            result += "<red>Your body slowly falls apart without blood!</red>\n";
         else if (you.hunger_state < HS_SATIATED)
-            result += "<green>You heal slowly.</green>\n";
+            result += "<yellow>You heal slowly.</yellow>\n";
         else if (you.hunger_state >= HS_FULL)
             result += "<green>Your natural rate of healing is unusually fast.</green>\n";
     }
@@ -2482,6 +2482,8 @@ static inline bool undesired_facet(const facet_def* const facet)
             case MUT_SPINY:
                 dprf("undesired_facet: returns true because m is MUT_SPINY");
                 return true;
+            case MUT_IGNITE_BLOOD:
+                dprf("undesired_facet: returns true because m is MUT_IGNITE_BLOOD");
             case MUT_HURL_DAMNATION:
                 if (Options.ds_hurl_hellfire == 0)
                 {
@@ -2492,7 +2494,7 @@ static inline bool undesired_facet(const facet_def* const facet)
             default:;
         }
     }
-    mprf("undesired_facet returns false");
+    dprf("undesired_facet returns false");
     return false;
 }
 
