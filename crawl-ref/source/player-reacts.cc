@@ -919,11 +919,13 @@ static void _regenerate_hp_and_mp(int delay)
         const int base_val = player_regen();
         you.hit_points_regeneration += div_rand_round(base_val * delay, BASELINE_DELAY);
     }
+    
+    int powered_by_death = you.props[POWERED_BY_DEATH_KEY].get_int();
 
     while (you.hit_points_regeneration >= 100)
     {
         // at low mp, "mana link" restores mp in place of hp
-        if (you.has_mutation(MUT_MANA_LINK)
+        if ((you.has_mutation(MUT_MANA_LINK) || powered_by_death > 0)
             && !x_chance_in_y(you.magic_points, you.max_magic_points))
         {
             inc_mp(1);
@@ -931,6 +933,7 @@ static void _regenerate_hp_and_mp(int delay)
         else // standard hp regeneration
             inc_hp(1);
         you.hit_points_regeneration -= 100;
+        powered_by_death--;
     }
     
     while (you.hit_points_regeneration <= -100)
