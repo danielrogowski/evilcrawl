@@ -557,6 +557,7 @@ static string _gen_randlevel_name(int level, god_type god)
  */
 bool make_book_level_randart(item_def &book, int level)
 {
+    ASSERT_RANGE(level, -1, 9 + 1);
     ASSERT(book.base_type == OBJ_BOOKS);
 
     const god_type god = origin_as_god_gift(book);
@@ -566,7 +567,7 @@ bool make_book_level_randart(item_def &book, int level)
 
     if (level == -1)
     {
-        int max_level =
+        const int max_level =
             (completely_random ? 9
              : min(9, you.get_experience_level()));
 
