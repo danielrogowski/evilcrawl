@@ -1708,8 +1708,8 @@ void read_init_file(bool runscript)
     }
     else
     {
-        Options.max_exp_level = 27;
-        Options.max_skill_level = 27;
+        Options.max_exp_level = NORMAL_MAX_SKILL_LEVEL;
+        Options.max_skill_level = NORMAL_MAX_SKILL_LEVEL;
     }
 }
 
