@@ -1703,8 +1703,8 @@ void read_init_file(bool runscript)
     // spicy
     if (Options.no_exp_cap)
     {
-        Options.max_exp_level = 99;
-        Options.max_skill_level = 99;
+        Options.max_exp_level = MAX_SKILL_LEVEL;
+        Options.max_skill_level = MAX_SKILL_LEVEL;
     }
     else
     {
