@@ -13,6 +13,8 @@
 
 #include "job-data.h"
 
+bool human_wanderer_needs_stat_reroll();
+
 static const job_def& _job_def(job_type job)
 {
     ASSERT_RANGE(job, 0, NUM_JOBS);
@@ -65,6 +67,21 @@ job_type get_job_by_name(const char *name)
     return job;
 }
 
+bool human_wanderer_needs_stat_reroll()
+{
+    if (you.species != SP_HUMAN)
+    {
+        return false;
+    }
+    
+    if (Options.human_wanderer_type == 1)
+    {
+        return you.base_stats[STAT_STR] > 9 || you.base_stats[STAT_INT] < 14;
+    }
+    
+    return false;
+}
+
 // Must be called after species_stat_init for the wanderer formula to work.
 void job_stat_init(job_type job)
 {
@@ -76,14 +93,21 @@ void job_stat_init(job_type job)
 
     if (job == JOB_WANDERER)
     {
-        for (int i = 0; i < 12; i++)
+        auto stats = you.base_stats;
+        
+        do
         {
-            const auto stat = random_choose_weighted(
-                    you.base_stats[STAT_STR] > 17 ? 1 : 2, STAT_STR,
-                    you.base_stats[STAT_INT] > 17 ? 1 : 2, STAT_INT,
-                    you.base_stats[STAT_DEX] > 17 ? 1 : 2, STAT_DEX);
-            you.base_stats[stat]++;
-        }
+            you.base_stats = stats;
+            
+            for (int i = 0; i < 12; i++)
+            {
+                const auto stat = random_choose_weighted(
+                        you.base_stats[STAT_STR] > 17 ? 1 : 2, STAT_STR,
+                        you.base_stats[STAT_INT] > 17 ? 1 : 2, STAT_INT,
+                        you.base_stats[STAT_DEX] > 17 ? 1 : 2, STAT_DEX);
+                you.base_stats[stat]++;
+            }
+        } while (human_wanderer_needs_stat_reroll());
     }
 }
 

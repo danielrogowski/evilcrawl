@@ -480,6 +480,7 @@ public:
     bool        ds_always_monstrous;
     bool        rune_identifies_items;
     bool        infusion_enhancement;
+    int         human_wanderer_type;
 
     lang_t              language;         // Translation to use.
     const char*         lang_name;        // Database name of the language.
