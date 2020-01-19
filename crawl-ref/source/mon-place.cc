@@ -90,6 +90,8 @@ static monster* _place_pghost_aux(const mgen_data &mg, const monster *leader,
                                    level_id place,
                                    bool force_pos, bool dont_place);
 
+void _prep_summoned_monster(mgen_data &mg, monster *&mon);
+
 
 /**
  * Is this feature "close enough" to the one we want for monster generation?
