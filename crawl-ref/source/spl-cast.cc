@@ -1010,6 +1010,12 @@ static void _spellcasting_side_effects(spell_type spell, god_type god,
         {
             dec_hp(1, false);
         }
+        // Agony should also cost hp
+        else if (spell == SPELL_AGONY
+                 && !player_res_torment())
+        {
+            dec_hp(3, false);
+        }
 
         if (you.duration[DUR_SAP_MAGIC]
             && you.props[SAP_MAGIC_KEY].get_int() < 3

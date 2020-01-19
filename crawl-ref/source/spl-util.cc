@@ -122,6 +122,8 @@ void init_spell_descs()
         
         if (data.id == SPELL_INFUSION)
             data.power_cap = 100;
+        else if (data.id == SPELL_PAIN)
+            data.power_cap = 50;
     }
 }
 

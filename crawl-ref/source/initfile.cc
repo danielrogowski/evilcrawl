@@ -237,6 +237,7 @@ const vector<GameOption*> game_options::build_options_list()
         new BoolGameOption(SIMPLE_NAME(rune_identifies_items), false),
         new BoolGameOption(SIMPLE_NAME(infusion_enhancement), false),
         new IntGameOption(SIMPLE_NAME(human_wanderer_type), 0, 0, 1),
+        new BoolGameOption(SIMPLE_NAME(pain_enhancement), false),
         
         new ColourGameOption(SIMPLE_NAME(tc_reachable), BLUE),
         new ColourGameOption(SIMPLE_NAME(tc_excluded), LIGHTMAGENTA),
@@ -1109,6 +1110,7 @@ void game_options::reset_options()
     rune_identifies_items         = false;
     infusion_enhancement          = false;
     human_wanderer_type           = 0;
+    pain_enhancement              = false;
 
     // These are only used internally, and only from the commandline:
     // XXX: These need a better place.

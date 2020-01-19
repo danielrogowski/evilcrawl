@@ -481,6 +481,7 @@ public:
     bool        rune_identifies_items;
     bool        infusion_enhancement;
     int         human_wanderer_type;
+    bool        pain_enhancement;
 
     lang_t              language;         // Translation to use.
     const char*         lang_name;        // Database name of the language.

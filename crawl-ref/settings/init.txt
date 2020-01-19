@@ -103,3 +103,4 @@ ds_always_monstrous = false
 rune_identifies_items = false
 infusion_enhancement = false
 human_wanderer_type = 0 # 0 = random, 1 = caster
+pain_enhancement = false
