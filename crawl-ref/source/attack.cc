@@ -270,9 +270,14 @@ int attack::calc_to_hit(bool random)
 
         if (defender->backlit(false))
             mhit += 2 + random2(8);
-        else if (!attacker->nightvision()
-                 && defender->umbra())
-            mhit -= 2 + random2(4);
+        else if (!attacker->nightvision())
+        {
+            if (defender->umbra())
+                mhit -= 2 + random2(4);
+            if (defender->is_player()
+                && dynamic_cast<player*>(defender)->duration[DUR_DARKNESS])
+                mhit -= 2 + random2(4);
+        }
     }
     // Don't delay doing this roll until test_hit().
     if (!attacker->is_player())
