@@ -3109,14 +3109,21 @@ bool bolt::misses_player()
         // Monsters shooting at an invisible player are very inaccurate.
         if (you.invisible() && !can_see_invis)
             real_tohit /= 2;
+        else if (can_see_invis)
+            real_tohit -= 4 + random2(4);
 
         // Backlit is easier to hit:
         if (you.backlit(false))
             real_tohit += 2 + random2(8);
 
         // Umbra is harder to hit:
-        if (!nightvision && you.umbra())
-            real_tohit -= 2 + random2(4);
+        if (!nightvision)
+        {
+            if (you.umbra())
+                real_tohit -= 2 + random2(4);
+            if (you.duration[DUR_DARKNESS])
+                real_tohit -= 2 + random2(4);
+        }
     }
 
     const int SH = player_shield_class();
@@ -4878,6 +4885,8 @@ void bolt::affect_monster(monster* mon)
     {
         if (mon->invisible() && !can_see_invis)
             beam_hit /= 2;
+        else if (can_see_invis)
+            beam_hit -= 4 + random2(4);
 
         // Backlit is easier to hit:
         if (mon->backlit(false))

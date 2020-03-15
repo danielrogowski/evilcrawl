@@ -258,9 +258,9 @@ int attack::calc_to_hit(bool random)
 
     if (!defender->visible_to(attacker))
         if (attacker->is_player())
-            mhit -= 6;
+            mhit -= 8;
         else
-            mhit = mhit * 65 / 100;
+            mhit /= 2;
     else
     {
         // This can only help if you're visible!
@@ -278,6 +278,10 @@ int attack::calc_to_hit(bool random)
                 && dynamic_cast<player*>(defender)->duration[DUR_DARKNESS])
                 mhit -= 2 + random2(4);
         }
+
+        if (defender->invisible()
+            && attacker->can_see_invisible())
+            mhit -= 4 + random2(4);
     }
     // Don't delay doing this roll until test_hit().
     if (!attacker->is_player())
