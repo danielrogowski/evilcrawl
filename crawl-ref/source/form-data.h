@@ -129,7 +129,7 @@ static const form_entry formdata[] =
 {
     transformation::bat, MONS_PROGRAM_BUG, "Bat", "bat-form", "bat",
     "",
-    EQF_PHYSICAL | EQF_RINGS, MR_NO_FLAGS,
+    EQF_PHYSICAL, MR_NO_FLAGS,
     DEFAULT_DURATION, 0, 5, SIZE_TINY, 10,
     0, 0, 0, false, 0, 12, 1,
     SPWPN_NORMAL, LIGHTGREY, "Teeth", ANIMAL_VERBS,
