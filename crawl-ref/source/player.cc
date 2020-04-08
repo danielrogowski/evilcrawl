@@ -7208,6 +7208,10 @@ bool player::can_polymorph() const
 
 bool player::can_bleed(bool allow_tran) const
 {
+    // because the below sort out Vampires
+    if (you.species == SP_VAMPIRE && you.hunger_state > HS_STARVING)
+        return true;
+    
     // XXX: Lich and statue forms are still caught by the holiness checks below.
     if (allow_tran && !form_can_bleed(form))
         return false;
