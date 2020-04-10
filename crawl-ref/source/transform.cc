@@ -802,6 +802,8 @@ public:
         {
             case MUT_HORNS:
                 return "You grow a pair of large bovine horns.";
+            case MUT_CLAWS:
+                return "Your hands morph into claws";
             case MUT_TENTACLE_SPIKE:
                 return "One of your tentacles grows a vicious spike.";
             case MUT_TALONS:
@@ -1377,7 +1379,8 @@ bool feat_dangerous_for_form(transformation which_trans,
 
 static mutation_type appendages[] =
 {
-    MUT_HORNS,
+    //MUT_HORNS,
+    MUT_CLAWS,
     MUT_TENTACLE_SPIKE,
     MUT_TALONS,
 };
