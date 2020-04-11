@@ -699,9 +699,12 @@ void get_cleave_targets(const actor &attacker, const coord_def& def,
 
     const item_def* weap = attacker.weapon(which_attack);
 
+    // this is the place were the decision is made if cleaving applies
+    // added blade hands despite it being strong enough already, because it is also inflexible (no ranged combat and harder to cast as long as transformed) and completely offensive minded
     if (weap && item_attack_skill(*weap) == SK_AXES
             || attacker.is_player()
-               && (you.form == transformation::hydra && you.heads() > 1
+               && ((you.form == transformation::hydra && you.heads() > 1
+                   || you.form == transformation::blade_hands)
                    || you.duration[DUR_CLEAVE]))
     {
         const coord_def atk = attacker.pos();
