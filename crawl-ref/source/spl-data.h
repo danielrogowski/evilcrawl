@@ -1738,7 +1738,7 @@ static struct spell_desc spelldata[] =
 {
     SPELL_HURL_DAMNATION, "Hurl Damnation",
     spschool::conjuration,
-    spflag::dir_or_target | spflag::unholy | spflag::monster
+    spflag::dir_or_target | spflag::unholy
         | spflag::needs_tracer,
     // plus DS ability, staff of Dispater & Sceptre of Asmodeus
     9,

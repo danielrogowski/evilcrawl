@@ -1843,6 +1843,12 @@ item_def* monster_die(monster& mons, killer_type killer,
 {
     ASSERT(!invalid_monster(&mons));
 
+#ifdef DEBUG_DIAGNOSTICS
+    std::ostringstream str;
+    str << "monster_die ( mons.mname = " << mons.mname << ", killer = " << killer << ", killer_index = " << killer_index << ", silent = " << silent << ", wizard = " << wizard << ", fake = " << fake << " )";
+    dprf("%s", str.str().c_str());
+#endif
+
     const bool was_visible = you.can_see(mons);
 
     // If a monster was banished to the Abyss and then killed there,
@@ -2173,7 +2179,7 @@ item_def* monster_die(monster& mons, killer_type killer,
     // Adjust song of slaying bonus. Kills by relevant avatars are adjusted by
     // now to KILL_YOU and are counted.
     if (you.duration[DUR_SONG_OF_SLAYING]
-        && killer == KILL_YOU
+        && (killer == KILL_YOU || killer == KILL_YOU_MISSILE)
         && gives_player_xp)
     {
         const int sos_bonus = you.props[SONG_OF_SLAYING_KEY].get_int();
