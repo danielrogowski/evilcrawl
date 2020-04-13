@@ -921,20 +921,21 @@ static void _regenerate_hp_and_mp(int delay)
     }
     
     int powered_by_death = you.props[POWERED_BY_DEATH_KEY].get_int();
+    const bool has_mana_link = you.has_mutation(MUT_MANA_LINK);
 
     while (you.hit_points_regeneration >= 100)
     {
         // "powered by death" may increase mp instead of hp when at max hp (but at a lower efficiency as mana link)
         if (powered_by_death > 0
-         && !you.has_mutation(MUT_MANA_LINK)
+         && !has_mana_link
          && you.hp >= you.hp_max
          && you.magic_points < you.max_magic_points)
         {
-            you.hit_points_regeneration -= 400;
-            inc_mp(1);
+            // every hp gives 1/5 mp
+            you.magic_points_regeneration += 20;
         }
         // at low mp, "mana link" restores mp in place of hp
-        else if (you.has_mutation(MUT_MANA_LINK)
+        else if (has_mana_link
               && !x_chance_in_y(you.magic_points, you.max_magic_points))
         {
             inc_mp(1);
