@@ -927,9 +927,10 @@ static void _regenerate_hp_and_mp(int delay)
         // "powered by death" may increase mp instead of hp when at max hp (but at a lower efficiency as mana link)
         if (powered_by_death > 0
          && !you.has_mutation(MUT_MANA_LINK)
-         && you.hp >= you.hp_max)
+         && you.hp >= you.hp_max
+         && you.magic_points < you.max_magic_points)
         {
-            you.hit_points_regeneration -= 50;
+            you.hit_points_regeneration -= 400;
             inc_mp(1);
         }
         // at low mp, "mana link" restores mp in place of hp
