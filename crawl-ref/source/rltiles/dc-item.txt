@@ -52,7 +52,7 @@ demon_whip2
 demon_whip3
 sacred_scourge WPN_SACRED_SCOURGE
 
-##Short Blades
+##Thrusting Blades
 dagger WPN_DAGGER
 dagger2
 dagger3
@@ -66,7 +66,7 @@ quickblade1 WPN_QUICK_BLADE
 quickblade2
 quickblade3
 
-##Long Blades
+##Slashing Blades
 falchion1 WPN_FALCHION
 falchion2
 falchion3

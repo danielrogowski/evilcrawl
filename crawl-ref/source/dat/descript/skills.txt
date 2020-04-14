@@ -4,23 +4,23 @@ Fighting
 Fighting skill increases your accuracy and damage in physical combat, and
 also increases your maximum health.
 %%%%
-Short Blades
+Thrusting Blades
 
-Short Blades are more effective than any other weapon type at stabbing helpless
+Thrusting Blades are more effective than any other weapon type at stabbing helpless
 foes.
 
-Being skilled with Short Blades will allow you to attack more quickly with all
+Being skilled with Thrusting Blades will allow you to attack more quickly with all
 weapons of this type, as well as increasing your accuracy and damage with them.
 
-Being skilled with Short Blades increases your effectiveness with Long Blades,
+Being skilled with Thrusting Blades increases your effectiveness with Slashing Blades,
 and vice versa.
 %%%%
-Long Blades
+Slashing Blades
 
-Being skilled with Long Blades will allow you to attack more quickly with all
+Being skilled with Slashing Blades will allow you to attack more quickly with all
 weapons of this type, as well as increasing your accuracy and damage with them.
 
-Being skilled with Long Blades increases your effectiveness with Short Blades,
+Being skilled with Slashing Blades increases your effectiveness with Thrusting Blades,
 and vice versa.
 %%%%
 Axes

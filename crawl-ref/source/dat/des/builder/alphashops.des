@@ -116,7 +116,7 @@
 
       elseif s == "K" then i = { "any" }
 
-      elseif s == "L" then i = { "lamp of fire", "manual of long blades",
+      elseif s == "L" then i = { "lamp of fire", "manual of slashing blades",
        "large rock", "large shield", "leather armour", "long sword",
        "potion of lignification", "lajatang", "longbow", "lightning rod" }
 
@@ -155,7 +155,7 @@
        "scroll of summoning", "scythe", "book of spatial translocations",
        "scroll of silence", "shield", "shortbow", "manual of staves",
        "steam dragon scales", "shadow dragon scales", "storm dragon scales",
-       "swamp dragon scales", "manual of short blades", "staff of summoning",
+       "swamp dragon scales", "manual of thrusting blades", "staff of summoning",
        "manual of slings", "manual of shields", "manual of spellcasting",
        "manual of summonings", "stone", "wand of scattershot" }
 

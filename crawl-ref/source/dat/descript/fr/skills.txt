@@ -4,7 +4,7 @@ Fighting
 La compétence Combat accroit votre précision et les dégâts en combat au corps à
 corps et, accroitre aussi votre maximum de points de vie.
 %%%%
-Short Blades
+Thrusting Blades
 
 Les Épées Courtes ont la réputation d’être le meilleur outil pour poignarder.
 
@@ -16,7 +16,7 @@ dans un ou deux types d'armes pour devenir plus puissant avec elles.
 Être compétent en Epées Courtes rend plus facile l'apprentissage en Epées
 Longues, et vice versa.
 %%%%
-Long Blades
+Slashing Blades
 
 Être compétent en Épées Longues  vous permettra d'attaquer plus rapidement avec
 toutes les armes de ce type, accroitra votre précision et les dégâts

@@ -219,7 +219,7 @@ struct weapon_def
 
   1) The main purpose of weapon brand distribution varying across weapon type
      is to help to balance the different weapon skills against each other -
-     staves and short blades getting better brands as partial compensation for
+     staves and thrusting blades getting better brands as partial compensation for
      their other drawbacks, for instance. It is true that we have other knobs
      that we also use to balance different weapon types, but they don't all
      affect things in the same way. For instance, lajatangs having very good
@@ -293,7 +293,7 @@ static const vector<brand_weight_tuple> DEMON_BRANDS = {
     { SPWPN_ANTIMAGIC,       3 },
 };
 
-/// brand weights for long blades.
+/// brand weights for slashing blades.
 static const vector<brand_weight_tuple> LBL_BRANDS = {
     { SPWPN_HOLY_WRATH,     23 },
     { SPWPN_NORMAL,         19 },
@@ -444,7 +444,7 @@ static const weapon_def Weapon_prop[] =
         SK_MACES_FLAILS, SIZE_LARGE, NUM_SIZE_LEVELS, MI_NONE,
         DAMV_CRUSHING | DAM_PIERCE, 1, 10, 19, {} },
 
-    // Short Blades
+    // Thrusting Blades
     { WPN_DAGGER,            "dagger",              4,  6, 10,
         SK_SHORT_BLADES, SIZE_LITTLE, SIZE_LITTLE, MI_NONE,
         DAMV_PIERCING, 10, 10, 20, {
@@ -478,7 +478,7 @@ static const weapon_def Weapon_prop[] =
 #endif
 
 
-    // Long Blades
+    // Slashing Blades
     { WPN_FALCHION,              "falchion",               7,  2, 13,
         SK_LONG_BLADES,  SIZE_LITTLE, SIZE_LITTLE, MI_NONE,
         DAMV_SLICING, 7, 10, 30, LBL_BRANDS }, // DAMV_CHOPPING...?

@@ -1047,7 +1047,7 @@ VISUAL:@The_monster@ takes a fighting stance.
 
 @The_monster@ laughs, "And you think you're capable of finding the ORB? I had it, you know. Then I gave it away so I could steal it AGAIN."
 %%%%
-Short Blades player ghost
+Thrusting Blades player ghost
 
 @The_monster@ says, "It's not the size of the blade that matters, it's how you use it."
 
@@ -1055,7 +1055,7 @@ Short Blades player ghost
 
 VISUAL:@The_monster@ flicks @possessive@ blade from hand to hand, faster than the eye can follow.
 %%%%
-Long Blades player ghost
+Slashing Blades player ghost
 
 VISUAL:@The_monster@ holds @possessive@ blade at the ready.
 
