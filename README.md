@@ -1,3 +1,57 @@
+# Evilcrawl
+
+I like dcss very much. (I won't go into depth here concerning the reasons.) It's a great game. One of the best imho. I'm very grateful a lot of people put a whole lot of work into this project and still do. That said, there are also some aspects of the game and of vanilla team decisions I'm not fond of. Most of which concerning the Vampire race. Especially since 0.24. The "new Vampire" is an interesting race, but to me, it doesn't feel a even a tiny bit like playing a Vampire at all. Fair enough I guess. This fork is about implementing the Vampire race so that it really feels like being a bloodsucker and being dependent on blood.
+
+## How to play this
+
+As there's no server running this fork, you can only build it yourself. Please use the branch evilcrawl-0.23.2! On how to build crawl, please refer to the file crawl-ref/INSTALL.txt. It details how to get the thing to run on your particular system.
+
+## What's changed
+
+### Vampire and related
+
+Most changes to the race are evident if you take a look at the abilities screen: shift+a and then hitting '!'.
+
+* the relevant hunger levels (which change something) are: bloodless, thirsty, satiated, full, very full and engorged
+* Vampires get a blood related strength and hp regeneration bonus at full and above, the more blood the more strength and regeneration. The boni scale with XL!
+* at bloodless Vampires not only don't naturally regenerate, they degenerate at a slow rate, eventually killing them: Vampires depend on blood for survival! Then again even bloodless Vampires can heal and therefore sustain themselves by wearing a source of magical healing, like a troll armor or an amulet of healing. Those healing effects are halved.
+* Vampires always have at least rN+, even if engorged
+* Vampires may use Sublimation of Blood if not bloodless
+* I put the spells Haste and Mass Confusion back in: I know Haste is overpowered. I don't care. To me, crawl is and will be an unbalanced game. So what. Haste is fun and Mass Confusion is too.
+* Invisibility is changed, so that even with SeeInvis a malus to to-hit occurs. This applies to monsters and players. ;-)
+* Darkness incurs a slight malus to to-hit for monsters
+* bats can wear rings in addition to amulets
+* reduced min weapon delay to 2 (fast chars are at a disadvantage in mid and late, because they can't do as much damage per attack to high AC monsters)
+
+### other stuff
+
+* short blades and long blades are renamed to thrusting blades and slashing blades. (I couldn't stand the rapier being a short blade.)
+* blade hands is cleaving despite it being strong enough already, because it is also inflexible (no ranged combat and harder to cast as long as transformed) and completely offensive minded
+* put claws in place of horns regarding beastly appendage
+* Bolt of Draining is in the necro starting book
+* when hurl hellfire is used to kill monsters, count it towards song of slaying
+* powered by death regenerates mp at a 1/5 rate when hp is full
+* strengthened repulsion field mutation a bit, because EV is generally weaker than AC
+* changes based on options configurable in the rc (defaults to vanilla)
+** spicy edition features (ported from spicy, credits go to jeremygurr)
+*** all_spicy_features = true|false
+*** no_exp_cap = true|false
+*** wide_spell_list = true|false
+*** unlimited_summons = true|false
+** evilcrawl options
+*** ds_hurl_hellfire = 0 -> off | 1 -> random (vanilla) | 2 -> guaranteed
+*** ds_guaranteed_powered_by_death = true|false
+*** ds_undesired_facets = true|false (I deem some facets undesirable)
+*** ds_always_monstrous = true|false
+*** rune_identifies_items = true|false (ported from bcrawl, credits go this way; but made optional)
+*** infusion_enhancement = true|false (ported from bcrawl, credits go this way)
+*** human_wanderer_type = 0 -> random (vanilla) | 1 -> caster
+*** pain_enhancement = true|false
+
+
+
+What follows is the official README of vanilla crawl:
+
 [![Build Status](https://travis-ci.org/crawl/crawl.svg?branch=master)](https://travis-ci.org/crawl/crawl)
 
 # Dungeon Crawl Stone Soup
