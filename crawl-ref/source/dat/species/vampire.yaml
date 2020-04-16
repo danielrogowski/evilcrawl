@@ -11,8 +11,8 @@ aptitudes:
   mp_mod: 0
   mr: 4
   fighting: 0
-  short_blades: 2
-  long_blades: 1
+  short_blades: 1
+  long_blades: 0
   axes: -1
   maces_and_flails: -2
   polearms: -1
