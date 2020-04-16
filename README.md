@@ -33,23 +33,23 @@ Most changes to the race are evident if you take a look at the abilities screen:
 * powered by death regenerates mp at a 1/5 rate when hp is full
 * strengthened repulsion field mutation a bit, because EV is generally weaker than AC
 * changes based on options configurable in the rc (defaults to vanilla)
-** spicy edition features (ported from spicy, credits go to jeremygurr)
-*** all_spicy_features = true|false
-*** no_exp_cap = true|false
-*** wide_spell_list = true|false
-*** unlimited_summons = true|false
-** evilcrawl options
-*** ds_hurl_hellfire = 0 -> off | 1 -> random (vanilla) | 2 -> guaranteed
-*** ds_guaranteed_powered_by_death = true|false
-*** ds_undesired_facets = true|false (I deem some facets undesirable)
-*** ds_always_monstrous = true|false
-*** rune_identifies_items = true|false (ported from bcrawl, credits go this way; but made optional)
-*** infusion_enhancement = true|false (ported from bcrawl, credits go this way)
-*** human_wanderer_type = 0 -> random (vanilla) | 1 -> caster
-*** pain_enhancement = true|false
-
-
-
+  * spicy edition features (ported from spicy, credits go to jeremygurr)
+    * all_spicy_features = true|false
+    * no_exp_cap = true|false
+    * wide_spell_list = true|false
+    * unlimited_summons = true|false
+  * evilcrawl options
+    * ds_hurl_hellfire = 0 -> off | 1 -> random (vanilla) | 2 -> guaranteed
+    * ds_guaranteed_powered_by_death = true|false
+    * ds_undesired_facets = true|false (I deem some facets undesirable)
+    * ds_always_monstrous = true|false
+    * rune_identifies_items = true|false (ported from bcrawl, credits go this way; but made optional)
+    * infusion_enhancement = true|false (ported from bcrawl, credits go this way)
+    * human_wanderer_type = 0 -> random (vanilla) | 1 -> caster
+    * pain_enhancement = true|false
+<br />
+<br />
+<br />
 What follows is the official README of vanilla crawl:
 
 # Dungeon Crawl Stone Soup
