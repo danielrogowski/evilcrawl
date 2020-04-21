@@ -54,7 +54,7 @@ bool SkillTextTileItem::handle_mouse(const MouseEvent& me)
 }
 #endif
 
-#define NAME_SIZE 20
+#define NAME_SIZE 24
 #define LEVEL_SIZE 5
 #define PROGRESS_SIZE 6
 #define APTITUDE_SIZE 5
@@ -774,7 +774,7 @@ void SkillMenuSwitch::update()
     set_text(text);
 }
 
-#define TILES_COL 6
+#define TILES_COL 8
 SkillMenu::SkillMenu() : PrecisionMenu(), m_min_coord(), m_max_coord(),
                          m_help_button(nullptr)
 {
@@ -1753,9 +1753,9 @@ SizeReq UISkillMenu::_get_preferred_size(Direction dim, int prosp_width)
 #ifdef USE_TILE_LOCAL
     SizeReq ret;
     if (!dim)
-        ret = { 90, 90 };
+        ret = { 90, 94 };
     else
-        ret = { 25, 38 };
+        ret = { 25, 42 };
 
     const FontWrapper* font = tiles.get_crt_font();
     const int f = !dim ? font->char_width() : font->char_height();
