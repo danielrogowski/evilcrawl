@@ -1646,7 +1646,8 @@ static bool _monster_resists_mass_enchantment(monster* mons,
         }
     }
     else if (wh_enchant == ENCH_INSANE
-             || mons->holiness() & MH_NATURAL)
+          || wh_enchant == ENCH_CONFUSION
+          || mons->holiness() & MH_NATURAL)
     {
         if (wh_enchant == ENCH_FEAR
             && mons->friendly())
