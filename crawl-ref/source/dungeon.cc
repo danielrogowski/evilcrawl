@@ -3551,7 +3551,7 @@ static int _place_uniques()
 
     // Magic numbers for dpeg's unique system.
     int A = 2;
-    const int B = 5;
+    const int B = 3;
     while (one_chance_in(A))
     {
         // In dpeg's unique placement system, chances is always 1 in A of even
