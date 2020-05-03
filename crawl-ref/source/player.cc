@@ -2008,6 +2008,9 @@ int player_movement_speed()
 
     if (you.duration[DUR_FROZEN])
         mv += 3;
+	
+	if (you.duration[DUR_ICY_ARMOUR])
+		++mv; // as ponderous
 
     // Mutations: -2, -3, -4, unless innate and shapechanged.
     if (int fast = you.get_mutation_level(MUT_FAST))

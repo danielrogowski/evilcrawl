@@ -947,9 +947,9 @@ impact. Its damage partially bypasses armour.
 Ozocubu's Armour spell
 
 Envelops the caster's body in a protective layer of thick ice, granting a
-substantial bonus to armour as long as they remain in their current location.
-The ice will crack and fall away if the caster moves to a new position. The
-spell will not function for casters already wearing heavy armour (any body
+substantial bonus to armour. The caster may fight as swiftly as normal but is
+slightly slower when moving.
+The spell will not function for casters already wearing heavy armour (any body
 armour with an encumbrance rating of 5 or more).
 %%%%
 Ozocubu's Refrigeration spell
