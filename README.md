@@ -4,7 +4,7 @@ I like dcss very much. (I won't go into depth here concerning the reasons.) It's
 
 ## How to play this
 
-As there's no server running this fork, you can only download and play it offline. Grab the zip at https://www.dropbox.com/s/a97igtwqtxh9xho/evilcrawl-stone_soup-0.23.2-59-g7911479-tiles-win32.zip?dl=1 unpack it to a folder of your choice and execute the exe. Have fun!
+As there's no server running this fork, you can only download and play it offline. Grab the zip at https://www.dropbox.com/s/a97igtwqtxh9xho/evilcrawl-stone_soup-0.23.2-59-g7911479-tiles-win32.zip?dl=1 unpack it to a folder of your choice and execute crawl.exe. Have fun!
 
 If you want to build it yourself: Please use the branch evilcrawl-0.23.2! On how to build crawl, please refer to the file crawl-ref/INSTALL.txt. It details how to get the thing to run on your particular system.
 
