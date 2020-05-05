@@ -25,6 +25,7 @@ Most changes to the race are evident if you take a look at the abilities screen:
 
 ### other stuff
 
+* higher unique spawn rate to offset some branch changes which make the game easier
 * short blades and long blades are renamed to thrusting blades and slashing blades. (I couldn't stand the rapier being a short blade.)
 * blade hands is cleaving despite it being strong enough already, because it is also inflexible (no ranged combat and harder to cast as long as transformed) and completely offensive minded
 * put claws in place of horns regarding beastly appendage
@@ -32,6 +33,9 @@ Most changes to the race are evident if you take a look at the abilities screen:
 * when hurl hellfire is used to kill monsters, count it towards song of slaying
 * powered by death regenerates mp at a 1/5 rate when hp is full
 * strengthened repulsion field mutation a bit, because EV is generally weaker than AC
+* changed ozos armor behavior back to 0.21 (you may move with ice armor, albeit with a speed like ponderous)
+* set max player speed to 4 (before haste)
+* set max attack speed to 2
 * changes based on options configurable in the rc (defaults to vanilla)
   * spicy edition features (ported from spicy, credits go to jeremygurr)
     * all_spicy_features = true|false
