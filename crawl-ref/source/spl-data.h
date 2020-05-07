@@ -867,9 +867,9 @@ static struct spell_desc spelldata[] =
 
 {
     SPELL_REGENERATION, "Regeneration",
-    spschool::charms | spschool::necromancy,
+    spschool::charms,
     spflag::selfench | spflag::utility,
-    3,
+    4,
     200,
     -1, -1,
     3, 0,
