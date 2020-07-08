@@ -773,11 +773,33 @@ static void _cast_smiting(monster &caster, mon_spell_slot slot, bolt&)
     const god_type god = _find_god(caster, slot.flags);
     actor* foe = caster.get_foe();
     ASSERT(foe);
+    
+    const bool same_god = foe->deity() == god;
+    const char* god_name = _god_name(god).c_str();
 
     if (foe->is_player())
-        mprf("%s smites you!", _god_name(god).c_str());
+    {
+        player* player_foe = dynamic_cast<player*> (foe);
+        if (same_god && player_foe->piety >= 0.75 * player_foe->piety_max[god])
+        {
+            mprf("%s refuses to smite you!", god_name);
+            return;
+        }
+        mprf("%s smites you!", god_name);
+    }
     else
+    {
+        monster* mons = foe->as_monster();
+        if (same_god)
+        {
+            if (mons->visible_to(&you))
+            {
+                mprf("%s refuses to smite %s!", god_name, mons->name(DESC_THE).c_str());
+            }
+            return;
+        }
         simple_monster_message(*foe->as_monster(), " is smitten.");
+    }
 
     foe->hurt(&caster, 7 + random2avg(11, 2), BEAM_MISSILE, KILLED_BY_BEAM,
               "", "by divine providence");
