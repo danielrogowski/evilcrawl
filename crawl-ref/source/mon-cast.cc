@@ -811,7 +811,7 @@ static int _calc_god_smiting_piety_threshold(const god_type god, const player* c
             percentage = 100;
             break;
         default:
-            throw "uncovered god in switch";
+            die_noline("%s:%d: uncovered god in switch", __FILE__, __LINE__);
     };
     
     return percentage * player_foe->piety_max[god] / 100;
@@ -828,7 +828,7 @@ static void _cast_smiting(monster &caster, mon_spell_slot slot, bolt&)
 
     if (foe->is_player())
     {
-        player* player_foe = dynamic_cast<player*> (foe);
+        player* player_foe = foe->as_player();
         ASSERT(player_foe);
         if (same_god && player_foe->piety >= _calc_god_smiting_piety_threshold(god, player_foe))
         {
@@ -840,6 +840,7 @@ static void _cast_smiting(monster &caster, mon_spell_slot slot, bolt&)
     else
     {
         monster* mons = foe->as_monster();
+        ASSERT(mons);
         if (same_god)
         {
             if (mons->visible_to(&you))
