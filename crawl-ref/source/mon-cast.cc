@@ -768,6 +768,55 @@ static void _cast_injury_mirror(monster &mons, mon_spell_slot slot, bolt&)
         = you.elapsed_time + 150 + random2(60);
 }
 
+static int _calc_god_smiting_piety_threshold(const god_type god, const player* const player_foe)
+{
+    int percentage;
+    switch(god)
+    {
+        case GOD_HEPLIAKLQANA:
+        case GOD_SIF_MUNA:
+        case GOD_RU:
+        case GOD_ZIN:
+        case GOD_SHINING_ONE:
+        case GOD_ELYVILON:
+            percentage = 50;
+            break;
+        case GOD_XOM:
+        case GOD_NEMELEX_XOBEH:
+        case GOD_JIYVA:
+        {
+            defer_rand rand;
+            percentage = rand.random2(100);
+        }
+            break;
+        case GOD_VEHUMET:
+        case GOD_OKAWARU:
+        case GOD_FEDHAS:
+        case GOD_CHEIBRIADOS:
+        case GOD_ASHENZARI:
+        case GOD_GOZAG:
+        case GOD_QAZLAL:
+        case GOD_PAKELLAS:
+        case GOD_USKAYAW:
+        case GOD_WU_JIAN:
+            percentage = 75;
+            break;
+        case GOD_KIKUBAAQUDGHA:
+        case GOD_YREDELEMNUL:
+        case GOD_MAKHLEB:
+        case GOD_TROG:
+        case GOD_LUGONU:
+        case GOD_BEOGH:
+        case GOD_DITHMENOS:
+            percentage = 100;
+            break;
+        default:
+            throw "uncovered god in switch";
+    };
+    
+    return percentage * player_foe->piety_max[god] / 100;
+}
+
 static void _cast_smiting(monster &caster, mon_spell_slot slot, bolt&)
 {
     const god_type god = _find_god(caster, slot.flags);
@@ -780,7 +829,8 @@ static void _cast_smiting(monster &caster, mon_spell_slot slot, bolt&)
     if (foe->is_player())
     {
         player* player_foe = dynamic_cast<player*> (foe);
-        if (same_god && player_foe->piety >= 0.75 * player_foe->piety_max[god])
+        ASSERT(player_foe);
+        if (same_god && player_foe->piety >= _calc_god_smiting_piety_threshold(god, player_foe))
         {
             mprf("%s refuses to smite you!", god_name);
             return;
