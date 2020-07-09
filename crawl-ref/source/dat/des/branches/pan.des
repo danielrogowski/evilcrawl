@@ -3967,6 +3967,14 @@ SUBST:  D& = +, '"- = ., H = G, C = c
 : set_feature_name("granite_statue", "golden statue")
 : set_feature_name("metal_wall", "silver wall")
 : set_random_mon_list("angel w:20 / cherub / ophan / daeva / apis w:20")
+# Do not place if you are with a holy god. It's just free loot in that case.
+veto {{
+    if you.deity() == GOD_SHINING_ONE or you.deity() == GOD_ZIN or you.deity() == GOD_ELYVILON then
+        return true
+    else
+        return false
+    end
+}}
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxCCCCCxxxxxxxxxxxxwwwwxxxxxxxxxwwwxxxwwwxxxxxxCCCCCCCCCCCCCCCCCxxxxxxxxxxx
