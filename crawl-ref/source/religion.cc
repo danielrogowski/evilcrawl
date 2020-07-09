@@ -637,6 +637,12 @@ void dec_penance(god_type god, int val)
                 mprf(MSGCH_GOD, "A storm instantly forms around you!");
                 you.redraw_armour_class = true; // also handles shields
             }
+            
+            // When you've worked through all your penance, you get
+            // another chance to make hostile holy beings good neutral.
+            if (is_good_god(god))
+                add_daction(DACT_HOLY_NEW_ATTEMPT);
+            
             // When you've worked through all your penance, you get
             // another chance to make hostile slimes strict neutral.
 
@@ -2443,6 +2449,11 @@ static void _gain_piety_point()
         // Piety change affects halo / umbra radius.
         invalidate_agrid(true);
     }
+    
+    // When you gain a piety level, you get another chance to
+    // make hostile holy beings good neutral.
+    if (is_good_god(you.religion))
+        add_daction(DACT_HOLY_NEW_ATTEMPT);
 
     do_god_gift();
 }

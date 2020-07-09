@@ -147,6 +147,8 @@ void seen_monsters_react(int stealth)
 
         if (!mi->visible_to(&you))
             continue;
+        
+        good_god_follower_attitude_change(*mi);
 
         if (!mi->has_ench(ENCH_INSANE) && mi->can_see(you))
         {
