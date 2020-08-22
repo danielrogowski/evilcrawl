@@ -1562,6 +1562,13 @@ spret your_spells(spell_type spell, int powc, bool allow_fail,
     const bool old_target = actor_at(beam.target);
 
     spret cast_result = _do_cast(spell, powc, spd, beam, god, fail);
+    
+    if (you.species == SP_VAMPIRE && (cast_result == spret::success || cast_result == spret::fail))
+    {
+        you.make_hungry(
+            (get_spell_disciplines(spell) & spschool::hexes ? 0 : 10)
+                * spell_difficulty(spell));
+    }
 
     switch (cast_result)
     {
@@ -1657,6 +1664,18 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
     {
         if (!adjacent(you.pos(), target))
             return spret::abort;
+    }
+    
+    if (you.species == SP_VAMPIRE)
+    {
+        const int additional_spl_hunger =
+            (get_spell_disciplines(spell) & spschool::hexes ? 0 : 10)
+                * spell_difficulty(spell);
+        if (you.hunger <= additional_spl_hunger)
+        {
+            mprf(MSGCH_PLAIN, "You don't have got enough blood in your system to cast the spell.");
+            return spret::abort;
+        }
     }
 
     switch (spell)
