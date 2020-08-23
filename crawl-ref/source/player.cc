@@ -1990,9 +1990,9 @@ int player_movement_speed()
     if (you.liquefied_ground())
         mv += 3;
 
-    // armour
+    // ego SPARM_RUNNING
     if (you.run())
-        mv -= 1;
+        mv -= 2;
 
     mv += you.wearing_ego(EQ_ALL_ARMOUR, SPARM_PONDEROUSNESS);
 
