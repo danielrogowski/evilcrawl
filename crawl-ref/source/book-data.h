@@ -81,6 +81,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_HASTE,
     SPELL_MASS_CONFUSION,
     SPELL_DISCORD,
+    SPELL_MASS_DOMINATE,
 },
 
 {   // Young Poisoner's Handbook
@@ -181,6 +182,7 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_CONFUSE,
     SPELL_TUKIMAS_DANCE,
     SPELL_DAZZLING_SPRAY,
+    SPELL_DOMINATE,
 },
 
 {   // Book of Air

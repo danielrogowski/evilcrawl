@@ -75,7 +75,8 @@ enum beam_type                  // bolt::flavour
     BEAM_INFESTATION,
     BEAM_AGONY,
     BEAM_VILE_CLUTCH,
-    BEAM_LAST_ENCHANTMENT = BEAM_VILE_CLUTCH,
+    BEAM_DOMINATE,
+    BEAM_LAST_ENCHANTMENT = BEAM_DOMINATE,
 
     BEAM_MEPHITIC,
     BEAM_AIR,

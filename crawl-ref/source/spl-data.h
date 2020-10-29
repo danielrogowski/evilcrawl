@@ -4015,6 +4015,28 @@ static struct spell_desc spelldata[] =
 },
 
 {
+    SPELL_DOMINATE, "Dominate",
+    spschool::hexes,
+    spflag::dir_or_target | spflag::needs_tracer | spflag::MR_check,
+    1,
+    200,
+    LOS_RADIUS, LOS_RADIUS,
+    3, 0,
+    TILEG_CONFUSE
+},
+
+{
+    SPELL_MASS_DOMINATE, "Mass Dominate",
+    spschool::hexes,
+    spflag::area | spflag::MR_check,
+    1,
+    200,
+    -1, -1,
+    5, 0,
+    TILEG_MASS_CONFUSION
+},
+
+{
     SPELL_NO_SPELL, "nonexistent spell",
     spschool::none,
     spflag::testing,

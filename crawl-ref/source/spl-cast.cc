@@ -1859,6 +1859,9 @@ static spret _do_cast(spell_type spell, int powc, const dist& spd,
 
     case SPELL_DISCORD:
         return mass_enchantment(ENCH_INSANE, powc, fail);
+    
+    case SPELL_MASS_DOMINATE:
+        return mass_enchantment(ENCH_CHARM, powc, fail);
 
     case SPELL_ENGLACIATION:
         return cast_englaciation(powc, fail);

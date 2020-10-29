@@ -5553,6 +5553,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         return MON_AFFECTED;
     }
 
+    case BEAM_DOMINATE:
     case BEAM_ENSLAVE:
         if (agent() && agent()->is_monster())
         {
@@ -5781,6 +5782,17 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         obvious_effect = true;
         return MON_AFFECTED;
     }
+    
+//     case BEAM_DOMINATE:
+//     if (mon->check_clarity(false))
+//     {
+//         if (you.can_see(*mon))
+//             obvious_effect = true;
+//         return MON_AFFECTED;
+//     }
+//     {
+//         
+//     }
 
     default:
         break;
@@ -6560,6 +6572,7 @@ static string _beam_type_name(beam_type type)
     case BEAM_IRRESISTIBLE_CONFUSION:return "confusion";
     case BEAM_INFESTATION:           return "infestation";
     case BEAM_VILE_CLUTCH:           return "vile clutch";
+    case BEAM_DOMINATE:              return "dominate";
 
     case NUM_BEAMS:                  die("invalid beam type");
     }
