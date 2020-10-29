@@ -5782,17 +5782,6 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         obvious_effect = true;
         return MON_AFFECTED;
     }
-    
-//     case BEAM_DOMINATE:
-//     if (mon->check_clarity(false))
-//     {
-//         if (you.can_see(*mon))
-//             obvious_effect = true;
-//         return MON_AFFECTED;
-//     }
-//     {
-//         
-//     }
 
     default:
         break;
