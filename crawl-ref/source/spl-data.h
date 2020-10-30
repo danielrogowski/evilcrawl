@@ -4046,7 +4046,7 @@ static struct spell_desc spelldata[] =
     200,
     LOS_RADIUS, LOS_RADIUS,
     3, 0,
-    TILEG_CONFUSE
+    TILEG_DOMINATE
 },
 
 {
@@ -4057,7 +4057,7 @@ static struct spell_desc spelldata[] =
     200,
     -1, -1,
     5, 0,
-    TILEG_MASS_CONFUSION
+    TILEG_MASS_DOMINATE
 },
 
 {
