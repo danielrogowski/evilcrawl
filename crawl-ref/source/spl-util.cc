@@ -43,40 +43,6 @@
 #include "tiles-build-specific.h"
 #include "transform.h"
 
-struct spell_desc
-{
-    spell_type id;
-    const char  *title;
-    spschools_type disciplines;
-    spell_flags flags;       // bitfield
-    unsigned int level;
-
-    // Usually in the range 0..200 (0 means uncapped).
-    // Note that some spells are also capped through zap_type.
-    // See spell_power_cap below.
-    int power_cap;
-
-    // At power 0, you get min_range. At power power_cap, you get max_range.
-    int min_range;
-    int max_range;
-
-    // Noise made directly by casting this spell.
-    // Noise used to be based directly on spell level:
-    //  * for conjurations: spell level
-    //  * for non-conj pois/air: spell level / 2 (rounded up)
-    //  * for others: spell level * 3/4 (rounded up)
-    // These are probably good guidelines for new spells.
-    int noise;
-
-    // Some spells have a noise at their place of effect, in addition
-    // to at the place of casting. effect_noise handles that, and is also
-    // used even if the spell is not casted directly (by Xom, for instance).
-    int effect_noise;
-
-    /// Icon for the spell in e.g. spellbooks, casting menus, etc.
-    tileidx_t tile;
-};
-
 #include "spl-data.h"
 
 static int spell_list[NUM_SPELLS];

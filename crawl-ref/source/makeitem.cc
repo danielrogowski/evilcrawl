@@ -1506,7 +1506,9 @@ static skill_type _choose_manual_skill()
 }
 
 static void _generate_book_item(item_def& item, bool allow_uniques,
-                                int force_type, int item_level)
+                                int force_type, int item_level,
+                                spschool school = spschool::random
+                               )
 {
     if (force_type != OBJ_RANDOM)
         item.sub_type = force_type;
@@ -1540,7 +1542,16 @@ static void _generate_book_item(item_def& item, bool allow_uniques,
     }
 
     if (item.sub_type == BOOK_RANDART_THEME)
-        build_themed_book(item, capped_spell_filter(20));
+    {
+        if (school != spschool::random)
+        {
+            build_themed_book(item, capped_spell_filter(20), forced_book_theme(school));
+        }
+        else
+        {
+            build_themed_book(item, capped_spell_filter(20));
+        }
+    }
     else if (item.sub_type == BOOK_RANDART_LEVEL)
     {
         int max_level  = min(9, max(1, item_level / 3));
@@ -1799,7 +1810,9 @@ int items(bool allow_uniques,
           int force_type,
           int item_level,
           int force_ego,
-          int agent)
+          int agent,
+          const spschool school
+         )
 {
     ASSERT(force_ego <= 0
            || force_class == OBJ_WEAPONS
@@ -1952,7 +1965,7 @@ int items(bool allow_uniques,
         break;
 
     case OBJ_BOOKS:
-        _generate_book_item(item, allow_uniques, force_type, item_level);
+        _generate_book_item(item, allow_uniques, force_type, item_level, school);
         break;
 
     case OBJ_STAVES:

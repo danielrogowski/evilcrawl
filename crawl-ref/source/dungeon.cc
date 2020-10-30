@@ -3817,13 +3817,15 @@ static void _randomly_place_item(int item)
     }
 }
 
+const spschool CUSTOM_BOOK_CLASS = spschool::hexes;
+const bool GENERATE_CUSTOM_BOOKS = false;
+
 /**
  * Randomly place items on a level. Does not place items in vaults,
  * on monsters, etc. Only normal floor generated items.
  */
 static void _builder_items()
 {
-    int i = 0;
     object_class_type specif_type = OBJ_RANDOM;
     int items_levels = env.absdepth0;
     int items_wanted = _num_items_wanted(items_levels);
@@ -3839,13 +3841,17 @@ static void _builder_items()
         items_levels *= 2;       // Four levels' worth, in fact.
     }
 
-    for (i = 0; i < items_wanted; i++)
+    for (int i = 0; i < items_wanted; i++)
     {
         int item = items(true, specif_type, OBJ_RANDOM, items_levels);
 
         _randomly_place_item(item);
     }
 
+    for (unsigned int i = 0; GENERATE_CUSTOM_BOOKS && i < 5; ++i) {
+        const int item = items(true, OBJ_BOOKS, BOOK_RANDART_THEME, 10*i, 0, NO_AGENT, CUSTOM_BOOK_CLASS);
+        _randomly_place_item(item);
+    }
 }
 
 static bool _connect_vault_exit(const coord_def& exit)

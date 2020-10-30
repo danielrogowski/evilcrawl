@@ -6,13 +6,15 @@
 #pragma once
 
 #include "item-prop-enum.h"
+#include "spl-util.h"
 
 static const int NO_AGENT = -1;
 
 int create_item_named(string name, coord_def pos, string *error);
 
 int items(bool allow_uniques, object_class_type force_class, int force_type,
-          int item_level, int force_ego = 0, int agent = NO_AGENT);
+          int item_level, int force_ego = 0, int agent = NO_AGENT,
+          const spschool school = spschool::random);
 
 void item_colour(item_def &item);
 
