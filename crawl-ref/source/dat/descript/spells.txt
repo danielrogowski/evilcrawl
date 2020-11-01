@@ -304,6 +304,14 @@ Confusion Gaze spell
 Induces a state of bewilderment and confusion in a creature's mind, with no
 direct line of fire required.
 %%%%
+Dominate spell
+
+Temporarily overrides the targets will with the casters. A successful MR check negates the effect. As long as the effect lasts the target will obey the casters every command.
+%%%%
+Mass Dominate spell
+
+Temporarily overrides the will with the casters for all targets within line of sight. A successful MR check negates the effect. As long as the effect lasts the targets will obey the casters every command.
+%%%%
 Conjure Ball Lightning spell
 
 Creates a pack of ball lightnings, which seek out the nearest enemy before

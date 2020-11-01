@@ -4356,6 +4356,11 @@ void bolt::enchantment_affect_monster(monster* mon)
                 msg_generated = true;
             break;
         case MON_AFFECTED:
+            if (origin_spell == SPELL_DOMINATE || origin_spell == SPELL_MASS_DOMINATE)
+            {
+                // not beautiful, but it forces the end charm message for demons (... breaks free of your control)
+                mon->props["charmed_demon"].get_bool() = true;
+            }
         case MON_OTHER:         // Should this really be here?
             update_hurt_or_helped(mon);
             break;
