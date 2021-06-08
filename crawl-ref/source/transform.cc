@@ -1379,7 +1379,7 @@ bool feat_dangerous_for_form(transformation which_trans,
 
 static mutation_type appendages[] =
 {
-    //MUT_HORNS,
+    MUT_HORNS,
     MUT_CLAWS,
     MUT_TENTACLE_SPIKE,
     MUT_TALONS,
