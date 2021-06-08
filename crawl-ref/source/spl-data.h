@@ -4042,7 +4042,7 @@ static struct spell_desc spelldata[] =
     SPELL_DOMINATE, "Dominate",
     spschool::hexes,
     spflag::dir_or_target | spflag::needs_tracer | spflag::MR_check,
-    5,
+    4,
     200,
     LOS_RADIUS, LOS_RADIUS,
     3, 0,
