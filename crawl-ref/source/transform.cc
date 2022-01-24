@@ -9,6 +9,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <limits>
 
 #include "artefact.h"
 #include "art-enum.h"
@@ -1737,7 +1738,14 @@ bool transform(int pow, transformation which_trans, bool involuntary,
     _remove_equipment(rem_stuff, which_trans);
 
     you.form = which_trans;
-    you.set_duration(DUR_TRANSFORMATION, _transform_duration(which_trans, pow));
+    if (which_trans == transformation::lich)
+    {
+        you.set_duration(DUR_TRANSFORMATION, numeric_limits<int>::max());
+    }
+    else
+    {
+        you.set_duration(DUR_TRANSFORMATION, _transform_duration(which_trans, pow));
+    }
     update_player_symbol();
 
     you.props[TRANSFORM_POW_KEY] = pow;
