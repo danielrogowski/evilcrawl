@@ -2153,9 +2153,11 @@ void melee_attack::attacker_sustain_passive_damage()
 
 int melee_attack::staff_damage(skill_type skill)
 {
+    // (2 x evo + skill) / 30
     if (x_chance_in_y(attacker->skill(SK_EVOCATIONS, 200)
                     + attacker->skill(skill, 100), 3000))
     {
+        // [0, max); max = (10 x skill + 5 x evo) / 8
         return random2((attacker->skill(skill, 100)
                       + attacker->skill(SK_EVOCATIONS, 50)) / 80);
     }
