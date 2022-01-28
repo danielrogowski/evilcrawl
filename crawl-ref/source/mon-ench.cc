@@ -1996,10 +1996,10 @@ void monster::apply_enchantments()
 // Used to adjust time durations in calc_duration() for monster speed.
 static inline int _mod_speed(int val, int speed)
 {
-    if (!speed)
+    if (speed < 1)
         speed = BASELINE_DELAY;
     const int modded = val * BASELINE_DELAY / speed;
-    return modded? modded : 1;
+    return modded ? modded : 1;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -2326,8 +2326,12 @@ int mon_enchant::calc_duration(const monster* mons,
         // deg = 5    810 aut
         // deg = 6   1710 aut
         // with a large fuzz
+        if (deg >= 8)
+            cturn = 1000 / _mod_speed(2, mons->speed);
+        if (deg >= 7)
+            cturn += 1000 / _mod_speed(5, mons->speed);
         if (deg >= 6)
-            cturn = 1000 / _mod_speed(10, mons->speed);
+            cturn += 1000 / _mod_speed(10, mons->speed);
         if (deg >= 5)
             cturn += 1000 / _mod_speed(20, mons->speed);
         cturn += 1000 * min(4, deg) / _mod_speed(100, mons->speed);

@@ -572,7 +572,7 @@ void make_derived_undead_fineff::fire()
         if (!mg.mname.empty())
             name_zombie(*undead, mg.base_type, mg.mname);
 
-        undead->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
+        undead->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 8));
         if (!agent.empty())
         {
             mons_add_blame(undead,
