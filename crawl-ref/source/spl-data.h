@@ -1404,7 +1404,7 @@ static struct spell_desc spelldata[] =
 },
 
 {
-    SPELL_CALL_CANINE_FAMILIAR, "Call Canine Familiar",
+    SPELL_CALL_CANINE_FAMILIAR, "Call Canine",
     spschool::summoning,
     spflag::none,
     3,
