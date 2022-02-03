@@ -1489,6 +1489,9 @@ static void abyss_area_shift()
     place_transiting_monsters();
 
     check_map_validity();
+    // TODO: should dactions be rerun at this point instead? That would cover
+    // this particular case...
+    gozag_detect_level_gold(false);
 }
 
 void destroy_abyss()
@@ -1711,6 +1714,7 @@ void abyss_teleport()
     stop_delay(true);
     forget_map(false);
     clear_excludes();
+    gozag_detect_level_gold(false);
     more();
 }
 

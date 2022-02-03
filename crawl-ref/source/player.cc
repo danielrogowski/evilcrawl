@@ -5273,6 +5273,8 @@ player::player()
     num_turns        = 0;
     exploration      = 0;
 
+    trapped          = false;
+
     last_view_update = 0;
 
     spell_letter_table.init(-1);
@@ -5647,7 +5649,7 @@ int player::get_noise_perception(bool adjusted) const
     const int level = los_noise_last_turn;
     static const int BAR_MAX = 1000; // TODO: export to output.cc & webtiles
     if (!adjusted)
-         return div_rand_round(level, BAR_MAX);
+         return (level + 500) / BAR_MAX;
 
     static const vector<int> NOISE_BREAKPOINTS = { 0, 6000, 13000, 29000 };
     const int BAR_FRAC = BAR_MAX / (NOISE_BREAKPOINTS.size() - 1);
