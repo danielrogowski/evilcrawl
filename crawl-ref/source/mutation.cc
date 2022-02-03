@@ -2459,9 +2459,23 @@ static inline bool undesired_facet(const facet_def* const facet)
         // the switch does
         switch(m)
         {
+            /*
             case MUT_ANTENNAE:
                 dprf("undesired_facet: returns true because m is MUT_ANTENNAE");
                 return true;
+            case MUT_CLAWS:
+                dprf("undesired_facet: returns true because m is MUT_CLAWS");
+                return true;
+            case MUT_HOOVES:
+                dprf("undesired_facet: returns true because m is MUT_HOOVES");
+                return true;
+            case MUT_HORNS:
+                dprf("undesired_facet: returns true because m is MUT_HORNS");
+                return true;
+            case MUT_TALONS:
+                dprf("undesired_facet: returns true because m is MUT_TALONS");
+                return true;
+            */
             case MUT_THIN_SKELETAL_STRUCTURE:
                 dprf("undesired_facet: returns true because m is MUT_THIN_SKELETAL_STRUCTURE");
                 return true;
@@ -2548,6 +2562,10 @@ static vector<demon_mutation_info> _select_ds_mutations()
     {
         ct_of_tier[0] = 3;
         //ct_of_tier[1] = 0; // monstrous ds are weak at defense already, don't take away the only defensive mut they get
+    }
+    else if (one_chance_in(2))
+    {
+        ct_of_tier[0] = 0;
     }
 
     vector<demon_mutation_info> ret;
