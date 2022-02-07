@@ -2463,9 +2463,6 @@ static inline bool undesired_facet(const facet_def* const facet)
             case MUT_ANTENNAE:
                 dprf("undesired_facet: returns true because m is MUT_ANTENNAE");
                 return true;
-            case MUT_CLAWS:
-                dprf("undesired_facet: returns true because m is MUT_CLAWS");
-                return true;
             case MUT_HOOVES:
                 dprf("undesired_facet: returns true because m is MUT_HOOVES");
                 return true;
@@ -2475,7 +2472,14 @@ static inline bool undesired_facet(const facet_def* const facet)
             case MUT_TALONS:
                 dprf("undesired_facet: returns true because m is MUT_TALONS");
                 return true;
+            case MUT_POWERED_BY_PAIN:
+                dprf("undesired_facet: returns true because m is MUT_POWERED_BY_PAIN");
+                return true;
             */
+            // useless because it doesn't give an auxilliary attack and needs to be used as primary weapon
+            case MUT_CLAWS:
+                dprf("undesired_facet: returns true because m is MUT_CLAWS");
+                return true;
             case MUT_THIN_SKELETAL_STRUCTURE:
                 dprf("undesired_facet: returns true because m is MUT_THIN_SKELETAL_STRUCTURE");
                 return true;
@@ -2491,15 +2495,13 @@ static inline bool undesired_facet(const facet_def* const facet)
             case MUT_ROBUST:
                 dprf("undesired_facet: returns true because m is MUT_ROBUST");
                 return true;
-            case MUT_POWERED_BY_PAIN:
-                dprf("undesired_facet: returns true because m is MUT_POWERED_BY_PAIN");
-                return true;
             // spiny is useful, but should conflict with body armor
             case MUT_SPINY:
                 dprf("undesired_facet: returns true because m is MUT_SPINY");
                 return true;
             case MUT_IGNITE_BLOOD:
                 dprf("undesired_facet: returns true because m is MUT_IGNITE_BLOOD");
+                return true;
             case MUT_HURL_DAMNATION:
                 if (Options.ds_hurl_hellfire == 0)
                 {
