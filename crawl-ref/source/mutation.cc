@@ -2562,7 +2562,7 @@ static vector<demon_mutation_info> _select_ds_mutations()
     
     if (one_chance_in(monstrous_chance))
     {
-        ct_of_tier[0] = 3;
+        ct_of_tier[0] = 2;
         //ct_of_tier[1] = 0; // monstrous ds are weak at defense already, don't take away the only defensive mut they get
     }
     else if (one_chance_in(2))
