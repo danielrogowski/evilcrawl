@@ -2183,7 +2183,7 @@ item_def* monster_die(monster& mons, killer_type killer,
         && gives_player_xp)
     {
         const int sos_bonus = you.props[SONG_OF_SLAYING_KEY].get_int();
-        if (sos_bonus <= 8) // cap at +9 slay
+        if (sos_bonus <= 14) // cap at +15 slay
             you.props[SONG_OF_SLAYING_KEY] = sos_bonus + 1;
     }
 
