@@ -465,8 +465,9 @@ bool fill_status_info(int status, status_info& inf)
 
     case DUR_SONG_OF_SLAYING:
         inf.light_text
-            = make_stringf("Slay (%u)",
-                           you.props[SONG_OF_SLAYING_KEY].get_int());
+            = make_stringf("Slay (%u/%u)",
+                           you.props[SONG_OF_SLAYING_KEY].get_int(),
+                           5 + (you.experience_level * 2 / 5));
         break;
 
     case STATUS_BEOGH:
