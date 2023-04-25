@@ -645,7 +645,7 @@ string describe_mutations(bool drop_title)
     if (you.species == SP_VAMPIRE)
     {
         if (you.hunger_state <= HS_STARVING)
-            result += "<red>Your body slowly falls apart without blood!</red>\n";
+            result += "<red>Your body can only regenerate by magical means when bloodless!</red>\n";
         else if (you.hunger_state < HS_SATIATED)
             result += "<yellow>You heal slowly.</yellow>\n";
         else if (you.hunger_state >= HS_FULL)
@@ -818,7 +818,7 @@ static string _display_vampire_attributes()
 
         {"Hunger costs            ", "very high           ", "even higher         ", "higher              ", "full       ", "halved     ", "none     "},
         
-        {"Degeneration            ", "none                ", "none                ", "none                ", "none       ", "none       ", "1% / turn"},
+        {"Health                  ", "+15%                ", "+10%                ", "+5%                 ", "normal     ", "-10%       ", "-20%     "},
         
         {""},
 

@@ -88,6 +88,8 @@
 #include "wizard-option-type.h"
 #include "xom.h"
 
+int get_vamp_hunger_hp_mod();
+
 bool player::res_damnation() const
 {
   for (player::demon_trait trait : demonic_traits)
@@ -1160,9 +1162,7 @@ int player_regen()
     if (you.species == SP_VAMPIRE)
     {
         if (you.hunger_state <= HS_STARVING)
-            rr = _player_vampire_bonus_regen()
-                 - 1
-                 - 1 * you.get_experience_level() * 2 / 3;
+            rr = _player_vampire_bonus_regen();
         else if (you.hunger_state < HS_SATIATED)
             rr /= 2;  // Halved regeneration for hungry vampires.
         else if (you.hunger_state == HS_FULL)
@@ -3347,7 +3347,7 @@ static void _display_vampire_status()
             attrib.push_back("significantly resist cold");
             attrib.push_back("are immune to negative energy");
             attrib.push_back("resist torment");
-            attrib.push_back("do not heal.");
+            attrib.push_back("do not naturally heal.");
             break;
         case HS_NEAR_STARVING:
         case HS_VERY_HUNGRY:
@@ -3954,6 +3954,31 @@ void set_mp(int new_amount)
     you.redraw_magic_points = true;
 }
 
+int get_vamp_hunger_hp_mod()
+{
+    if (you.species == SP_VAMPIRE)
+    {
+        switch(you.hunger_state)
+        {
+            case HS_ENGORGED:
+                return 15;
+            case HS_VERY_FULL:
+                return 10;
+            case HS_FULL:
+                return 5;
+            case HS_HUNGRY:
+            case HS_VERY_HUNGRY:
+            case HS_NEAR_STARVING:
+                return -10;
+            case HS_STARVING:
+                return -20;
+            default:
+                return 0;
+        }
+    }
+    return 0;
+}
+
 /**
  * Get the player's max HP
  * @param trans          Whether to include transformations, berserk,
@@ -3986,6 +4011,9 @@ int get_real_hp(bool trans, bool rotted)
                 - (you.get_mutation_level(MUT_FRAIL) * 10)
                 - (hep_frail ? 10 : 0);
 
+    hitp /= 100;
+
+    hitp *= 100 + get_vamp_hunger_hp_mod();
     hitp /= 100;
 
     if (rotted)

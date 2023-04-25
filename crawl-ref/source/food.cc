@@ -75,7 +75,10 @@ void make_hungry(int hunger_amount, bool suppress_msg,
         _describe_food_change(-hunger_amount);
 
     if (you.species == SP_VAMPIRE)
+    {
+        calc_hp();
         notify_stat_change();
+    }
 }
 
 /**
@@ -109,7 +112,10 @@ void lessen_hunger(int satiated_amount, bool suppress_msg, int max)
         _describe_food_change(satiated_amount);
 
     if (you.species == SP_VAMPIRE)
+    {
+        calc_hp();
         notify_stat_change();
+    }
 }
 
 void set_hunger(int new_hunger_level, bool suppress_msg)
