@@ -229,7 +229,7 @@ static const form_entry formdata[] =
     DEFAULT_DURATION, 0, 0, SIZE_CHARACTER, 10,
     0, 0, 0, true, 0, 0, 3,
     SPWPN_NORMAL, MAGENTA, "", DEFAULT_VERBS,
-    FC_DEFAULT, FC_FORBID, FC_FORBID, true, true,
+    FC_ENABLE, FC_FORBID, FC_FORBID, false, true,
     "", 0, "", "", "", "shadow"
 },
 
