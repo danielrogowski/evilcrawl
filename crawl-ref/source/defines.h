@@ -139,7 +139,9 @@ const int XP_EVOKE_DEBT = 10;
 const int XP_EVOKE_LIGHTNING_ROD_DEBT = 3;
 
 const int BASELINE_DELAY  = 10;
-const int INVIS_CONTAM_PER_TURN = 30;
+
+// bigger values force glowing even with casting it one time
+const int INVIS_CONTAM_PER_TURN = 15;
 
 const int GOURMAND_MAX            = 200 * BASELINE_DELAY;
 const int GOURMAND_NUTRITION_BASE = 10  * BASELINE_DELAY;
