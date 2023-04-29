@@ -1503,7 +1503,7 @@ static struct spell_desc spelldata[] =
     5,
     200,
     -1, -1,
-    4, 0,
+    2, 0,
     TILEG_SILENCE,
 },
 
@@ -2208,7 +2208,7 @@ static struct spell_desc spelldata[] =
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
-    4, 0,
+    0, 0,
     TILEG_SLEEP,
 },
 
@@ -2517,7 +2517,7 @@ static struct spell_desc spelldata[] =
     5,
     200,
     LOS_RADIUS, LOS_RADIUS,
-    4, 0,
+    3, 0,
     TILEG_GENERIC_MONSTER_SPELL,
 },
 
