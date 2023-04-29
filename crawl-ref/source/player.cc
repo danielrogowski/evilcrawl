@@ -1162,7 +1162,9 @@ int player_regen()
     if (you.species == SP_VAMPIRE)
     {
         if (you.hunger_state <= HS_STARVING)
-            rr = _player_vampire_bonus_regen();
+            rr = _player_vampire_bonus_regen()
+                 - 1
+                 - 1 * you.get_experience_level() / 2;
         else if (you.hunger_state < HS_SATIATED)
             rr /= 2;  // Halved regeneration for hungry vampires.
         else if (you.hunger_state == HS_FULL)
@@ -3347,7 +3349,10 @@ static void _display_vampire_status()
             attrib.push_back("significantly resist cold");
             attrib.push_back("are immune to negative energy");
             attrib.push_back("resist torment");
+            attrib.push_back("resist rot");
             attrib.push_back("do not naturally heal.");
+            attrib.push_back("slowly decay.");
+            attrib.push_back("are a lot stealthier.");
             break;
         case HS_NEAR_STARVING:
         case HS_VERY_HUNGRY:
@@ -3355,17 +3360,34 @@ static void _display_vampire_status()
             attrib.push_back("resist poison");
             attrib.push_back("resist cold");
             attrib.push_back("significantly resist negative energy");
+            attrib.push_back("resist rot");
             attrib.push_back("have a slow metabolism");
             attrib.push_back("heal slowly.");
+            attrib.push_back("are a little stealthier.");
             break;
         case HS_SATIATED:
             attrib.push_back("resist negative energy.");
             break;
         case HS_FULL:
-        case HS_VERY_FULL:
-        case HS_ENGORGED:
+            attrib.push_back("resist negative energy.");
             attrib.push_back("have a fast metabolism");
             attrib.push_back("heal quickly.");
+            attrib.push_back("get a strength bonus.");
+            attrib.push_back("get a health bonus.");
+            break;
+        case HS_VERY_FULL:
+            attrib.push_back("resist negative energy.");
+            attrib.push_back("have a very fast metabolism");
+            attrib.push_back("heal very quickly.");
+            attrib.push_back("get a high strength bonus.");
+            attrib.push_back("get a high health bonus.");
+            break;
+        case HS_ENGORGED:
+            attrib.push_back("resist negative energy.");
+            attrib.push_back("have an extremely fast metabolism");
+            attrib.push_back("heal extremely quickly.");
+            attrib.push_back("get a very high strength bonus.");
+            attrib.push_back("get a very high health bonus.");
             break;
     }
 
@@ -3969,9 +3991,9 @@ int get_vamp_hunger_hp_mod()
             case HS_HUNGRY:
             case HS_VERY_HUNGRY:
             case HS_NEAR_STARVING:
-                return -10;
+                return -5;
             case HS_STARVING:
-                return -20;
+                return -10;
             default:
                 return 0;
         }

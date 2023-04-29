@@ -645,7 +645,7 @@ string describe_mutations(bool drop_title)
     if (you.species == SP_VAMPIRE)
     {
         if (you.hunger_state <= HS_STARVING)
-            result += "<red>Your body can only regenerate by magical means when bloodless!</red>\n";
+            result += "<red>Your body slowly decays and can only regenerate by magical means!</red>\n";
         else if (you.hunger_state < HS_SATIATED)
             result += "<yellow>You heal slowly.</yellow>\n";
         else if (you.hunger_state >= HS_FULL)
@@ -800,25 +800,27 @@ static string _display_vampire_attributes()
 
     string result;
 
-    const int lines = 20;
+    const int lines = 21;
     const int columns = 7;
     string column[lines][columns] =
     {
-        {"                        ", "<lightcyan>Engorged</lightcyan>            ", "<lightgreen>Very Full</lightgreen>           ", "<green>Full</green>                ", "Satiated   ", "<yellow>Thirsty</yellow>    ", "<lightred>Bloodless</lightred>"},
+        {"                        ", "<lightcyan>Engorged</lightcyan>            ", "<lightgreen>Very Full</lightgreen>           ", "<green>Full</green>                ", "Satiated   ", "<yellow>Thirsty</yellow>    ", "<lightred>Bloodless </lightred>"},
       
         {""},
         //                          Engorged          Very Full        Full           Satiated       Thirsty        Bloodless
         //{"Metabolism           ", "fast          ", "fast           ", "fast       ", "normal     ", "slow       ", "none  "},
       
-        {"Strength bonus          ", "3+ (XL-dependent)   ", "2+ (XL-dependent)   ", "1+ (XL-dependent)   ", "none       ", "none       ", "none     "},
+        {"Strength bonus          ", "3+ (XL-dependent)   ", "2+ (XL-dependent)   ", "1+ (XL-dependent)   ", "none       ", "none       ", "none      "},
         
-        {"Regeneration            ", "extremely fast      ", "very fast           ", "fast                ", "normal     ", "slow       ", "none     "},
+        {"Regeneration            ", "extremely fast      ", "very fast           ", "fast                ", "normal     ", "slow       ", "none      "},
       
-        {"Stealth boost           ", "none                ", "none                ", "none                ", "none       ", "minor      ", "major    "},
+        {"Stealth boost           ", "none                ", "none                ", "none                ", "none       ", "minor      ", "major     "},
 
-        {"Hunger costs            ", "very high           ", "even higher         ", "higher              ", "full       ", "halved     ", "none     "},
+        {"Hunger costs            ", "very high           ", "even higher         ", "higher              ", "full       ", "halved     ", "none      "},
         
-        {"Health                  ", "+15%                ", "+10%                ", "+5%                 ", "normal     ", "-10%       ", "-20%     "},
+        {"Health                  ", "+15%                ", "+10%                ", "+5%                 ", "normal     ", "-5%       ", "-10%      "},
+        
+        {"Degeneration            ", "none                ", "none                ", "none                ", "none       ", "none       ", "~1‰ / turn"},
         
         {""},
 
@@ -826,15 +828,15 @@ static string _display_vampire_attributes()
         
         {""},
         
-        {"Poison resistance       ", "                    ", "                    ", "                    ", "           ", "+          ", "immune   "},
+        {"Poison resistance       ", "                    ", "                    ", "                    ", "           ", "+          ", "immune    "},
 
-        {"Cold resistance         ", "                    ", "                    ", "                    ", "           ", "+          ", "++       "},
+        {"Cold resistance         ", "                    ", "                    ", "                    ", "           ", "+          ", "++        "},
 
-        {"Negative resistance     ", "+                   ", "+                   ", "+                   ", " +         ", "++         ", "+++      "},
+        {"Negative resistance     ", "+                   ", "+                   ", "+                   ", " +         ", "++         ", "+++       "},
         
-        {"Rotting resistance      ", "                    ", "                    ", "                    ", "           ", "+          ", "+        "},
+        {"Rotting resistance      ", "                    ", "                    ", "                    ", "           ", "+          ", "+         "},
         
-        {"Torment resistance      ", "                    ", "                    ", "                    ", "           ", "           ", "+        "},
+        {"Torment resistance      ", "                    ", "                    ", "                    ", "           ", "           ", "+         "},
         
         {""},
         
@@ -842,9 +844,9 @@ static string _display_vampire_attributes()
         
         {""},
         
-        {"Bat form                ", "no                  ", "no                  ", "no                  ", "yes        ", "yes        ", "yes      "},
+        {"Bat form                ", "no                  ", "no                  ", "no                  ", "yes        ", "yes        ", "yes       "},
           
-        {"Other forms & berserk   ", "yes                 ", "yes                 ", "yes                 ", "yes        ", "no         ", "no       "}
+        {"Other forms & berserk   ", "yes                 ", "yes                 ", "yes                 ", "yes        ", "no         ", "no        "}
     };
 
     int current = _vampire_bloodlessness();
