@@ -3210,6 +3210,15 @@ int player_stealth()
     if (you.duration[DUR_AGILITY])
         stealth += STEALTH_PIP;
 
+    if (!you.backlit())
+    {
+        if (you.duration[DUR_DARKNESS])
+            stealth += STEALTH_PIP;
+
+        if (you.duration[DUR_INVIS])
+            stealth += 2 * STEALTH_PIP;
+    }
+
     if (you.form == transformation::blade_hands && you.species == SP_FELID
         && !you.airborne())
     {
