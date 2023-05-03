@@ -27,6 +27,7 @@
 #include "fight.h"
 #include "food.h"          // For evokes
 #include "ghost.h"         // For is_dragonkind ghost_demon datas
+#include "god-abil.h"      // for pakellas_surge_devices
 #include "god-conduct.h"    // did_god_conduct
 #include "god-passive.h"    // passive_t::want_curses
 #include "mgen-data.h"     // For Sceptre of Asmodeus evoke
@@ -75,33 +76,55 @@ static bool _evoke_sceptre_of_asmodeus()
 {
     if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
         return false;
-
-    const monster_type mon = random_choose_weighted(
-                                   3, MONS_EFREET,
-                                   3, MONS_SUN_DEMON,
-                                   3, MONS_BALRUG,
-                                   2, MONS_HELLION,
-                                   1, MONS_BRIMSTONE_FIEND);
-
-    mgen_data mg(mon, BEH_CHARMED, you.pos(), MHITYOU,
-                 MG_FORCE_BEH, you.religion);
-    mg.set_summoned(&you, 0, 0);
-    mg.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
-
-    monster *m = create_monster(mg);
-
-    if (m)
+    
+    int num = 1;
+    const int surge = pakellas_surge_devices();
+    surge_power(you.spec_evoke() + surge);
+    const int adjusted_power =
+        player_adjust_evoc_power(you.skill(SK_EVOCATIONS, 10), surge);
+    if (adjusted_power + random2(90) > 160)
+        ++num;
+    if (adjusted_power + random2(90) > 210)
+        ++num;
+    if (adjusted_power + random2(90) > 260)
+        ++num;
+    bool created = false;
+    for (int n = 0; n < num; ++n)
     {
-        mpr("The sceptre summons one of its servants.");
-        did_god_conduct(DID_EVIL, 3);
+        const monster_type mon = random_choose_weighted(
+                                    3, MONS_EFREET,
+                                    3, MONS_SUN_DEMON,
+                                    3, MONS_BALRUG,
+                                    2, MONS_HELLION,
+                                    1, MONS_BRIMSTONE_FIEND);
 
-        m->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
+        mgen_data mg(mon, BEH_CHARMED, you.pos(), MHITYOU,
+                    MG_AUTOFOE, you.religion);
+        mg.set_summoned(&you, 0, 0);
+        mg.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
 
-        if (!player_angers_monster(m))
-            mpr("You don't feel so good about this...");
+        monster *m = create_monster(mg);
+
+        if (m)
+        {
+            if (created)
+                mpr("The sceptre summons another one of its servants.");
+            else
+                mpr("The sceptre summons one of its servants.");
+            
+            created = true;
+
+            m->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
+
+            if (!player_angers_monster(m))
+                mpr("You don't feel so good about this one...");
+        }
+        else
+            mpr("The air shimmers briefly.");
     }
-    else
-        mpr("The air shimmers briefly.");
+    
+    if (created)
+        did_god_conduct(DID_EVIL, 3);
 
     return true;
 }

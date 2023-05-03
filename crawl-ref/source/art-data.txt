@@ -297,8 +297,8 @@ BOOL:    evil, nogen
 
 NAME:    sceptre of Asmodeus
 APPEAR:  ruby sceptre
-OBJ:     OBJ_WEAPONS/WPN_STAFF
-PLUS:    +7
+OBJ:     OBJ_WEAPONS/WPN_EVENINGSTAR
+PLUS:    +13
 COLOUR:  ETC_BLOOD
 TILE:    spwpn_sceptre_of_asmodeus
 TILE_EQ: asmodeus
