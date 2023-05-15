@@ -1163,8 +1163,7 @@ int player_regen()
     {
         if (you.hunger_state <= HS_STARVING)
             rr = _player_vampire_bonus_regen()
-                 - 1
-                 - 1 * you.get_experience_level() / 2;
+                 - REGEN_PIP / 2;
         else if (you.hunger_state < HS_SATIATED)
             rr /= 2;  // Halved regeneration for hungry vampires.
         else if (you.hunger_state == HS_FULL)

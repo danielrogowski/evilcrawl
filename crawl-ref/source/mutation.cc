@@ -802,6 +802,7 @@ static string _display_vampire_attributes()
 
     const int lines = 21;
     const int columns = 7;
+    const string degen = std::to_string(static_cast<float>(REGEN_PIP)/200).substr(0, 4) + " / turn";
     string column[lines][columns] =
     {
         {"                        ", "<lightcyan>Engorged</lightcyan>            ", "<lightgreen>Very Full</lightgreen>           ", "<green>Full</green>                ", "Satiated   ", "<yellow>Thirsty</yellow>    ", "<lightred>Bloodless </lightred>"},
@@ -810,17 +811,17 @@ static string _display_vampire_attributes()
         //                          Engorged          Very Full        Full           Satiated       Thirsty        Bloodless
         //{"Metabolism           ", "fast          ", "fast           ", "fast       ", "normal     ", "slow       ", "none  "},
       
-        {"Strength bonus          ", "3+ (XL-dependent)   ", "2+ (XL-dependent)   ", "1+ (XL-dependent)   ", "none       ", "none       ", "none      "},
+        {"Strength bonus          ", "3+ (XL-dependent)   ", "2+ (XL-dependent)   ", "1+ (XL-dependent)   ", "none       ", "none       ", "none     "},
         
-        {"Regeneration            ", "extremely fast      ", "very fast           ", "fast                ", "normal     ", "slow       ", "none      "},
+        {"Regeneration            ", "extremely fast      ", "very fast           ", "fast                ", "normal     ", "slow       ", "none     "},
       
-        {"Stealth boost           ", "none                ", "none                ", "none                ", "none       ", "minor      ", "major     "},
+        {"Stealth boost           ", "none                ", "none                ", "none                ", "none       ", "minor      ", "major    "},
 
-        {"Hunger costs            ", "very high           ", "even higher         ", "higher              ", "full       ", "halved     ", "none      "},
+        {"Hunger costs            ", "very high           ", "even higher         ", "higher              ", "full       ", "halved     ", "none     "},
         
         {"Health                  ", "+15%                ", "+10%                ", "+5%                 ", "normal     ", "-5%       ", "-10%      "},
         
-        {"Degeneration            ", "none                ", "none                ", "none                ", "none       ", "none       ", "~1‰ / turn"},
+        {"Degeneration            ", "none                ", "none                ", "none                ", "none       ", "none       ", degen},
         
         {""},
 
