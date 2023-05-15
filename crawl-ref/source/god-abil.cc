@@ -1365,7 +1365,7 @@ void tso_divine_shield()
 
     // Size of SH bonus.
     you.attribute[ATTR_DIVINE_SHIELD] =
-        12 + you.skill_rdiv(SK_INVOCATIONS, 4, 5);
+        15 + you.skill_rdiv(SK_INVOCATIONS, 6, 5);
 
     you.redraw_armour_class = true;
 }
