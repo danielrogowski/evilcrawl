@@ -46,8 +46,8 @@
 // Note that they don't have to be equal, but it is important to make
 // sure that they're set so that the spending limit will always allow
 // for 1 skill point to be earned.
-#define MAX_COST_LIMIT           265
-#define MAX_SPENDING_LIMIT       265
+#define MAX_COST_LIMIT           650
+#define MAX_SPENDING_LIMIT       650
 
 static int _train(skill_type exsk, int &max_exp, bool simu = false);
 static void _train_skills(int exp, const int cost, const bool simu);
@@ -150,36 +150,37 @@ unsigned int skill_cost_needed(int level)
     return exp_needed(level, 1) * 13;
 }
 
-static const int MAX_SKILL_COST_LEVEL = 27;
+static const int MAX_SKILL_COST_LEVEL = 99;
+
+static const int skill_cost[] = { 1, 2, 3, 4, 5,            // 1-5
+                            7, 8, 9, 13, 22,         // 6-10
+                            37, 48, 73, 98, 125,      // 11-15
+                            145, 170, 190, 212, 225,  // 16-20
+                            240, 255, 260, 265, 270,  // 21-25
+                            275, 280, 285, 290, 295,  // 26-30
+                            300, 305, 310, 315, 320,  // 31-35
+                            325, 330, 335, 340, 345,  // 36-40
+                            350, 355, 360, 365, 370,  // 41-45
+                            375, 380, 385, 390, 395,  // 46-50
+                            400, 405, 410, 415, 420,  // 51-55
+                            425, 430, 435, 440, 445,  // 56-60
+                            450, 455, 460, 465, 470,  // 61-65
+                            475, 480, 485, 490, 495,  // 66-70
+                            500, 505, 510, 515, 520,  // 71-75
+                            525, 530, 535, 540, 545,  // 76-80
+                            550, 565, 570, 575, 580,  // 81-85
+                            585, 590, 595, 600, 605,  // 86-90
+                            610, 615, 620, 625, 630,  // 91-95
+                            635, 640, 645, 650        // 96-99
+};
 
 // skill_cost_level makes skills more expensive for more experienced characters
 int calc_skill_cost(int skill_cost_level)
 {
-    const int cost[] = { 1, 2, 3, 4, 5,            // 1-5
-                         7, 8, 9, 13, 22,         // 6-10
-                         37, 48, 73, 98, 125,      // 11-15
-                         145, 170, 190, 212, 225,  // 16-20
-                         240, 255, 260, 265, 265,  // 21-25
-                         265, 265, 265, 265, 265,  // 26-30
-                         265, 265, 265, 265, 265,  // 31-35
-                         265, 265, 265, 265, 265,  // 36-40
-                         265, 265, 265, 265, 265,  // 41-45
-                         265, 265, 265, 265, 265,  // 46-50
-                         265, 265, 265, 265, 265,  // 51-55
-                         265, 265, 265, 265, 265,  // 56-60
-                         265, 265, 265, 265, 265,  // 61-65
-                         265, 265, 265, 265, 265,  // 66-70
-                         265, 265, 265, 265, 265,  // 71-75
-                         265, 265, 265, 265, 265,  // 76-80
-                         265, 265, 265, 265, 265,  // 81-85
-                         265, 265, 265, 265, 265,  // 86-90
-                         265, 265, 265, 265, 265,  // 91-95
-                         265, 265, 265, 265        // 96-99
-    };
-    COMPILE_CHECK(ARRAYSZ(cost) == 99);
+    COMPILE_CHECK(ARRAYSZ(skill_cost) == 99);
 
     ASSERT_RANGE(skill_cost_level, 1, Options.max_skill_level + 1);
-    return cost[skill_cost_level - 1];
+    return skill_cost[skill_cost_level - 1];
 }
 
 /**
