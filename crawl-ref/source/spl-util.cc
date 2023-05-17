@@ -447,29 +447,31 @@ bool spell_harms_area(spell_type spell)
 // for Xom acting (more power = more likely to grab his attention) {dlb}
 int spell_mana(spell_type which_spell)
 {
-    const spell_desc *spell = _seekspell(which_spell);
-    const int mana_cost = spell_difficulty(which_spell);
-    if (Options.unlimited_summons && spell_produces_summoned_minion(spell->id))
-    {
-        if (which_spell == SPELL_SUMMON_LIGHTNING_SPIRE)
-            return 10;
-        return ceil(mana_cost * 3 / 2);
-    }
-    return mana_cost;
+//     const spell_desc *spell = _seekspell(which_spell);
+//     const int mana_cost = spell_difficulty(which_spell);
+//     if (Options.unlimited_summons && spell_produces_summoned_minion(spell->id))
+//     {
+//         if (which_spell == SPELL_SUMMON_LIGHTNING_SPIRE)
+//             return 10;
+//         return ceil(mana_cost * 3 / 2);
+//     }
+//     return mana_cost;
+    return _seekspell(which_spell)->level;
 }
 
 // applied in naughties (more difficult = higher level knowledge = worse)
 // and triggers for Sif acting (same reasoning as above, just good) {dlb}
 int spell_difficulty(spell_type which_spell)
 {
-    const int level = _seekspell(which_spell)->level;
-    
-    if (Options.unlimited_summons && which_spell == SPELL_SUMMON_LIGHTNING_SPIRE)
-    {
-        return level + 1;
-    }
-    
-    return level;
+//     const int level = _seekspell(which_spell)->level;
+//     
+//     if (Options.unlimited_summons && which_spell == SPELL_SUMMON_LIGHTNING_SPIRE)
+//     {
+//         return level + 1;
+//     }
+//     
+//     return level;
+    return _seekspell(which_spell)->level;
 }
 
 int spell_levels_required(spell_type which_spell)

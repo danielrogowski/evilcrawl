@@ -3371,7 +3371,7 @@ void summoned_monster(const monster *mons, const actor *caster,
     
     if (Options.unlimited_summons)
     {
-        max_this_time = you.intel();
+        max_this_time = you.intel() / 3;
     }
 
     monster* oldest_summon = 0;
