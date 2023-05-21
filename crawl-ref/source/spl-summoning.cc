@@ -67,6 +67,8 @@
 #include "viewchar.h"
 #include "xom.h"
 
+int count_all_summons(const actor *summoner);
+
 static void _monster_greeting(monster *mons, const string &key)
 {
     string msg = getSpeakString(key);
@@ -3352,6 +3354,11 @@ static void _expire_capped_summon(monster* mon, int delay, bool recurse)
     }
 }
 
+unsigned int unlimited_summons_summoning_limit()
+{
+    return you.intel() / 2;
+}
+
 // Call when a monster has been summoned, to manage this summoner's caps.
 void summoned_monster(const monster *mons, const actor *caster,
                       spell_type spell)
@@ -3361,17 +3368,16 @@ void summoned_monster(const monster *mons, const actor *caster,
         return;
 
     int max_this_time = cap->type_cap;
-
-    // Cap large abominations and tentacled monstrosities separately
-    if (spell == SPELL_SUMMON_HORRIBLE_THINGS)
-    {
-        max_this_time = (mons->type == MONS_ABOMINATION_LARGE ? max_this_time * 3 / 4
-                                                              : max_this_time * 1 / 4);
-    }
     
     if (Options.unlimited_summons)
     {
-        max_this_time = you.intel() / 3;
+        max_this_time = unlimited_summons_summoning_limit();
+    }
+    // Cap large abominations and tentacled monstrosities separately
+    else if (spell == SPELL_SUMMON_HORRIBLE_THINGS)
+    {
+        max_this_time = (mons->type == MONS_ABOMINATION_LARGE ? max_this_time * 3 / 4
+                                                              : max_this_time * 1 / 4);
     }
 
     monster* oldest_summon = 0;
@@ -3389,14 +3395,17 @@ void summoned_monster(const monster *mons, const actor *caster,
         int duration = 0;
         int stype    = 0;
         const bool summoned = mi->is_summoned(&duration, &stype);
-        if (summoned && stype == spell && caster->mid == mi->summoner
+        if (summoned
+            && Options.unlimited_summons ? true : stype == spell
+            && caster->mid == mi->summoner
             && mons_aligned(caster, *mi))
         {
             // Count large abominations and tentacled monstrosities separately
-            if (spell == SPELL_SUMMON_HORRIBLE_THINGS && mi->type != mons->type)
+            if (stype == SPELL_SUMMON_HORRIBLE_THINGS && mi->type != mons->type)
                 continue;
 
-            if (_spell_has_variable_cap(spell) && mi->props.exists("summon_id"))
+            if (_spell_has_variable_cap(static_cast<spell_type>(stype))
+                && mi->props.exists("summon_id"))
             {
                 const int id = mi->props["summon_id"].get_int();
 
@@ -3421,7 +3430,11 @@ void summoned_monster(const monster *mons, const actor *caster,
         }
     }
 
-    if (oldest_summon && count > max_this_time)
+    if (Options.unlimited_summons && oldest_summon && count_all_summons(caster) >= max_this_time)
+    {
+        _expire_capped_summon(oldest_summon, cap->timeout * 5, true);
+    }
+    else if (oldest_summon && count > max_this_time)
         _expire_capped_summon(oldest_summon, cap->timeout * 5, true);
 }
 
@@ -3435,7 +3448,9 @@ int count_summons(const actor *summoner, spell_type spell)
 
         int stype    = 0;
         const bool summoned = mi->is_summoned(nullptr, &stype);
-        if (summoned && stype == spell && summoner->mid == mi->summoner
+        if (summoned
+            && (spell == SPELL_NO_SPELL ? true : stype == spell)
+            && summoner->mid == mi->summoner
             && mons_aligned(summoner, *mi))
         {
             count++;
@@ -3443,6 +3458,11 @@ int count_summons(const actor *summoner, spell_type spell)
     }
 
     return count;
+}
+
+int count_all_summons(const actor *summoner)
+{
+    return count_summons(summoner, SPELL_NO_SPELL);
 }
 
 bool spell_produces_summoned_minion(const spell_type spell)

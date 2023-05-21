@@ -2949,12 +2949,18 @@ static string _player_spell_desc(spell_type spell)
     ostringstream description;
 
     // Report summon cap
-    const int limit = summons_limit(spell);
+    const int limit = Options.unlimited_summons ?
+                        (summons_limit(spell) ?
+                            unlimited_summons_summoning_limit() :
+                            0) : 
+                        summons_limit(spell);
     if (limit)
     {
         description << "You can sustain at most " + number_in_words(limit)
                     << " creature" << (limit > 1 ? "s" : "")
-                    << " summoned by this spell.\n";
+                    << (Options.unlimited_summons
+                        ? " summoned by all summoning spells combined.\n"
+                        : " summoned by this spell.\n");
     }
 
     if (god_hates_spell(spell, you.religion))

@@ -128,3 +128,4 @@ int count_summons(const actor *summoner, spell_type spell);
 bool spell_produces_summoned_minion(const spell_type spell);
 bool spell_produces_minion(spell_type spell);
 bool spell_produces_undead_minion(spell_type spell);
+unsigned int unlimited_summons_summoning_limit();
