@@ -1171,13 +1171,13 @@ spret cast_summon_greater_demon(int pow, god_type god, bool fail)
 }
 
 spret cast_shadow_creatures(int st, god_type god, level_id place,
-                                 bool fail)
+                                 bool fail, int powc)
 {
     fail_check();
     const bool scroll = (st == MON_SUMM_SCROLL);
     mpr("Wisps of shadow whirl around you...");
 
-    int num = (scroll ? roll_dice(2, 2) : 1);
+    const int num = (scroll ? roll_dice(2, 2) : roll_dice(1, max(powc / 50, 1)));
     int num_created = 0;
 
     for (int i = 0; i < num; ++i)
@@ -1213,13 +1213,9 @@ spret cast_shadow_creatures(int st, god_type god, level_id place,
             {
                 // Choose a new duration based on HD.
                 int x = max(mons->get_experience_level() - 3, 1);
-                int d = div_rand_round(17,x);
+                int d = max(1, div_rand_round(17,x));
                 if (scroll)
                     d++;
-                if (d < 1)
-                    d = 1;
-                if (d > 4)
-                    d = 4;
                 mon_enchant me = mon_enchant(ENCH_ABJ, d);
                 me.set_duration(mons, &me);
                 mons->update_ench(me);

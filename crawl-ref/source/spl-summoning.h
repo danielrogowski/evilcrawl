@@ -54,9 +54,10 @@ spret cast_summon_demon(int pow, god_type god = GOD_NO_GOD,
                              bool fail = false);
 spret cast_summon_greater_demon(int pow, god_type god, bool fail);
 spret cast_shadow_creatures(int st = SPELL_SHADOW_CREATURES,
-                                 god_type god = GOD_NO_GOD,
-                                 level_id place = level_id::current(),
-                                 bool fail = false);
+                            god_type god = GOD_NO_GOD,
+                            level_id place = level_id::current(),
+                            bool fail = false,
+                            int powc = 0);
 spret cast_summon_horrible_things(int pow, god_type god, bool fail);
 bool can_cast_malign_gateway();
 spret cast_malign_gateway(actor* caster, int pow,

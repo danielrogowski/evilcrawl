@@ -1330,7 +1330,7 @@ static struct spell_desc spelldata[] =
     spschool::summoning,
     spflag::mons_abjure,
     6,
-    0,
+    200,
     -1, -1,
     4, 0,
     TILEG_SUMMON_SHADOW_CREATURES,
