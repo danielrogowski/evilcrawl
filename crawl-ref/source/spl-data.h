@@ -49,11 +49,11 @@ static struct spell_desc spelldata[] =
 {
     SPELL_TELEPORT_SELF, "Teleport Self",
     spschool::translocation,
-    spflag::escape | spflag::emergency | spflag::utility | spflag::monster,
-    5,
+    spflag::escape | spflag::emergency | spflag::utility,
+    3,
     0,
     -1, -1,
-    4, 0,
+    3, 0,
     TILEG_TELEPORT,
 },
 
@@ -2687,7 +2687,7 @@ static struct spell_desc spelldata[] =
     SPELL_FORCE_LANCE, "Force Lance",
     spschool::conjuration | spschool::translocation,
     spflag::dir_or_target | spflag::needs_tracer,
-    4,
+    3,
     100,
     3, 3,
     5, 0,
