@@ -1989,6 +1989,11 @@ vector<skill_type> get_crosstrain_skills(skill_type sk)
         return { SK_THROWING };
     case SK_THROWING:
         return { SK_SLINGS };
+    case SK_SUMMONINGS:
+        return { SK_CHARMS, SK_TRANSLOCATIONS };
+    case SK_CHARMS:
+    case SK_TRANSLOCATIONS:
+        return { SK_SUMMONINGS };
     default:
         return {};
     }
