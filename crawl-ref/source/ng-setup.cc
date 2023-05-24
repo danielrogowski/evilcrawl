@@ -176,7 +176,7 @@ item_def* newgame_make_item(object_class_type base,
     // Wanderers may or may not already have a spell. - bwr
     // Also, when this function gets called their possible randbook
     // has not been initialised and will trigger an ASSERT.
-    if (item.base_type == OBJ_BOOKS && you.char_class != JOB_WANDERER)
+    if (item.base_type == OBJ_BOOKS && item.sub_type != BOOK_MANUAL && you.char_class != JOB_WANDERER)
     {
         spell_type which_spell = spells_in_book(item)[0];
         if (!spell_is_useless(which_spell, false, true)

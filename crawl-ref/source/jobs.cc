@@ -4,7 +4,10 @@
 
 #include "enum.h"
 #include "errors.h"
+#include "item-name.h"
 #include "item-prop.h"
+#include "item-status-flag-type.h"
+#include "items.h"
 #include "libutil.h"
 #include "mapdef.h"
 #include "ng-setup.h"
@@ -131,6 +134,57 @@ void give_job_equipment(job_type job)
     item_list items;
     for (const string& it : _job_def(job).equipment)
         items.add_item(it);
+    
+   if (Options.human_enchanter_booster && job == JOB_ENCHANTER && you.species == SP_HUMAN)
+   {
+        int slot;
+        for (slot = 0; slot < ENDOFPACK; ++slot)
+        {
+            if (!you.inv[slot].defined())
+                break;
+        }
+        
+        item_def &stealth_manual(you.inv[slot++]);
+        stealth_manual.base_type = OBJ_BOOKS;
+        stealth_manual.sub_type = BOOK_MANUAL;
+        stealth_manual.quantity = 1;
+        stealth_manual.skill = SK_STEALTH;
+        stealth_manual.skill_points = 5000;
+        set_ident_type(stealth_manual, true);
+        set_ident_flags(stealth_manual, ISFLAG_IDENT_MASK);
+        origin_set_startequip(stealth_manual);
+        
+        item_def &hexes_manual(you.inv[slot++]);
+        hexes_manual.base_type = OBJ_BOOKS;
+        hexes_manual.sub_type = BOOK_MANUAL;
+        hexes_manual.quantity = 1;
+        hexes_manual.skill = SK_HEXES;
+        hexes_manual.skill_points = 5000;
+        set_ident_type(hexes_manual, true);
+        set_ident_flags(hexes_manual, ISFLAG_IDENT_MASK);
+        origin_set_startequip(hexes_manual);
+        
+        item_def &dodging_manual(you.inv[slot++]);
+        dodging_manual.base_type = OBJ_BOOKS;
+        dodging_manual.sub_type = BOOK_MANUAL;
+        dodging_manual.quantity = 1;
+        dodging_manual.skill = SK_DODGING;
+        dodging_manual.skill_points = 5000;
+        set_ident_type(dodging_manual, true);
+        set_ident_flags(dodging_manual, ISFLAG_IDENT_MASK);
+        origin_set_startequip(dodging_manual);
+        
+        item_def &sb_manual(you.inv[slot]);
+        sb_manual.base_type = OBJ_BOOKS;
+        sb_manual.sub_type = BOOK_MANUAL;
+        sb_manual.quantity = 1;
+        sb_manual.skill = SK_SHORT_BLADES;
+        sb_manual.skill_points = 5000;
+        set_ident_type(sb_manual, true);
+        set_ident_flags(sb_manual, ISFLAG_IDENT_MASK);
+        origin_set_startequip(sb_manual);
+   }
+    
     for (size_t i = 0; i < items.size(); i++)
     {
         const item_spec spec = items.get_item(i);

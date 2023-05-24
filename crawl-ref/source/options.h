@@ -482,6 +482,7 @@ public:
     bool        infusion_enhancement;
     int         human_wanderer_type;
     bool        pain_enhancement;
+    bool        human_enchanter_booster;
 
     lang_t              language;         // Translation to use.
     const char*         lang_name;        // Database name of the language.
