@@ -16,8 +16,8 @@ static const vector<spell_type> spellbook_templates[] =
     SPELL_MAGIC_DART,
     SPELL_SEARING_RAY,
     SPELL_DAZZLING_SPRAY,
-    SPELL_FULMINANT_PRISM,
     SPELL_FORCE_LANCE,
+    SPELL_FULMINANT_PRISM,
     SPELL_ISKENDERUNS_MYSTIC_BLAST,
 },
 
@@ -339,8 +339,8 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Alchemy
     SPELL_SUBLIMATION_OF_BLOOD,
-    SPELL_REGENERATION,
     SPELL_IGNITE_POISON,
+    SPELL_REGENERATION,
     SPELL_PETRIFY,
     SPELL_INTOXICATE,
     SPELL_IRRADIATE,
