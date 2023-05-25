@@ -152,7 +152,7 @@ spret cast_swiftness(int power, bool fail)
                                              : "liquid ground");
     }
 
-    you.set_duration(DUR_SWIFTNESS, 12 + random2(power)/2, 30,
+    you.set_duration(DUR_SWIFTNESS, 12 + random2(power)/2, 0,
                      "You feel quick.");
     you.attribute[ATTR_SWIFTNESS] = you.duration[DUR_SWIFTNESS];
 
@@ -211,11 +211,8 @@ spret cast_infusion(int pow, bool fail)
         mpr("You begin infusing your attacks with magical energy.");
     else
         mpr("You extend your infusion's duration.");
-    
-    if (Options.infusion_enhancement)
-        you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow/2), 30);
-    else
-        you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow), 100);
+
+    you.increase_duration(DUR_INFUSION,  8 + roll_dice(2, pow));
     
     you.props["infusion_power"] = pow;
 
@@ -274,7 +271,7 @@ spret cast_shroud_of_golubria(int pow, bool fail)
     else
         mpr("Space distorts slightly along a thin shroud covering your body.");
 
-    you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 7 + roll_dice(2, pow), 50);
+    you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 5 + roll_dice(4, pow / 3));
     return spret::success;
 }
 

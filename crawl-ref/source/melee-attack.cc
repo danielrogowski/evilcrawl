@@ -550,9 +550,16 @@ bool melee_attack::handle_phase_damaged()
                && defender->as_monster()->has_ench(ENCH_SHROUD))
         && !one_chance_in(3))
     {
+        const int effectiveness = 10 + (defender->is_player()
+                                    ? div_rand_round(
+                                        calc_spell_power(
+                                            SPELL_SHROUD_OF_GOLUBRIA,
+                                            true),
+                                        4) - 5
+                                    : 0);
         // Chance of the shroud falling apart increases based on the
         // strain of it, i.e. the damage it is redirecting.
-        if (x_chance_in_y(damage_done, 10+damage_done))
+        if (x_chance_in_y(damage_done, effectiveness + damage_done))
         {
             // Delay the message for the shroud breaking until after
             // the attack message.
