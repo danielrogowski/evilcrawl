@@ -939,7 +939,7 @@ static struct spell_desc spelldata[] =
 
 {
     SPELL_SUBLIMATION_OF_BLOOD, "Sublimation of Blood",
-    spschool::necromancy,
+    spschool::transmutation,
     spflag::utility,
     2,
     200,

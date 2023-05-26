@@ -103,7 +103,6 @@ static const vector<spell_type> spellbook_templates[] =
 
 {   // Book of Death
     SPELL_CORPSE_ROT,
-    SPELL_SUBLIMATION_OF_BLOOD,
     SPELL_AGONY,
     SPELL_DISPEL_UNDEAD,
     SPELL_EXCRUCIATING_WOUNDS,
@@ -128,6 +127,7 @@ static const vector<spell_type> spellbook_templates[] =
 },
 
 {   // Book of Transfigurations
+    SPELL_SUBLIMATION_OF_BLOOD,
     SPELL_IRRADIATE,
     SPELL_STATUE_FORM,
     SPELL_HYDRA_FORM,
