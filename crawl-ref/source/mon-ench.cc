@@ -2271,7 +2271,7 @@ int mon_enchant::calc_duration(const monster* mons,
         cturn = 50 / _mod_speed(10, mons->speed);
         break;
     case ENCH_CONFUSION:
-        cturn = max(100 / modded_speed(mons, 5), 3);
+        cturn = max(300 / modded_speed(mons, 5), 3);
         break;
     case ENCH_HELD:
         cturn = 120 / _mod_speed(25, mons->speed);
