@@ -1915,14 +1915,12 @@ static const char* _determine_colour_string(int level, int max_level)
 
 int stealth_breakpoint(int stealth)
 {
-    if (stealth == 0)
+    if (stealth <= 0)
         return 0;
-    else if (stealth >= 500)
-        return 10;
-    else if (stealth >= 450)
-        return 9;
+    else if (stealth >= 1000)
+        return 20;
     else
-        return 1 + stealth / STEALTH_PIP;
+        return stealth / STEALTH_PIP;
 }
 
 static string _stealth_bar(int sw)
@@ -1934,7 +1932,7 @@ static string _stealth_bar(int sw)
     const int stealth_num = stealth_breakpoint(player_stealth());
     for (int i = 0; i < stealth_num; i++)
         bar += "+";
-    for (int i = 0; i < 10 - stealth_num; i++)
+    for (int i = 0; i < 20 - stealth_num; i++)
         bar += ".";
     bar += "\n";
     linebreak_string(bar, sw);
@@ -2422,8 +2420,6 @@ static vector<formatted_string> _get_overview_resistances(
     const int rmagi = player_res_magic(calc_unid) / MR_PIP;
     out += _resist_composer("MR", cwidth, rmagi, 5) + "\n";
 
-    out += _stealth_bar(20) + "\n";
-
     int regen = player_regen(); // round up
     if (regen < 0)
     {
@@ -2439,6 +2435,8 @@ static vector<formatted_string> _get_overview_resistances(
     out += make_stringf("MPRegen  %d.%02d/turn%s\n",
                         mp_regen / 100, mp_regen % 100,
                         etheric ? "*" : "");
+
+    out += _stealth_bar(29) + "\n";
 
     cols.add_formatted(0, out, false);
 
