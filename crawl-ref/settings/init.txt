@@ -87,20 +87,28 @@
 # include                 = 0.14_monster_glyphs.txt
 
 
-# Here are the spicy edition expansion options (Look at the readme for details)
+### Here are the spicy edition expansion options
+#   (Look at the readme for details)             ###
 
 no_exp_cap = false
 wide_spell_list = false
 unlimited_summons = false
 
 
-# evilcrawl options
+### evilcrawl options ###
 
-ds_hurl_hellfire = 0 # 0 = off, 1 = random (default), 2 = guaranteed
+# 0 = off, 1 = random (default), 2 = guaranteed
+ds_hurl_hellfire = 0
+
 ds_guaranteed_death_affinity = false
 ds_undesired_facets = false
 ds_always_monstrous = false
 rune_identifies_items = false
 infusion_enhancement = false
-human_wanderer_type = 0 # 0 = random, 1 = caster
+
+# 0 = random, 1 = caster
+human_wanderer_type = 0
+
 pain_enhancement = false
+
+human_booster = false
