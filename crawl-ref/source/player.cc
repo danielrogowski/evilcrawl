@@ -1412,7 +1412,7 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
     }
 
     // species:
-    if (you.species == SP_MUMMY)
+    if (you.species == SP_MUMMY || you.species == SP_VAMPIRE)
         rf--;
 
     // mutations:

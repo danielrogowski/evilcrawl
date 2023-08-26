@@ -11,42 +11,46 @@ aptitudes:
   mp_mod: 0
   mr: 4
   fighting: 0
-  short_blades: 1
-  long_blades: 0
-  axes: -1
+  short_blades: 2
+  long_blades: 1
+  axes: -2
   maces_and_flails: -2
-  polearms: -1
-  staves: -2
+  polearms: -2
+  staves: -1
   slings: -2
-  bows: -2
-  crossbows: -2
+  bows: -1
+  crossbows: 0
   throwing: 0
-  armour: -2
-  dodging: 1
+  armour: -1
+  dodging: 2
   stealth: 5
-  shields: -1
+  shields: 0
   unarmed_combat: 2
-  spellcasting: 0
+  spellcasting: 1
   conjurations: -3
   hexes: 4
   charms: 1
-  necromancy: 1
+  necromancy: 2
   translocations: -2
   transmutations: 1
-  fire_magic: -2
-  poison_magic: -1
+  fire_magic: 0
+  ice_magic: 1
+  poison_magic: 0
   invocations: -1
   evocations: -1
 undead_type: US_SEMI_UNDEAD
-str: 7
+str: 6
 int: 10
 dex: 9
-levelup_stat_frequency: 3
+levelup_stat_frequency: 2
 mutations:
   1:
     MUT_FANGS: 3
     MUT_ACUTE_VISION: 1
     MUT_UNBREATHING: 1
+fake_mutations:
+  - long: Your flesh and blood are vulnerable to fire.
+    short: fire vulnerability
 recommended_jobs:
   - JOB_GLADIATOR
   - JOB_ASSASSIN
@@ -56,9 +60,6 @@ recommended_jobs:
   - JOB_ICE_ELEMENTALIST
 recommended_weapons:
   - SK_SHORT_BLADES
-  - SK_AXES
   - SK_LONG_BLADES
-  - SK_BOWS
   - SK_CROSSBOWS
-  - SK_SLINGS
 create_enum: false
