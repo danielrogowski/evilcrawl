@@ -17,6 +17,8 @@
 #include "job-data.h"
 
 bool human_wanderer_needs_stat_reroll();
+void add_manual(skill_type sk, int slot, float factor = 1.0f);
+int get_first_free_slot();
 
 static const job_def& _job_def(job_type job)
 {
@@ -129,61 +131,34 @@ bool job_gets_ranged_weapons(job_type job)
     return _job_def(job).wchoice == WCHOICE_RANGED;
 }
 
+int get_first_free_slot()
+{
+    for (int slot = 0; slot < ENDOFPACK; ++slot)
+    {
+        if (!you.inv[slot].defined())
+            return slot;
+    }
+    return -1;
+}
+
+void add_manual(skill_type sk, int slot, float factor)
+{
+    item_def &manual(you.inv[slot]);
+    manual.base_type = OBJ_BOOKS;
+    manual.sub_type = BOOK_MANUAL;
+    manual.quantity = 1;
+    manual.skill = sk;
+    manual.skill_points = 5000 * factor;
+    set_ident_type(manual, true);
+    set_ident_flags(manual, ISFLAG_IDENT_MASK);
+    origin_set_startequip(manual);
+}
+
 void give_job_equipment(job_type job)
 {
     item_list items;
     for (const string& it : _job_def(job).equipment)
         items.add_item(it);
-    
-   if (Options.human_enchanter_booster && job == JOB_ENCHANTER && you.species == SP_HUMAN)
-   {
-        int slot;
-        for (slot = 0; slot < ENDOFPACK; ++slot)
-        {
-            if (!you.inv[slot].defined())
-                break;
-        }
-        
-        item_def &stealth_manual(you.inv[slot++]);
-        stealth_manual.base_type = OBJ_BOOKS;
-        stealth_manual.sub_type = BOOK_MANUAL;
-        stealth_manual.quantity = 1;
-        stealth_manual.skill = SK_STEALTH;
-        stealth_manual.skill_points = 5000;
-        set_ident_type(stealth_manual, true);
-        set_ident_flags(stealth_manual, ISFLAG_IDENT_MASK);
-        origin_set_startequip(stealth_manual);
-        
-        item_def &hexes_manual(you.inv[slot++]);
-        hexes_manual.base_type = OBJ_BOOKS;
-        hexes_manual.sub_type = BOOK_MANUAL;
-        hexes_manual.quantity = 1;
-        hexes_manual.skill = SK_HEXES;
-        hexes_manual.skill_points = 5000;
-        set_ident_type(hexes_manual, true);
-        set_ident_flags(hexes_manual, ISFLAG_IDENT_MASK);
-        origin_set_startequip(hexes_manual);
-        
-        item_def &dodging_manual(you.inv[slot++]);
-        dodging_manual.base_type = OBJ_BOOKS;
-        dodging_manual.sub_type = BOOK_MANUAL;
-        dodging_manual.quantity = 1;
-        dodging_manual.skill = SK_DODGING;
-        dodging_manual.skill_points = 5000;
-        set_ident_type(dodging_manual, true);
-        set_ident_flags(dodging_manual, ISFLAG_IDENT_MASK);
-        origin_set_startequip(dodging_manual);
-        
-        item_def &sb_manual(you.inv[slot]);
-        sb_manual.base_type = OBJ_BOOKS;
-        sb_manual.sub_type = BOOK_MANUAL;
-        sb_manual.quantity = 1;
-        sb_manual.skill = SK_SHORT_BLADES;
-        sb_manual.skill_points = 5000;
-        set_ident_type(sb_manual, true);
-        set_ident_flags(sb_manual, ISFLAG_IDENT_MASK);
-        origin_set_startequip(sb_manual);
-   }
     
     for (size_t i = 0; i < items.size(); i++)
     {
@@ -195,6 +170,83 @@ void give_job_equipment(job_type job)
             plus = spec.props["plus"];
         newgame_make_item(spec.base_type, spec.sub_type, max(spec.qty, 1),
                           plus, spec.ego);
+    }
+    
+    if (you.species == SP_HUMAN)
+    {
+        if (Options.human_booster)
+        {
+            int slot = get_first_free_slot();
+            switch(job)
+            {
+                case JOB_FIGHTER:
+                case JOB_BERSERKER:
+                    add_manual(SK_FIGHTING, slot++, 2.0f);
+                    break;
+                case JOB_WIZARD:
+                    add_manual(SK_SPELLCASTING, slot++, 2.0f);
+                    break;
+                case JOB_NECROMANCER:
+                    add_manual(SK_SPELLCASTING, slot++);
+                    add_manual(SK_NECROMANCY, slot++);
+                    break;
+                case JOB_CONJURER:
+                    add_manual(SK_SPELLCASTING, slot++);
+                    add_manual(SK_CONJURATIONS, slot++);
+                    break;
+                case JOB_ENCHANTER:
+                    add_manual(SK_STEALTH, slot++);
+                    add_manual(SK_HEXES, slot++);
+                    add_manual(SK_DODGING, slot++);
+                    add_manual(SK_SHORT_BLADES, slot++);
+                    break;
+                case JOB_FIRE_ELEMENTALIST:
+                    add_manual(SK_CONJURATIONS, slot++);
+                    add_manual(SK_FIRE_MAGIC, slot++);
+                    break;
+                case JOB_ICE_ELEMENTALIST:
+                    add_manual(SK_CONJURATIONS, slot++);
+                    add_manual(SK_ICE_MAGIC, slot++);
+                    break;
+                case JOB_SUMMONER:
+                    add_manual(SK_SPELLCASTING, slot++);
+                    add_manual(SK_SUMMONINGS, slot++);
+                    break;
+                case JOB_AIR_ELEMENTALIST:
+                    add_manual(SK_CONJURATIONS, slot++);
+                    add_manual(SK_AIR_MAGIC, slot++);
+                    break;
+                case JOB_EARTH_ELEMENTALIST:
+                    add_manual(SK_CONJURATIONS, slot++);
+                    add_manual(SK_EARTH_MAGIC, slot++);
+                    break;
+                case JOB_SKALD:
+                    add_manual(SK_FIGHTING, slot++);
+                    add_manual(SK_CHARMS, slot++);
+                    break;
+                case JOB_VENOM_MAGE:
+                    add_manual(SK_CONJURATIONS, slot++);
+                    add_manual(SK_POISON_MAGIC, slot++);
+                    break;
+                case JOB_TRANSMUTER:
+                    add_manual(SK_FIGHTING, slot++);
+                    add_manual(SK_UNARMED_COMBAT, slot++);
+                    add_manual(SK_TRANSMUTATIONS, slot++, 0.5f);
+                    break;
+                case JOB_WARPER:
+                    add_manual(SK_FIGHTING, slot++, 1.5f);
+                    add_manual(SK_TRANSLOCATIONS, slot++);
+                    break;
+                case JOB_CHAOS_KNIGHT:
+                case JOB_MONK:
+                case JOB_ABYSSAL_KNIGHT:
+                    add_manual(SK_FIGHTING, slot++);
+                    add_manual(SK_INVOCATIONS, slot++);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
 
