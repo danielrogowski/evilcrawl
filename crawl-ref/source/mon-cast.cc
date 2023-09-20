@@ -860,6 +860,13 @@ static void _cast_grasping_roots(monster &caster, mon_spell_slot, bolt&)
 {
     actor* foe = caster.get_foe();
     ASSERT(foe);
+    
+    if (foe->airborne())
+    {
+        if (foe->is_player())
+            mprf(MSGCH_PLAIN, "The grasping roots fail to grab you, because you're flying!");
+        return;
+    }
 
     const int turns = 4 + random2avg(div_rand_round(
                 mons_spellpower(caster, SPELL_GRASPING_ROOTS), 10), 2);
