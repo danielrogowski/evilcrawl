@@ -470,16 +470,25 @@ spret cast_controlled_blink(bool fail, bool safe)
     return controlled_blink(fail, safe);
 }
 
-void you_teleport()
+spret cast_teleport_self(bool fail)
+{
+    return you_teleport();
+}
+
+spret you_teleport()
 {
     // [Cha] here we block teleportation, which will save the player from
     // death from read-id'ing scrolls (in sprint)
     if (you.no_tele(true, true))
+    {
         canned_msg(MSG_STRANGE_STASIS);
+        return spret::abort;
+    }
     else if (you.duration[DUR_TELEPORT])
     {
         mpr("You feel strangely stable.");
         you.duration[DUR_TELEPORT] = 0;
+        return spret::abort;
     }
     else
     {
@@ -499,6 +508,8 @@ void you_teleport()
         }
 
         you.set_duration(DUR_TELEPORT, teleport_delay);
+        
+        return spret::success;
     }
 }
 

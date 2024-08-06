@@ -7,12 +7,13 @@ void disjunction_spell();
 
 spret cast_blink(bool fail = false);
 spret cast_controlled_blink(bool fail = false, bool safe = true);
+spret cast_teleport_self(bool fail = false);
 void uncontrolled_blink(bool override_stasis = false);
 spret controlled_blink(bool fail, bool safe_cancel = true);
 spret frog_hop(bool fail);
 void wizard_blink();
 
-void you_teleport();
+spret you_teleport();
 void you_teleport_now(bool wizard_tele = false, bool teleportitis = false,
                       string reason = "");
 bool you_teleport_to(const coord_def where,
