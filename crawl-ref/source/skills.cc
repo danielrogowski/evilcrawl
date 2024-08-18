@@ -1510,7 +1510,7 @@ int get_skill_percentage(const skill_type x)
  */
 int player::get_training_target(const skill_type sk) const
 {
-    ASSERT_LESS(training_targets[sk], 271);
+    ASSERT_LESS(training_targets[sk], 1001);
     return training_targets[sk];
 }
 
@@ -1542,7 +1542,7 @@ void player::clear_training_targets()
  */
 bool player::set_training_target(const skill_type sk, const int target, bool announce)
 {
-    const int ranged_target = min(max((int) target, 0), 270);
+    const int ranged_target = min(max((int) target, 0), 1000);
     if (announce && ranged_target != (int) training_targets[sk])
     {
         if (you.species == SP_GNOLL)
