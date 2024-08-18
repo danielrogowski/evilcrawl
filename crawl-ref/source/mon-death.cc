@@ -2184,7 +2184,7 @@ item_def* monster_die(monster& mons, killer_type killer,
     {
         const int sos_bonus = you.props[SONG_OF_SLAYING_KEY].get_int();
         const int cap = 5 + (you.experience_level * 2 / 5);
-        if (sos_bonus <= cap)
+        if (sos_bonus < cap)
             you.props[SONG_OF_SLAYING_KEY] = sos_bonus + 1;
     }
 
