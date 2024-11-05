@@ -74,18 +74,6 @@ struct demon_mutation_info
         : mut(m), when(w), facet(f) { }
 };
 
-enum class mutflag
-{
-    good    = 1 << 0, // used by benemut etc
-    bad     = 1 << 1, // used by malmut etc
-    jiyva   = 1 << 2, // jiyva-only muts
-    qazlal  = 1 << 3, // qazlal wrath
-    xom     = 1 << 4, // xom being xom
-
-    last    = xom
-};
-DEF_BITFIELD(mutflags, mutflag, 4);
-COMPILE_CHECK(mutflags::exponent(mutflags::last_exponent) == mutflag::last);
 
 #include "mutation-data.h"
 
@@ -596,6 +584,20 @@ string describe_mutations(bool drop_title)
     validate_mutations(true);
 #endif
     string result;
+    
+    if (you.your_name.compare(std::string("Auric Ulvin")) == 0)
+    {
+        for (unsigned int i = 0; true; i++)
+        {
+            if (mut_data[i].mutation == MUT_STURDY_FRAME)
+            {
+                mut_data[i].have[0] = "Your movements are slightly less encumbered by armour. (ER -3)";
+                mut_data[i].have[1] = "Your movements are less encumbered by armour. (ER -6)";
+                mut_data[i].have[2] = "Your movements are significantly less encumbered by armour. (ER -9)";
+                break;
+            }
+        }
+    }
 
     _num_full_suppressed = _num_part_suppressed = 0;
     _num_transient = 0;

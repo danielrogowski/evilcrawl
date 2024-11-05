@@ -520,6 +520,13 @@ static void _setup_generic(const newgame_def& ng)
 
     if (you.species == SP_DEMONSPAWN)
         roll_demonspawn_mutations();
+    
+    if (you.your_name.compare(std::string("Auric Ulvin")) == 0)
+    {
+        you.base_stats[STAT_STR] += 7;
+        you.base_stats[STAT_DEX] -= 2;
+        you.mutation[MUT_STURDY_FRAME] = you.innate_mutation[MUT_STURDY_FRAME] = 3;
+    }
 
     _give_starting_food();
 

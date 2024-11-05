@@ -157,8 +157,26 @@ void add_manual(skill_type sk, int slot, float factor)
 void give_job_equipment(job_type job)
 {
     item_list items;
+    const bool is_auric = you.your_name.compare(string("Auric Ulvin")) == 0;
     for (const string& it : _job_def(job).equipment)
-        items.add_item(it);
+    {
+        string item = it;
+        if (is_auric && (
+                it.compare(string("robe")) == 0 ||
+                it.compare(string("leather armour")) == 0
+            ))
+        {
+            item = string("scale mail");
+        }
+        items.add_item(item);
+    }
+    
+    if (is_auric && job == JOB_ICE_ELEMENTALIST)
+    {
+        items.add_item("mace");
+        you.skills[SK_FIGHTING] += 2;
+        you.skills[SK_MACES_FLAILS] += 2;
+    }
     
     for (size_t i = 0; i < items.size(); i++)
     {

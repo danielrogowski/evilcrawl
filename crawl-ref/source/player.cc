@@ -5879,10 +5879,13 @@ int player::unadjusted_body_armour_penalty() const
     const item_def *body_armour = slot_item(EQ_BODY_ARMOUR, false);
     if (!body_armour)
         return 0;
+    
+    const bool is_auric = you.your_name.compare(std::string("Auric Ulvin")) == 0;
+    const int factor = is_auric ? 3 : 2;
 
     // PARM_EVASION is always less than or equal to 0
     return max(0, -property(*body_armour, PARM_EVASION) / 10
-                  - get_mutation_level(MUT_STURDY_FRAME) * 2);
+                  - get_mutation_level(MUT_STURDY_FRAME) * factor);
 }
 
 /**
